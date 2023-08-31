@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct
-{
+typedef struct {
     char name[10];
     int type;
     int etat;
@@ -12,23 +11,18 @@ typedef struct
 int main(int argc, char *argv[])
 {
     printf("\n-----INCENDIE-----\n\n");
-
-
-    printf("\nentrez le nombre de cellules en longueur : ");
     int length;
-    scanf("%d", &length);
-    if(length < 1 || length > 20)
-    {
-        printf("\n\nEntree incorrecte : la longueur doit etre comprise entre 1 et 20\n\n");
-    }
-
-    printf("\nentrez le nombre de cellules en largeur : ");
     int width;
-    scanf("%d", &width);
-    if(width < 1 || width > 20)
-    {
-        printf("\n\nEntree incorrecte : la largeur doit etre comprise entre 1 et 20\n\n");
-    }
+
+    do {
+        printf("Entrez le nombre de cellules en longueur compris entre 1 et 20: ");
+        scanf("%d", &length);
+    } while (length < 1 || length > 20);
+
+    do {
+        printf("Entrez le nombre de cellules en largeur compris entre 1 et 20: ");
+        scanf("%d", &width);
+    } while (width < 1 || width > 20);
 
 
     entity matrice[length][width];
