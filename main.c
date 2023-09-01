@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct
 {
@@ -9,23 +10,55 @@ typedef struct
     int etat;
 } Entity;
 
-typedef struct
+
+typedef struct Node Node;
+struct Node
 {
     Entity data;
-    Node next;
-} Node;
+    Node* next;
+};
 
-int isEmpty(struct Node *top)
-{
-    return top == 0;
+
+int isEmpty(struct Node* top) {
+
+    if(top == NULL)
+    {
+        return 0;
+    }
 }
 
-int main(int argc, char *argv[])
-{
+void push(struct Node** top, Entity data) {
+    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Pile pleine. Allocation mémoire échouée.\n");
+        return;
+    }
+    newNode->data = data;
+    newNode->next = *top;
+    *top = newNode;
+}
+
+void pop(struct Node** top, Entity* popped) {
+    if (isEmpty(*top)) {
+        printf("Pile vide. Impossible de retirer un élément.\n");
+    }
+    else
+    {
+        struct Node* temp = *top;
+        *popped = temp->data;
+        *top = temp->next;
+        free(temp);
+    }
+
+}
+
+
+int main(int argc, char *argv[]){
     int length;
     int width;
-
-    // Menu selection taille matrice
+    int nombrealeatoire;
+    int nbtours;
+    //Menu selection taille matrice
     printf("\n=========================INCENDIE========================\n\n");
 
     do
@@ -170,7 +203,39 @@ int main(int argc, char *argv[])
     }
     else if (mode == '2')
     {
-    }
+          for (int i = 0; i < length; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                srand(time(NULL));
+                int nombrealeatoire = (rand() % 6) + 1;
+            }
+        }
+        printf("lancement de la simulation\n");
+        printf("donnée le nombre de tours de la simulation \n");
+        scanf("%d", &nbtours);
+        printf("déclarer la case du départ de feu");
+        for (int p = 0; p < nbtours; p++)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    if (Entity.degres > 1)
+                    {
+                        if ((matrice[i - 1][j - 1].etat || matrice[i - 1][j + 1].etat || matrice[i + 1][j - 1].etat || matrice[i + 1][j + 1].etat || matrice[i + 1][j].etat || matrice[i][j + 1].etat || matrice[i - 1][j].etat || matrice[i][j - 1].etat) == 1)
+                        {
+                            matrice[i][j].etat = 1;
+                        }
+                    }
+                    if (matrice[i][j].etat == 1)
+                    {
+                        Entity.degres = Entity.degres - 1;
+                    }
+                }
+            }
+        }
 
+    }
     return 0;
 }
