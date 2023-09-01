@@ -61,7 +61,8 @@ void pop(struct Node** top, Entity* popped) {
 int main(int argc, char *argv[]){
     int length;
     int width;
-
+    int nombrealeatoire;
+    int nbtours;
     //Menu selection taille matrice
     printf("\n=========================INCENDIE========================\n\n");
 
@@ -115,20 +116,39 @@ int main(int argc, char *argv[]){
     }
     else if (mode == '2')
     {
+          for (int i = 0; i < length; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                srand(time(NULL));
+                int nombrealeatoire = (rand() % 6) + 1;
+            }
+        }
+        printf("lancement de la simulation\n");
+        printf("donnée le nombre de tours de la simulation \n");
+        scanf("%d", &nbtours);
+        printf("déclarer la case du départ de feu");
+        for (int p = 0; p < nbtours; p++)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    if (Entity.degres > 1)
+                    {
+                        if ((matrice[i - 1][j - 1].etat || matrice[i - 1][j + 1].etat || matrice[i + 1][j - 1].etat || matrice[i + 1][j + 1].etat || matrice[i + 1][j].etat || matrice[i][j + 1].etat || matrice[i - 1][j].etat || matrice[i][j - 1].etat) == 1)
+                        {
+                            matrice[i][j].etat = 1;
+                        }
+                    }
+                    if (matrice[i][j].etat == 1)
+                    {
+                        Entity.degres = Entity.degres - 1;
+                    }
+                }
+            }
+        }
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return 0;
 }
