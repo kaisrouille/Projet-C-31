@@ -7,10 +7,21 @@ typedef struct
     char name[10];
     int degres;
     int etat;
-} entity;
+} Entity;
 
-int main()
+typedef struct
 {
+    Entity data;
+    Node next;
+} Node;
+
+int isEmpty(struct Node* top) {
+    return top == 0;
+}
+
+
+
+int main(int argc, char *argv[]){
     int length;
     int width;
 
@@ -31,7 +42,7 @@ int main()
 
 
     //génération de la matrice
-    entity **matrice = malloc(length * sizeof(entity *));
+    Entity **matrice = malloc(length * sizeof(Entity *));
     if (matrice == NULL)
     {
         printf("Echec de l'allocation\n");
@@ -39,7 +50,7 @@ int main()
     }
     for (int i = 0; i < length; i++)
     {
-        matrice[i] = malloc(width * sizeof(entity));
+        matrice[i] = malloc(width * sizeof(Entity));
         if (matrice[i] == NULL)
         {
             printf("Echec de l'allocation\n");
@@ -68,5 +79,19 @@ int main()
     else if (mode == '2')
     {
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return 0;
 }
