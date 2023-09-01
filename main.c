@@ -9,16 +9,47 @@ typedef struct
     int etat;
 } Entity;
 
-typedef struct
+
+typedef struct Node Node;
+struct Node
 {
     Entity data;
-    Node next;
-} Node;
+    Node* next;
+};
+
 
 int isEmpty(struct Node* top) {
-    return top == 0;
+
+    if(top == NULL)
+    {
+        return 0;
+    }
 }
 
+void push(struct Node** top, Entity data) {
+    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Pile pleine. Allocation mémoire échouée.\n");
+        return;
+    }
+    newNode->data = data;
+    newNode->next = *top;
+    *top = newNode;
+}
+
+void pop(struct Node** top, Entity* popped) {
+    if (isEmpty(*top)) {
+        printf("Pile vide. Impossible de retirer un élément.\n");
+    }
+    else
+    {
+        struct Node* temp = *top;
+        *popped = temp->data;
+        *top = temp->next;
+        free(temp);
+    }
+
+}
 
 
 int main(int argc, char *argv[]){
