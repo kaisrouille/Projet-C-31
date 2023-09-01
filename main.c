@@ -128,7 +128,7 @@ int main(int argc, char *argv[]){
             {
                 for (int j = 0; j < width; j++)
                 {
-                    if (entity.degres > 1)
+                    if (Entity.degres > 1)
                     {
                         if ((matrice[i - 1][j - 1].etat || matrice[i - 1][j + 1].etat || matrice[i + 1][j - 1].etat || matrice[i + 1][j + 1].etat || matrice[i + 1][j].etat || matrice[i][j + 1].etat || matrice[i - 1][j].etat || matrice[i][j - 1].etat) == 1)
                         {
@@ -137,7 +137,7 @@ int main(int argc, char *argv[]){
                     }
                     if (matrice[i][j].etat == 1)
                     {
-                        entity.degres = entity.degres - 1;
+                        Entity.degres = Entity.degres - 1;
                     }
                 }
             }
