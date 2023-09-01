@@ -1,13 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "functions.h"
 
-typedef struct
+#define SIZEMIN 1
+#define SIZEMAX 20
+
+typedef struct Entity
 {
     char symbole;
     char name[10];
     int degres;
     int etat;
 } Entity;
+
+
 
 
 typedef struct Node Node;
@@ -63,13 +69,13 @@ int main(int argc, char *argv[]){
     {
         printf("Entrez le nombre de cellules en longueur de la foret, compris entre 1 et 20: ");
         scanf("%d", &length);
-    } while (length < 1 || length > 20);
+    } while (length < SIZEMIN || length > SIZEMAX);
 
     do
     {
         printf("Entrez le nombre de cellules en largeur de la foret, compris entre 1 et 20: ");
         scanf("%d", &width);
-    } while (width < 1 || width > 20);
+    } while (width < SIZEMIN || width > SIZEMAX);
 
 
     //génération de la matrice
