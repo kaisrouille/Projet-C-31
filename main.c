@@ -3,6 +3,7 @@
 
 typedef struct
 {
+    char symbole;
     char name[10];
     int type;
     int degres;
