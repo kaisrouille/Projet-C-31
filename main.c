@@ -10,12 +10,28 @@ typedef struct
     int etat;
 } entity;
 
+<<<<<<< HEAD
+
+
+
+
+
+int main(int argc, char *argv[])
+{
+    int length;
+    int width;
+
+
+    printf("\n=========================INCENDIE========================\n\n");
+
+=======
 int main()
 {
     printf("\n=========================INCENDIE========================\n\n");
     int length;
     int width;
 
+>>>>>>> 3c657113d7caeb18ec1058b93d95f756d86f940e
     do
     {
         printf("Entrez le nombre de cellules en longueur de la foret, compris entre 1 et 20: ");
@@ -28,6 +44,12 @@ int main()
         scanf("%d", &width);
     } while (width < 1 || width > 20);
 
+<<<<<<< HEAD
+
+
+    //génération de la matrice
+=======
+>>>>>>> 3c657113d7caeb18ec1058b93d95f756d86f940e
     entity **matrice = malloc(length * sizeof(entity *));
     if (matrice == NULL)
     {
@@ -64,5 +86,14 @@ int main()
     else if (mode == '2')
     {
     }
+<<<<<<< HEAD
+
+
+
+
+
+
+=======
+>>>>>>> 3c657113d7caeb18ec1058b93d95f756d86f940e
     return 0;
 }
