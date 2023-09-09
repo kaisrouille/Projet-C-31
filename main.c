@@ -207,9 +207,8 @@ int main(int argc, char *argv[]){
                         printf("Veuillez entrer une option valide :\n");
                         break;
                     }
-                    while (choix < 0 || choix > 8)
-                        ;
-                }
+                    
+                }while (choix < 0 || choix > 8);
             }
         }
     }
