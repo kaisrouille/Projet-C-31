@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "time.h"
 #include "functions.h"
 
@@ -84,8 +85,7 @@ int main(int argc, char *argv[]){
         scanf("%d", &width);
     } while (width < SIZEMIN || width > SIZEMAX);
 
-
-    //génération de la matrice
+    // génération de la matrice
     Element **matrice = malloc(length * sizeof(Element *));
     if (matrice == NULL)
     {
@@ -102,22 +102,114 @@ int main(int argc, char *argv[]){
         }
     }
 
-
-    //menu selection mode de jeu
-    printf("Mode de jeu :\n\n1 - Manuel\n2- Automatique\n\n");
-
+    // Affichage de la foret a l'utilisateur, selection mode de jeu, et initialisation foret
     int mode;
-    scanf(" %d", &mode);
+    printf("Veuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n");
+    do
+    {
+        scanf("%d", &mode);
+    } while (mode != 1 && mode != 2);
 
     if (mode == 1)
     {
+        printf("Voici la surface de votre foret.\n");
+        for (int i = 0; i < length; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                if (j == 0)
+                    printf("+");
+                else
+                    printf("---+");
+            }
+            for (int j = 0; j < width; j++)
+            {
+                if (j == 0)
+                    printf("\n|");
+                else
+                    printf("   |");
+            }
+            if (i == length - 1)
+            {
+                printf("\n");
+                for (int k = 0; k < width; k++)
+                {
+                    if (k == 0)
+                        printf("+");
+                    else
+                        printf("---+");
+                }
+            }
+            printf("\n");
+        }
+
         for (int i = 0; i < length; i++)
         {
             for (int j = 0; j < width; j++)
             {
                 printf("\n\nEntrez le type de la cellule %d %d : ", i, j);
-                scanf("%c", &(matrice[i][j].symbole));
-                matrice[i][j].etat = 0;
+                printf("Choisissez :\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)");
+                int choix;
+                do
+                {
+                    scanf("%d", &choix);
+                    switch (choix)
+                    {
+                    case 1:
+                        matrice[i][j].symbole = '+';
+                        strcpy(matrice[i][j].name, "Sol");
+                        matrice[i][j].degres = 0;
+                        matrice[i][j].etat = 0;
+                        break;
+                    case 2:
+                        matrice[i][j].symbole = '*';
+                        strcpy(matrice[i][j].name, "Arbre");
+                        matrice[i][j].degres = 4;
+                        matrice[i][j].etat = 0;
+                        break;
+                    case 3:
+                        matrice[i][j].symbole = ' ';
+                        strcpy(matrice[i][j].name, "Feuille");
+                        matrice[i][j].degres = 2;
+                        matrice[i][j].etat = 0;
+                        break;
+                    case 4:
+                        matrice[i][j].symbole = '#';
+                        strcpy(matrice[i][j].name, "Roche");
+                        matrice[i][j].degres = 5;
+                        matrice[i][j].etat = 0;
+                        break;
+                    case 5:
+                        matrice[i][j].symbole = 'x';
+                        strcpy(matrice[i][j].name, "Herbe");
+                        matrice[i][j].degres = 3;
+                        matrice[i][j].etat = 0;
+                        break;
+                    case 6:
+                        matrice[i][j].symbole = '/';
+                        strcpy(matrice[i][j].name, "Eau");
+                        matrice[i][j].degres = 0;
+                        matrice[i][j].etat = 0;
+                        break;
+                    case 7:
+                        matrice[i][j].symbole = '-';
+                        strcpy(matrice[i][j].name, "Cendres");
+                        matrice[i][j].degres = 1;
+                        matrice[i][j].etat = 0;
+                        break;
+                    case 8:
+                        matrice[i][j].symbole = '@';
+                        strcpy(matrice[i][j].name, "Cendres eteintes");
+                        matrice[i][j].degres = 0;
+                        matrice[i][j].etat = 0;
+                        break;
+                    default:
+                        printf("Veuillez entrer une option valide :\n");
+                        break;
+                    }
+                    while (choix < 0 || choix > 8)
+                        ;
+                }
             }
         }
     }
