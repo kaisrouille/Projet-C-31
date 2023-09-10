@@ -10,7 +10,6 @@
 typedef struct Element
 {
     char symbole;
-    char name[10];
     int degres;
     int etat;
 } Element;
@@ -117,6 +116,7 @@ int main(int argc, char *argv[]){
     int length;
     int width;
 
+
     //Menu selection taille matrice
     printf("\n=========================INCENDIE========================\n\n");
 
@@ -132,7 +132,8 @@ int main(int argc, char *argv[]){
         scanf("%d", &width);
     } while (width < SIZEMIN || width > SIZEMAX);
 
-    // génération de la matrice
+
+    //Génération de la matrice
     Element **matrice = malloc(length * sizeof(Element *));
     if (matrice == NULL)
     {
@@ -149,7 +150,7 @@ int main(int argc, char *argv[]){
         }
     }
 
-    // Affichage de la foret a l'utilisateur, selection mode de jeu, et initialisation foret
+    //Affichage de la foret a l'utilisateur, selection mode de jeu, et initialisation foret
     int mode_game;
     printf("Veuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n");
     do
@@ -157,6 +158,7 @@ int main(int argc, char *argv[]){
         scanf("%d", &mode_game);
     } while (mode_game != 1 && mode_game != 2);
 
+    //mode remplissage manuel
     if (mode_game == 1)
     {
         printf("Voici la surface de votre foret.\n");
@@ -235,6 +237,7 @@ int main(int argc, char *argv[]){
             }
         }
     }
+    //mode remplissage auto
     else if (mode_game == 2)
     {
           for (int i = 0; i < length; i++)
@@ -243,16 +246,17 @@ int main(int argc, char *argv[]){
             {
                 srand(time(NULL));
                 int random_number = (rand() % 6) + 1;
+                //mode auto à finaliser
             }
         }
     
     }
 
 
-    printf("\nlancement de la simulation\ndonnée le nombre de tours de la simulation \n");
+    printf("\nDonnez le nombre de tour de la simulation \n");
     scanf("%d", &nb_tour);
 
-    printf("déclarer la case du départ de feu\n");
+    printf("\ndéclarez la case du départ de feu\n");
 
     int p;
     for (p = 0; p < nb_tour; p++)
@@ -264,7 +268,16 @@ int main(int argc, char *argv[]){
             {
                 if (matrice[i][j].degres > 1)
                 {
-                    if ((matrice[i - 1][j - 1].etat || matrice[i - 1][j + 1].etat || matrice[i + 1][j - 1].etat || matrice[i + 1][j + 1].etat || matrice[i + 1][j].etat || matrice[i][j + 1].etat || matrice[i - 1][j].etat || matrice[i][j - 1].etat) == 1)
+                    if ((
+                        matrice[i - 1][j - 1].etat ||
+                        matrice[i - 1][j + 1].etat ||
+                        matrice[i + 1][j - 1].etat ||
+                        matrice[i + 1][j + 1].etat ||
+                        matrice[i + 1][j].etat ||
+                        matrice[i][j + 1].etat ||
+                        matrice[i - 1][j].etat ||
+                        matrice[i][j - 1].etat
+                        ) == 1)
                     {
                         matrice[i][j].etat = 1;
                     }
