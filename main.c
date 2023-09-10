@@ -60,28 +60,75 @@ void pop(struct Node** top, Element* popped) {
 
 int main(int argc, char *argv[]){
 
-    //dimensions matrice
-    int length;
-    int width;
+    //déclaration des éléments
+    Element ground = {
+        '+',
+        0,
+        0
+    };
+
+    Element tree = {
+        '*',
+        4,
+        0
+    };
+
+    Element leaf = {
+        ' ',
+        2,
+        0
+    };
+
+    Element rock = {
+        '#',
+        5,
+        0
+    };
+
+    Element grass = {
+        'x',
+        3,
+        0
+    };
+
+    Element water = {
+        '/',
+        0,
+        0
+    };
+
+    Element ash = {
+        '-',
+        1,
+        0
+    };
+
+    Element inactive_ash = {
+        '@',
+        0,
+        0
+    };
 
 
     int random_number;
-    int nbtours;
+    int nb_tour;
 
-
+    //dimensions matrice
+    int length;
+    int width;
 
     //Menu selection taille matrice
     printf("\n=========================INCENDIE========================\n\n");
 
     do
     {
-        printf("\nEntrez le nombre de cellules en longueur de la foret, compris entre 1 et 20: \n\n");
+        printf("\nEntrez le nombre de cellules en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
         scanf("%d", &length);
     } while (length < SIZEMIN || length > SIZEMAX);
 
     do
     {
-        printf("\nEntrez le nombre de cellules en largeur de la foret, compris entre 1 et 20: \n\n");
+        printf("\nEntrez le nombre de cellules en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
         scanf("%d", &width);
     } while (width < SIZEMIN || width > SIZEMAX);
 
@@ -103,14 +150,14 @@ int main(int argc, char *argv[]){
     }
 
     // Affichage de la foret a l'utilisateur, selection mode de jeu, et initialisation foret
-    int mode;
+    int mode_game;
     printf("Veuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n");
     do
     {
-        scanf("%d", &mode);
-    } while (mode != 1 && mode != 2);
+        scanf("%d", &mode_game);
+    } while (mode_game != 1 && mode_game != 2);
 
-    if (mode == 1)
+    if (mode_game == 1)
     {
         printf("Voici la surface de votre foret.\n");
         for (int i = 0; i < length; i++)
@@ -149,70 +196,46 @@ int main(int argc, char *argv[]){
             {
                 printf("\n\nEntrez le type de la cellule %d %d : ", i, j);
                 printf("Choisissez :\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)");
-                int choix;
+                int choice;
                 do
                 {
-                    scanf("%d", &choix);
-                    switch (choix)
+                    scanf("%d", &choice);
+                    switch (choice)
                     {
                     case 1:
-                        matrice[i][j].symbole = '+';
-                        strcpy(matrice[i][j].name, "Sol");
-                        matrice[i][j].degres = 0;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = ground;
                         break;
                     case 2:
-                        matrice[i][j].symbole = '*';
-                        strcpy(matrice[i][j].name, "Arbre");
-                        matrice[i][j].degres = 4;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = tree;
                         break;
                     case 3:
-                        matrice[i][j].symbole = ' ';
-                        strcpy(matrice[i][j].name, "Feuille");
-                        matrice[i][j].degres = 2;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = leaf;
                         break;
                     case 4:
-                        matrice[i][j].symbole = '#';
-                        strcpy(matrice[i][j].name, "Roche");
-                        matrice[i][j].degres = 5;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = rock;
                         break;
                     case 5:
-                        matrice[i][j].symbole = 'x';
-                        strcpy(matrice[i][j].name, "Herbe");
-                        matrice[i][j].degres = 3;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = grass;
                         break;
                     case 6:
-                        matrice[i][j].symbole = '/';
-                        strcpy(matrice[i][j].name, "Eau");
-                        matrice[i][j].degres = 0;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = water;
                         break;
                     case 7:
-                        matrice[i][j].symbole = '-';
-                        strcpy(matrice[i][j].name, "Cendres");
-                        matrice[i][j].degres = 1;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = ash;
                         break;
                     case 8:
-                        matrice[i][j].symbole = '@';
-                        strcpy(matrice[i][j].name, "Cendres eteintes");
-                        matrice[i][j].degres = 0;
-                        matrice[i][j].etat = 0;
+                        matrice[i][j] = inactive_ash;
                         break;
                     default:
                         printf("Veuillez entrer une option valide :\n");
                         break;
                     }
                     
-                }while (choix < 0 || choix > 8);
+                }while (choice < 0 || choice > 8);
             }
         }
     }
-    else if (mode == 2)
+    else if (mode_game == 2)
     {
           for (int i = 0; i < length; i++)
         {
@@ -227,12 +250,12 @@ int main(int argc, char *argv[]){
 
 
     printf("\nlancement de la simulation\ndonnée le nombre de tours de la simulation \n");
-    scanf("%d", &nbtours);
+    scanf("%d", &nb_tour);
 
     printf("déclarer la case du départ de feu\n");
 
     int p;
-    for (p = 0; p < nbtours; p++)
+    for (p = 0; p < nb_tour; p++)
     {
         int i,j;
         for (i = 0; i < length; i++)
