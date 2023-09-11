@@ -2,27 +2,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void generate_matrice(int length, int width)
+Element** allocate_matrice(int length, int width)
 {
-    Element **matrice = malloc(length * sizeof(Element *));
-    if (matrice == NULL)
-    {
-        printf("Echec de l'allocation\n");
-        return EXIT_FAILURE;
+    Element **matrice;
+
+    // Allocation de mémoire pour les lignes (tableau de pointeurs)
+    matrice = (Element**)malloc(length * sizeof(Element *));
+    if(matrice == NULL) {
+        printf("Échec de l'allocation de mémoire.\n");
+        return NULL;
     }
+
+    // Allocation de mémoire pour chaque ligne (tableau de int)
     int i;
-    for(i = 0; i < length; i++)
-    {
-        matrice[i] = malloc(width * sizeof(Element));
-        if (matrice[i] == NULL)
-        {
-            printf("Echec de l'allocation\n");
-            return EXIT_FAILURE;
+    for(i = 0; i < width; i++) {
+        matrice[i] = (Element *)malloc(width * sizeof(Element));
+        if (matrice[i] == NULL) {
+            printf("Échec de l'allocation de mémoire pour la ligne %d.\n", i);
+            return NULL;
         }
     }
+
+    return matrice;
 }
 
-void display_matrice(Element matrice)
+void free_matrice(Element **matrice, int length)
+{
+    for (int i = 0; i < length; i++) {
+        free(matrice[i]);
+    }
+    free(matrice);
+}
+
+void display_matrice(Element **matrice, int length, int width)
 {
     int i,j,k;
     for (i = 0; i < length; i++)
@@ -54,6 +66,119 @@ void display_matrice(Element matrice)
         }
         printf("\n");
     }
+}
+
+
+
+void menu_1(int *length, int *width)
+{
+    printf("\n=========================INCENDIE========================\n\n");
+
+    do
+    {
+        printf("\nEntrez le nombre de cellule en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+        scanf("%d", &length);
+    } while (length < SIZEMIN || length > SIZEMAX);
+
+    do
+    {
+        printf("\n\nEntrez le nombre de cellule en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+        scanf("%d", &width);
+    } while (width < SIZEMIN || width > SIZEMAX);
+}
+
+
+void menu_2(int *mode_game)
+{
+    printf("\n\nVeuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
+    do
+    {
+        scanf("%d", &mode_game);
+    } while (mode_game != 1 && mode_game != 2);
+}
+
+void manual_mode(Element **matrice, int length, int width)
+{
+    printf("\n\nVoici la surface de votre foret :\n\n");
+
+    //affichage matrice
+    display_matrice(matrice, length, width);
+
+    //remplissage de la matrice par l'utilisateur
+    int i,j;
+    int choice;
+    for(i = 0; i < length; i++)
+    {
+        for(j = 0; j < width; j++)
+        {
+            printf("\n\nCellule %d %d\n", i, j);
+            printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
+            
+            do
+            {
+                scanf("%d", &choice);
+                switch (choice)
+                {
+                case 1:
+                    matrice[i][j] = ground;
+                    break;
+                case 2:
+                    matrice[i][j] = tree;
+                    break;
+                case 3:
+                    matrice[i][j] = leaf;
+                    break;
+                case 4:
+                    matrice[i][j] = rock;
+                    break;
+                case 5:
+                    matrice[i][j] = grass;
+                    break;
+                case 6:
+                    matrice[i][j] = water;
+                    break;
+                case 7:
+                    matrice[i][j] = ash;
+                    break;
+                case 8:
+                    matrice[i][j] = inactive_ash;
+                    break;
+                default:
+                    printf("Veuillez entrer une option valide :\n");
+                    break;
+                }
+                
+            }while (choice < 0 || choice > 8);
+        }
+    }
+}
+
+void auto_mode(Element **matrice, int length, int width)
+{
+    int i,j;
+    for (i = 0; i < length; i++)
+    {
+        for (j = 0; j < width; j++)
+        {
+            srand(time(NULL));
+            int random_number = (rand() % 6) + 1;
+        }
+    }
+
+    //A finir
+}
+
+
+void menu_3(int *nb_tour, int *x_firstcase, int *_firstcase)
+{
+    printf("\n\nEntrez le nombre de tour de la simulation \n");
+    scanf("%d", &nb_tour);
+
+    printf("\nEntrez les coordonnees de la case du départ de feu\n\n");
+    // scanf("%d", &????);
+
+
+    //A finir
 }
 
 
@@ -91,3 +216,38 @@ void pop(struct Node** top, Element* popped)
     }
 
 }
+
+
+
+
+void game(Element **matrice, int length, int width)
+{
+    int i,j;
+    for (i = 0; i < length; i++)
+    {
+        for (j = 0; j < width; j++)
+        {
+            if (matrice[i][j].degres > 1)
+            {
+                if ((
+                    matrice[i - 1][j - 1].etat ||
+                    matrice[i - 1][j + 1].etat ||
+                    matrice[i + 1][j - 1].etat ||
+                    matrice[i + 1][j + 1].etat ||
+                    matrice[i + 1][j].etat ||
+                    matrice[i][j + 1].etat ||
+                    matrice[i - 1][j].etat ||
+                    matrice[i][j - 1].etat
+                    ) == 1)
+                {
+                    matrice[i][j].etat = 1;
+                }
+            }
+            if (matrice[i][j].etat == 1)
+            {
+                matrice[i][j].degres = matrice[i][j].degres - 1;
+            }
+        }
+    }
+}
+
