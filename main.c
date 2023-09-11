@@ -4,60 +4,9 @@
 #include "time.h"
 #include "functions.h"
 
-#define SIZEMIN 1
-#define SIZEMAX 20
-
-typedef struct Element
+int main(int argc, char *argv[])
 {
-    char symbole;
-    int degres;
-    int etat;
-} Element;
-
-
-typedef struct Node Node;
-struct Node
-{
-    Element data;
-    Node* next;
-};
-
-
-int isEmpty(struct Node* top) {
-
-    if(top == NULL)
-    {
-        return 0;
-    }
-}
-
-void push(struct Node** top, Element data) {
-    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
-    if (newNode == NULL) {
-        printf("Pile pleine. Allocation mémoire échouée.\n");
-        return;
-    }
-    newNode->data = data;
-    newNode->next = *top;
-    *top = newNode;
-}
-
-void pop(struct Node** top, Element* popped) {
-    if (isEmpty(*top)) {
-        printf("Pile vide. Impossible de retirer un élément.\n");
-    }
-    else
-    {
-        struct Node* temp = *top;
-        *popped = temp->data;
-        *top = temp->next;
-        free(temp);
-    }
-
-}
-
-
-int main(int argc, char *argv[]){
+    Element matrice[][];
 
     //déclaration des éléments
     Element ground = {
@@ -110,7 +59,6 @@ int main(int argc, char *argv[]){
 
 
     int random_number;
-    int nb_tour;
 
     //dimensions matrice
     int length;
@@ -122,37 +70,24 @@ int main(int argc, char *argv[]){
 
     do
     {
-        printf("\nEntrez le nombre de cellules en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+        printf("\nEntrez le nombre de cellule en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
         scanf("%d", &length);
     } while (length < SIZEMIN || length > SIZEMAX);
 
     do
     {
-        printf("\nEntrez le nombre de cellules en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+        printf("\n\nEntrez le nombre de cellule en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
         scanf("%d", &width);
     } while (width < SIZEMIN || width > SIZEMAX);
 
 
     //Génération de la matrice
-    Element **matrice = malloc(length * sizeof(Element *));
-    if (matrice == NULL)
-    {
-        printf("Echec de l'allocation\n");
-        return EXIT_FAILURE;
-    }
-    for (int i = 0; i < length; i++)
-    {
-        matrice[i] = malloc(width * sizeof(Element));
-        if (matrice[i] == NULL)
-        {
-            printf("Echec de l'allocation\n");
-            return EXIT_FAILURE;
-        }
-    }
+    matrice = generate_matrice(length, width);
+
 
     //Affichage de la foret a l'utilisateur, selection mode de jeu, et initialisation foret
     int mode_game;
-    printf("Veuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n");
+    printf("\n\nVeuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
     do
     {
         scanf("%d", &mode_game);
@@ -161,44 +96,21 @@ int main(int argc, char *argv[]){
     //mode remplissage manuel
     if (mode_game == 1)
     {
-        printf("Voici la surface de votre foret.\n");
-        for (int i = 0; i < length; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
-                if (j == 0)
-                    printf("+");
-                else
-                    printf("---+");
-            }
-            for (int j = 0; j < width; j++)
-            {
-                if (j == 0)
-                    printf("\n|");
-                else
-                    printf("   |");
-            }
-            if (i == length - 1)
-            {
-                printf("\n");
-                for (int k = 0; k < width; k++)
-                {
-                    if (k == 0)
-                        printf("+");
-                    else
-                        printf("---+");
-                }
-            }
-            printf("\n");
-        }
+        printf("\n\nVoici la surface de votre foret :\n\n");
 
-        for (int i = 0; i < length; i++)
+        //affichage matrice
+        display_matrice(matrice);
+
+        //remplissage de la matrice par l'utilisateur
+        int i,j;
+        int choice;
+        for(i = 0; i < length; i++)
         {
-            for (int j = 0; j < width; j++)
+            for(j = 0; j < width; j++)
             {
-                printf("\n\nEntrez le type de la cellule %d %d : ", i, j);
-                printf("Choisissez :\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)");
-                int choice;
+                printf("\n\nCellule %d %d\n", i, j);
+                printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
+                
                 do
                 {
                     scanf("%d", &choice);
@@ -237,12 +149,14 @@ int main(int argc, char *argv[]){
             }
         }
     }
+
     //mode remplissage auto
     else if (mode_game == 2)
     {
-          for (int i = 0; i < length; i++)
+        int i,j;
+        for (i = 0; i < length; i++)
         {
-            for (int j = 0; j < width; j++)
+            for (j = 0; j < width; j++)
             {
                 srand(time(NULL));
                 int random_number = (rand() % 6) + 1;
@@ -253,10 +167,14 @@ int main(int argc, char *argv[]){
     }
 
 
-    printf("\nDonnez le nombre de tour de la simulation \n");
+    int nb_tour;
+    
+    printf("\n\nEntrez le nombre de tour de la simulation \n");
     scanf("%d", &nb_tour);
 
-    printf("\ndéclarez la case du départ de feu\n");
+    printf("\nEntrez les coordonnees de la case du départ de feu (au format x x)\n\n");
+    // scanf("%d", &nb_tour);
+
 
     int p;
     for (p = 0; p < nb_tour; p++)
@@ -296,6 +214,7 @@ int main(int argc, char *argv[]){
 
     }
 
+    free_matrice(matrice);
 
     return 0;
 }
