@@ -39,14 +39,14 @@ void display_matrice(Element **matrice, int length, int width)
     int i,j,k;
     for (i = 0; i < length; i++)
     {
-        for (j = 0; j < width; j++)
+        for (j = 0; j < width+1; j++)
         {
             if (j == 0)
                 printf("+");
             else
                 printf("---+");
         }
-        for (j = 0; j < width; j++)
+        for (j = 0; j < width+1; j++)
         {
             if (j == 0)
                 printf("\n|");
@@ -56,7 +56,7 @@ void display_matrice(Element **matrice, int length, int width)
         if (i == length - 1)
         {
             printf("\n");
-            for (k = 0; k < width; k++)
+            for (k = 0; k < width+1; k++)
             {
                 if (k == 0)
                     printf("+");
