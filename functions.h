@@ -13,7 +13,7 @@ struct Node
 {
     Element data;
     Node* next;
-} Node;
+};
 
 
 
@@ -35,14 +35,37 @@ void menu_1(int *length, int *width);
 void menu_2(int *mode_game);
 
 //Remplissage manuel de la matrice
-void manual_mode(Element **matrice, int length, int width);
+void manual_mode(
+    Element **matrice,
+    int length,
+    int width,
+    Element ground,
+    Element tree,
+    Element leaf,
+    Element rock,
+    Element grass,
+    Element water,
+    Element ash,
+    Element inactive_ash
+);
 
 //Remplissage auto de la matrice
-void auto_mode(Element **matrice, int length, int width);
+void auto_mode(
+    Element **matrice,
+    int length,
+    int width,
+    Element ground,
+    Element tree,
+    Element leaf,
+    Element rock,
+    Element grass,
+    Element water,
+    Element ash,
+    Element inactive_ash
+);
 
 
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase);
-
 
 int isEmpty(struct Node* top);
 

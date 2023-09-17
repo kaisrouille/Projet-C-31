@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "time.h"
+#include <time.h>
 #include "functions.h"
 
 int main(int argc, char *argv[])
@@ -63,32 +63,59 @@ int main(int argc, char *argv[])
     //Déclaration et initialisation de la matrice
     Element **matrice = allocate_matrice(length, width);
 
-
     //Selection du mode de jeu
     int mode_game;
     menu_2(&mode_game);
 
+    //Initialisation de la matrice
     if (mode_game == 1)
     {
-        manual_mode(matrice, length, width);
+        manual_mode(
+            matrice,
+            length,
+            width,
+            ground,
+            tree,
+            leaf,
+            rock,
+            grass,
+            water,
+            ash,
+            inactive_ash
+        );
     }
     else if (mode_game == 2)
     {
-        auto_mode(matrice, length, width);    
+        auto_mode(
+            matrice,
+            length,
+            width,
+            ground,
+            tree,
+            leaf,
+            rock,
+            grass,
+            water,
+            ash,
+            inactive_ash
+        );    
     }
 
 
+    //Selection du nombre de tour et de la case de départ
     int nb_tour;
     int x_firstcase, y_firstcase;
     menu_3(&nb_tour, &x_firstcase, &y_firstcase);
 
 
+    //Déroulement du jeu
     int p;
     for (p = 0; p < nb_tour; p++)
     {
-        game();
+        game(matrice, length, width);
     }
 
+    //Libération de la mémoire de la matrice
     free_matrice(matrice, length);
 
     return 0;

@@ -77,14 +77,14 @@ void menu_1(int *length, int *width)
     do
     {
         printf("\nEntrez le nombre de cellule en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
-        scanf("%d", &length);
-    } while (length < SIZEMIN || length > SIZEMAX);
+        scanf("%d", length);
+    } while (*length < SIZEMIN || *length > SIZEMAX);
 
     do
     {
         printf("\n\nEntrez le nombre de cellule en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
-        scanf("%d", &width);
-    } while (width < SIZEMIN || width > SIZEMAX);
+        scanf("%d", width);
+    } while (*width < SIZEMIN || *width > SIZEMAX);
 }
 
 
@@ -93,11 +93,23 @@ void menu_2(int *mode_game)
     printf("\n\nVeuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
     do
     {
-        scanf("%d", &mode_game);
-    } while (mode_game != 1 && mode_game != 2);
+        scanf("%d", mode_game);
+    } while (*mode_game != 1 && *mode_game != 2);
 }
 
-void manual_mode(Element **matrice, int length, int width)
+void manual_mode(
+    Element **matrice,
+    int length,
+    int width,
+    Element ground,
+    Element tree,
+    Element leaf,
+    Element rock,
+    Element grass,
+    Element water,
+    Element ash,
+    Element inactive_ash
+)
 {
     printf("\n\nVoici la surface de votre foret :\n\n");
 
@@ -151,9 +163,24 @@ void manual_mode(Element **matrice, int length, int width)
             }while (choice < 0 || choice > 8);
         }
     }
+
+
+    //A finir
 }
 
-void auto_mode(Element **matrice, int length, int width)
+void auto_mode(
+    Element **matrice,
+    int length,
+    int width,
+    Element ground,
+    Element tree,
+    Element leaf,
+    Element rock,
+    Element grass,
+    Element water,
+    Element ash,
+    Element inactive_ash
+)
 {
     int i,j;
     for (i = 0; i < length; i++)
@@ -169,10 +196,10 @@ void auto_mode(Element **matrice, int length, int width)
 }
 
 
-void menu_3(int *nb_tour, int *x_firstcase, int *_firstcase)
+void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
 {
     printf("\n\nEntrez le nombre de tour de la simulation \n");
-    scanf("%d", &nb_tour);
+    scanf("%d", nb_tour);
 
     printf("\nEntrez les coordonnees de la case du départ de feu\n\n");
     // scanf("%d", &????);
@@ -188,6 +215,7 @@ int isEmpty(struct Node* top)
     {
         return 0;
     }
+    return 1;
 }
 
 void push(struct Node** top, Element data)
