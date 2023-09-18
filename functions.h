@@ -39,6 +39,7 @@ void manual_mode(
     Element **matrice,
     int length,
     int width,
+    Element select,
     Element ground,
     Element tree,
     Element leaf,

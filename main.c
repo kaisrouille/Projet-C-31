@@ -6,6 +6,13 @@
 
 int main(int argc, char *argv[])
 {
+    //affichage de selection de case pour le mode manuel
+    Element select = {
+        's',
+        -9,
+        -9
+    };
+
     //déclaration des éléments
     Element ground = {
         '+',
@@ -74,6 +81,7 @@ int main(int argc, char *argv[])
             matrice,
             length,
             width,
+            select,
             ground,
             tree,
             leaf,

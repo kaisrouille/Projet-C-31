@@ -13,18 +13,36 @@ Element** allocate_matrice(int length, int width)
         return NULL;
     }
 
-    // Allocation de mémoire pour chaque ligne (tableau de int)
+    // Allocation de mémoire pour chaque ligne (tableau de Elements)
     int i;
-    for(i = 0; i < width; i++) {
+    for(i = 0; i < length; i++)
+    {
         matrice[i] = (Element *)malloc(width * sizeof(Element));
-        if (matrice[i] == NULL) {
+        if (matrice[i] == NULL)
+        {
             printf("Échec de l'allocation de mémoire pour la ligne %d.\n", i);
+
+            // Libération de la mémoire déjà allouée
+            for(int j = 0; j < i; j++) {
+                free(matrice[j]);
+            }
+            free(matrice);
+
             return NULL;
+        }
+
+        int j;
+        for(j = 0; j < width; j++)
+        {
+            matrice[i][j].symbole = '\0';
+            matrice[i][j].degres = -1;
+            matrice[i][j].etat = 0;
         }
     }
 
     return matrice;
 }
+
 
 void free_matrice(Element **matrice, int length)
 {
@@ -51,7 +69,13 @@ void display_matrice(Element **matrice, int length, int width)
             if (j == 0)
                 printf("\n|");
             else
-                printf("   |");
+            {
+                //on ne peut pas faire matrice[i][j] pour naviguer dans la matrice car i et j sont > à length et width
+                // if(matrice[i][j].degres != -1)
+                //     printf(" %c |", matrice[i][j].symbole);
+                // else
+                    printf("   |");
+            }
         }
         if (i == length - 1)
         {
@@ -101,6 +125,7 @@ void manual_mode(
     Element **matrice,
     int length,
     int width,
+    Element select,
     Element ground,
     Element tree,
     Element leaf,
@@ -126,6 +151,12 @@ void manual_mode(
             printf("\n\nCellule %d %d\n", i, j);
             printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
             
+            matrice[i][j] = select;
+
+            display_matrice(matrice, length, width);
+
+            printf("\n");
+
             do
             {
                 scanf("%d", &choice);
@@ -182,17 +213,17 @@ void auto_mode(
     Element inactive_ash
 )
 {
-    int i,j;
-    for (i = 0; i < length; i++)
-    {
-        for (j = 0; j < width; j++)
-        {
-            srand(time(NULL));
-            int random_number = (rand() % 6) + 1;
-        }
-    }
+    // int i,j;
+    // for (i = 0; i < length; i++)
+    // {
+    //     for (j = 0; j < width; j++)
+    //     {
+    //         srand(time(NULL));
+    //         int random_number = (rand() % 6) + 1;
+    //     }
+    // }
 
-    //A finir
+    // //A finir
 }
 
 
@@ -278,4 +309,3 @@ void game(Element **matrice, int length, int width)
         }
     }
 }
-
