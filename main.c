@@ -110,6 +110,10 @@ int main(int argc, char *argv[])
     }
 
 
+    printf("\n\nVoici votre foret !\n\n");
+    display_matrice(matrice, length, width);
+
+
     //Selection du nombre de tour et de la case de départ
     int nb_tour;
     int x_firstcase, y_firstcase;

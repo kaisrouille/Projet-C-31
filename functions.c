@@ -9,7 +9,7 @@ Element** allocate_matrice(int length, int width)
     // Allocation de mémoire pour les lignes (tableau de pointeurs)
     matrice = (Element**)malloc(length * sizeof(Element *));
     if(matrice == NULL) {
-        printf("Échec de l'allocation de mémoire.\n");
+        printf("Echec de l'allocation de memoire.\n");
         return NULL;
     }
 
@@ -20,7 +20,7 @@ Element** allocate_matrice(int length, int width)
         matrice[i] = (Element *)malloc(width * sizeof(Element));
         if (matrice[i] == NULL)
         {
-            printf("Échec de l'allocation de mémoire pour la ligne %d.\n", i);
+            printf("Echec de l'allocation de memoire pour la ligne %d.\n", i);
 
             // Libération de la mémoire déjà allouée
             for(int j = 0; j < i; j++) {
@@ -42,7 +42,6 @@ Element** allocate_matrice(int length, int width)
 
     return matrice;
 }
-
 
 void free_matrice(Element **matrice, int length)
 {
@@ -182,13 +181,9 @@ void manual_mode(
                     printf("Veuillez entrer une option valide :\n");
                     break;
                 }
-                
             }while (choice < 0 || choice > 8);
         }
     }
-
-
-    //A finir
 }
 
 void auto_mode(
@@ -221,14 +216,13 @@ void auto_mode(
 
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
 {
-    printf("\n\nEntrez le nombre de tour de la simulation \n");
+    printf("\n\nEntrez le nombre de tour de la simulation \n\n");
     scanf("%d", nb_tour);
 
-    printf("\nEntrez les coordonnees de la case du départ de feu\n\n");
-    // scanf("%d", &????);
+    printf("\n\nEntrez les coordonnees de la case du depart de feu (au format X,X) :\n\n");
+    scanf("%d,%d", x_firstcase, y_firstcase);
 
-
-    //A finir
+    printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
 
@@ -245,7 +239,7 @@ void push(struct Node** top, Element data)
 {
     struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
     if (newNode == NULL) {
-        printf("Pile pleine. Allocation mémoire échouée.\n");
+        printf("Pile pleine. Allocation memoire echouee.\n");
         return;
     }
     newNode->data = data;
@@ -256,7 +250,7 @@ void push(struct Node** top, Element data)
 void pop(struct Node** top, Element* popped)
 {
     if (isEmpty(*top)) {
-        printf("Pile vide. Impossible de retirer un élément.\n");
+        printf("Pile vide. Impossible de retirer un element.\n");
     }
     else
     {
