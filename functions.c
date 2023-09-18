@@ -34,7 +34,7 @@ Element** allocate_matrice(int length, int width)
         int j;
         for(j = 0; j < width; j++)
         {
-            matrice[i][j].symbole = '\0';
+            matrice[i][j].symbole = ' ';
             matrice[i][j].degres = -1;
             matrice[i][j].etat = 0;
         }
@@ -54,35 +54,27 @@ void free_matrice(Element **matrice, int length)
 
 void display_matrice(Element **matrice, int length, int width)
 {
-    int i,j,k;
+    int i,j,k,l;
     for (i = 0; i < length; i++)
     {
-        for (j = 0; j < width+1; j++)
+        printf("+");
+        for (k = 0; k < width; k++)
         {
-            if (j == 0)
-                printf("+");
-            else
-                printf("---+");
+            printf("---+");
         }
-        for (j = 0; j < width+1; j++)
+
+        printf("\n|");
+        for (j = 0; j < width; j++)
         {
-            if (j == 0)
-                printf("\n|");
-            else
-            {
-                //on ne peut pas faire matrice[i][j] pour naviguer dans la matrice car i et j sont > à length et width
-                // if(matrice[i][j].degres != -1)
-                //     printf(" %c |", matrice[i][j].symbole);
-                // else
-                    printf("   |");
-            }
+            printf(" %c |", matrice[i][j].symbole);
         }
+
         if (i == length - 1)
         {
             printf("\n");
-            for (k = 0; k < width+1; k++)
+            for (l = 0; l < width+1; l++)
             {
-                if (k == 0)
+                if (l == 0)
                     printf("+");
                 else
                     printf("---+");
