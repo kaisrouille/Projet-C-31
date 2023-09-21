@@ -6,75 +6,65 @@
 
 int main(int argc, char *argv[])
 {
-    //affichage de selection de case pour le mode manuel
+    // affichage de selection de case pour le mode manuel
     Element select = {
         's',
         -9,
-        -9
-    };
+        -9};
 
-    //déclaration des éléments
+    // déclaration des éléments
     Element ground = {
         '+',
         0,
-        0
-    };
+        0};
 
     Element tree = {
         '*',
         4,
-        0
-    };
+        0};
 
     Element leaf = {
         ' ',
         2,
-        0
-    };
+        0};
 
     Element rock = {
         '#',
         5,
-        0
-    };
+        0};
 
     Element grass = {
         'x',
         3,
-        0
-    };
+        0};
 
     Element water = {
         '/',
         0,
-        0
-    };
+        0};
 
     Element ash = {
         '-',
         1,
-        0
-    };
+        0};
 
     Element inactive_ash = {
         '@',
         0,
-        0
-    };
+        0};
 
-
-    //Selection dimentions de la matrice
+    // Selection dimentions de la matrice
     int length, width;
     menu_1(&length, &width);
 
-    //Déclaration et initialisation de la matrice
+    // Déclaration et initialisation de la matrice
     Element **matrice = allocate_matrice(length, width);
 
-    //Selection du mode de jeu
+    // Selection du mode de jeu
     int mode_game;
     menu_2(&mode_game);
 
-    //Initialisation de la matrice
+    // Initialisation de la matrice
     if (mode_game == 1)
     {
         manual_mode(
@@ -89,8 +79,7 @@ int main(int argc, char *argv[])
             grass,
             water,
             ash,
-            inactive_ash
-        );
+            inactive_ash);
     }
     else if (mode_game == 2)
     {
@@ -105,29 +94,27 @@ int main(int argc, char *argv[])
             grass,
             water,
             ash,
-            inactive_ash
-        );    
+            inactive_ash);
     }
-
 
     printf("\n\nVoici votre foret !\n\n");
     display_matrice(matrice, length, width);
 
-
-    //Selection du nombre de tour et de la case de départ
+    // Selection du nombre de tour et de la case de départ
     int nb_tour;
     int x_firstcase, y_firstcase;
     menu_3(&nb_tour, &x_firstcase, &y_firstcase);
 
-
-    //Déroulement du jeu
+    // Déroulement du jeu
     int p;
     for (p = 0; p < nb_tour; p++)
     {
-        game(matrice, length, width);
+        game(matrice, length, width, &x_firstcase, &y_firstcase);
+        display_matrice(matrice, length, width);
+        printf("\n\n\n\n\n");
     }
 
-    //Libération de la mémoire de la matrice
+    // Libération de la mémoire de la matrice
     free_matrice(matrice, length);
 
     return 0;

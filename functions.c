@@ -2,20 +2,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Element** allocate_matrice(int length, int width)
+Element **allocate_matrice(int length, int width)
 {
     Element **matrice;
 
     // Allocation de mémoire pour les lignes (tableau de pointeurs)
-    matrice = (Element**)malloc(length * sizeof(Element *));
-    if(matrice == NULL) {
+    matrice = (Element **)malloc(length * sizeof(Element *));
+    if (matrice == NULL)
+    {
         printf("Echec de l'allocation de memoire.\n");
         return NULL;
     }
 
     // Allocation de mémoire pour chaque ligne (tableau de Elements)
     int i;
-    for(i = 0; i < length; i++)
+    for (i = 0; i < length; i++)
     {
         matrice[i] = (Element *)malloc(width * sizeof(Element));
         if (matrice[i] == NULL)
@@ -23,7 +24,8 @@ Element** allocate_matrice(int length, int width)
             printf("Echec de l'allocation de memoire pour la ligne %d.\n", i);
 
             // Libération de la mémoire déjà allouée
-            for(int j = 0; j < i; j++) {
+            for (int j = 0; j < i; j++)
+            {
                 free(matrice[j]);
             }
             free(matrice);
@@ -32,7 +34,7 @@ Element** allocate_matrice(int length, int width)
         }
 
         int j;
-        for(j = 0; j < width; j++)
+        for (j = 0; j < width; j++)
         {
             matrice[i][j].symbole = ' ';
             matrice[i][j].degres = -1;
@@ -45,7 +47,8 @@ Element** allocate_matrice(int length, int width)
 
 void free_matrice(Element **matrice, int length)
 {
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < length; i++)
+    {
         free(matrice[i]);
     }
     free(matrice);
@@ -53,7 +56,7 @@ void free_matrice(Element **matrice, int length)
 
 void display_matrice(Element **matrice, int length, int width)
 {
-    int i,j,k,l;
+    int i, j, k, l;
     for (i = 0; i < length; i++)
     {
         printf("+");
@@ -71,7 +74,7 @@ void display_matrice(Element **matrice, int length, int width)
         if (i == length - 1)
         {
             printf("\n");
-            for (l = 0; l < width+1; l++)
+            for (l = 0; l < width + 1; l++)
             {
                 if (l == 0)
                     printf("+");
@@ -82,8 +85,6 @@ void display_matrice(Element **matrice, int length, int width)
         printf("\n");
     }
 }
-
-
 
 void menu_1(int *length, int *width)
 {
@@ -101,7 +102,6 @@ void menu_1(int *length, int *width)
         scanf("%d", width);
     } while (*width < SIZEMIN || *width > SIZEMAX);
 }
-
 
 void menu_2(int *mode_game)
 {
@@ -124,24 +124,23 @@ void manual_mode(
     Element grass,
     Element water,
     Element ash,
-    Element inactive_ash
-)
+    Element inactive_ash)
 {
     printf("\n\nVoici la surface de votre foret :\n\n");
 
-    //affichage matrice
+    // affichage matrice
     display_matrice(matrice, length, width);
 
-    //remplissage de la matrice par l'utilisateur
-    int i,j;
+    // remplissage de la matrice par l'utilisateur
+    int i, j;
     int choice;
-    for(i = 0; i < length; i++)
+    for (i = 0; i < length; i++)
     {
-        for(j = 0; j < width; j++)
+        for (j = 0; j < width; j++)
         {
             printf("\n\nCellule %d %d\n", i, j);
             printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
-            
+
             matrice[i][j] = select;
 
             display_matrice(matrice, length, width);
@@ -181,7 +180,7 @@ void manual_mode(
                     printf("Veuillez entrer une option valide :\n");
                     break;
                 }
-            }while (choice < 0 || choice > 8);
+            } while (choice < 0 || choice > 8);
         }
     }
 }
@@ -197,8 +196,7 @@ void auto_mode(
     Element grass,
     Element water,
     Element ash,
-    Element inactive_ash
-)
+    Element inactive_ash)
 {
     // int i,j;
     // for (i = 0; i < length; i++)
@@ -213,7 +211,6 @@ void auto_mode(
     // //A finir
 }
 
-
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
 {
     printf("\n\nEntrez le nombre de tour de la simulation \n\n");
@@ -225,20 +222,43 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
     printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
+// void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase)
+// {
+//     int choix;
+//     printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
+//     printf("\t\t1 - Pour continuer la simulation.\n");
+//     printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
+//     printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
+//     printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
+//     scanf("%d", &choix);
 
-int isEmpty(struct Node* top)
+//     switch (choix)
+//     {
+//     case 1:
+//         break;
+//     case 2:
+//         break;
+//     case 3:
+//         break;
+//     default:
+//         break;
+//     }
+// }
+
+int isEmpty(struct Node *top)
 {
-    if(top == NULL)
+    if (top == NULL)
     {
         return 0;
     }
     return 1;
 }
 
-void push(struct Node** top, Element data)
+void push(struct Node **top, Element data)
 {
-    struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
-    if (newNode == NULL) {
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    if (newNode == NULL)
+    {
         printf("Pile pleine. Allocation memoire echouee.\n");
         return;
     }
@@ -247,51 +267,615 @@ void push(struct Node** top, Element data)
     *top = newNode;
 }
 
-void pop(struct Node** top, Element* popped)
+void pop(struct Node **top, Element *popped)
 {
-    if (isEmpty(*top)) {
+    if (isEmpty(*top))
+    {
         printf("Pile vide. Impossible de retirer un element.\n");
     }
     else
     {
-        struct Node* temp = *top;
+        struct Node *temp = *top;
         *popped = temp->data;
         *top = temp->next;
         free(temp);
     }
-
 }
 
-
-
-
-void game(Element **matrice, int length, int width)
+void game(Element **matrice, int length, int width, int *x_firstcase, int *y_firstcase)
 {
-    int i,j;
+    // On met d'abord le feu à la case selectionnée par l'utilisateur
+    matrice[*x_firstcase][*y_firstcase].etat = 1;
+    int i, j;
     for (i = 0; i < length; i++)
     {
         for (j = 0; j < width; j++)
         {
-            if (matrice[i][j].degres > 1)
-            {
-                if ((
-                    matrice[i - 1][j - 1].etat ||
-                    matrice[i - 1][j + 1].etat ||
-                    matrice[i + 1][j - 1].etat ||
-                    matrice[i + 1][j + 1].etat ||
-                    matrice[i + 1][j].etat ||
-                    matrice[i][j + 1].etat ||
-                    matrice[i - 1][j].etat ||
-                    matrice[i][j - 1].etat
-                    ) == 1)
-                {
-                    matrice[i][j].etat = 1;
-                }
-            }
+            // On verifie est-ce que la cellule en question est en feu
             if (matrice[i][j].etat == 1)
             {
-                matrice[i][j].degres = matrice[i][j].degres - 1;
+                // Puis on verifie si le degres est superieur à 1
+                if (matrice[i][j].degres > 1)
+                {
+                    // On diminue le degres de la case
+                    matrice[i][j].degres--;
+                    // Le traitement à effectuer maintenant est de faire en sorte de mettre en feu les 8 cases
+                    // entourant la case actuelle (si c'est possible)
+                    // Premierement les cases qui sont bien entourées de 8 autres cases
+                    if (i != 0 && i != length - 1)
+                    {
+                        if (j != 0 && j != width - 1)
+                        {
+                            // Verification si l'état de la case n'est pas déjà en feu
+                            if (matrice[i - 1][j - 1].etat == 0)
+                            {
+                                if (matrice[i - 1][j - 1].degres != 0)
+                                {
+                                    matrice[i - 1][j - 1].etat = 1;
+                                    matrice[i - 1][j - 1].degres--;
+                                    if (matrice[i - 1][j - 1].degres == 1)
+                                    {
+                                        matrice[i - 1][j - 1].symbole = '-';
+                                    }
+                                }
+                            }
+
+                            if (matrice[i - 1][j].etat == 0)
+                            {
+                                if (matrice[i - 1][j].degres != 0)
+                                {
+                                    matrice[i - 1][j].etat = 1;
+                                    matrice[i - 1][j].degres--;
+                                    if (matrice[i - 1][j].degres == 1)
+                                    {
+                                        matrice[i - 1][j].symbole = '-';
+                                    }
+                                }
+                            }
+
+                            if (matrice[i - 1][j + 1].etat == 0)
+                            {
+                                if (matrice[i - 1][j + 1].degres != 0)
+                                {
+                                    matrice[i - 1][j + 1].etat = 1;
+                                    matrice[i - 1][j + 1].degres--;
+                                    if (matrice[i - 1][j + 1].degres == 1)
+                                    {
+                                        matrice[i - 1][j + 1].symbole = '-';
+                                    }
+                                }
+                            }
+
+                            if (matrice[i][j - 1].etat == 0)
+                            {
+                                if (matrice[i][j - 1].degres != 0)
+                                {
+                                    matrice[i][j - 1].etat = 1;
+                                    matrice[i][j - 1].degres--;
+                                    if (matrice[i][j - 1].degres == 1)
+                                    {
+                                        matrice[i][j - 1].symbole = '-';
+                                    }
+                                }
+                            }
+
+                            if (matrice[i][j + 1].etat == 0)
+                            {
+                                if (matrice[i][j + 1].degres != 0)
+                                {
+                                    matrice[i][j + 1].etat = 1;
+                                    matrice[i][j + 1].degres--;
+                                    if (matrice[i][j + 1].degres == 1)
+                                    {
+                                        matrice[i][j + 1].symbole = '-';
+                                    }
+                                }
+                            }
+
+                            if (matrice[i + 1][j - 1].etat == 0)
+                            {
+                                if (matrice[i + 1][j - 1].degres != 0)
+                                {
+                                    matrice[i + 1][j - 1].etat = 1;
+                                    matrice[i + 1][j - 1].degres--;
+                                    if (matrice[i + 1][j - 1].degres == 1)
+                                    {
+                                        matrice[i + 1][j - 1].symbole = '-';
+                                    }
+                                }
+                            }
+
+                            if (matrice[i + 1][j].etat == 0)
+                            {
+                                if (matrice[i + 1][j].degres != 0)
+                                {
+                                    matrice[i + 1][j].etat = 1;
+                                    matrice[i + 1][j].degres--;
+                                    if (matrice[i + 1][j].degres == 1)
+                                    {
+                                        matrice[i + 1][j].symbole = '-';
+                                    }
+                                }
+                            }
+
+                            if (matrice[i + 1][j + 1].etat == 0)
+                            {
+                                if (matrice[i + 1][j + 1].degres != 0)
+                                {
+                                    matrice[i + 1][j + 1].etat = 1;
+                                    matrice[i + 1][j + 1].degres--;
+                                    if (matrice[i + 1][j + 1].degres == 1)
+                                    {
+                                        matrice[i + 1][j + 1].symbole = '-';
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Mise en feu des 5 cases (si possible) entourant la case actuelle, car elle se
+                            // trouve du coté gauche ou du coté droit
+                            if (j == 0)
+                            {
+                                if (matrice[i - 1][j].etat == 0)
+                                {
+                                    if (matrice[i - 1][j].degres != 0)
+                                    {
+                                        matrice[i - 1][j].etat = 1;
+                                        matrice[i - 1][j].degres--;
+                                        if (matrice[i - 1][j].degres == 1)
+                                        {
+                                            matrice[i - 1][j].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i - 1][j + 1].etat == 0)
+                                {
+                                    if (matrice[i - 1][j + 1].degres != 0)
+                                    {
+                                        matrice[i - 1][j + 1].etat = 1;
+                                        matrice[i - 1][j + 1].degres--;
+                                        if (matrice[i - 1][j + 1].degres == 1)
+                                        {
+                                            matrice[i - 1][j + 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i][j + 1].etat == 0)
+                                {
+                                    if (matrice[i][j + 1].degres != 0)
+                                    {
+                                        matrice[i][j + 1].etat = 1;
+                                        matrice[i][j + 1].degres--;
+                                        if (matrice[i][j + 1].degres == 1)
+                                        {
+                                            matrice[i][j + 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i + 1][j + 1].etat == 0)
+                                {
+                                    if (matrice[i + 1][j + 1].degres != 0)
+                                    {
+                                        matrice[i + 1][j + 1].etat = 1;
+                                        matrice[i + 1][j + 1].degres--;
+                                        if (matrice[i + 1][j + 1].degres == 1)
+                                        {
+                                            matrice[i + 1][j + 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i + 1][j].etat == 0)
+                                {
+                                    if (matrice[i + 1][j].degres != 0)
+                                    {
+                                        matrice[i + 1][j].etat = 1;
+                                        matrice[i + 1][j].degres--;
+                                        if (matrice[i + 1][j].degres == 1)
+                                        {
+                                            matrice[i + 1][j].symbole = '-';
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (j == width - 1)
+                            {
+                                if (matrice[i - 1][j].etat == 0)
+                                {
+                                    if (matrice[i - 1][j].degres != 0)
+                                    {
+                                        matrice[i - 1][j].etat = 1;
+                                        matrice[i - 1][j].degres--;
+                                        if (matrice[i - 1][j].degres == 1)
+                                        {
+                                            matrice[i - 1][j].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i - 1][j - 1].etat == 0)
+                                {
+                                    if (matrice[i - 1][j - 1].degres != 0)
+                                    {
+                                        matrice[i - 1][j - 1].etat = 1;
+                                        matrice[i - 1][j - 1].degres--;
+                                        if (matrice[i - 1][j - 1].degres == 1)
+                                        {
+                                            matrice[i - 1][j - 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i][j - 1].etat == 0)
+                                {
+                                    if (matrice[i][j - 1].degres != 0)
+                                    {
+                                        matrice[i][j - 1].etat = 1;
+                                        matrice[i][j - 1].degres--;
+                                        if (matrice[i][j - 1].degres == 1)
+                                        {
+                                            matrice[i][j - 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i + 1][j - 1].etat == 0)
+                                {
+                                    if (matrice[i + 1][j - 1].degres != 0)
+                                    {
+                                        matrice[i + 1][j - 1].etat = 1;
+                                        matrice[i + 1][j - 1].degres--;
+                                        if (matrice[i + 1][j - 1].degres == 1)
+                                        {
+                                            matrice[i + 1][j - 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i + 1][j].etat == 0)
+                                {
+                                    if (matrice[i + 1][j].degres != 0)
+                                    {
+                                        matrice[i + 1][j].etat = 1;
+                                        matrice[i + 1][j].degres--;
+                                        if (matrice[i + 1][j].degres == 1)
+                                        {
+                                            matrice[i + 1][j].symbole = '-';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Mise en feu des 5 cases (si possible) entourant la case actuelle, car elle se
+                        // trouve en haut ou en bas
+                        if (j != 0 && j != width - 1)
+                        {
+                            if (i == 0)
+                            {
+                                if (matrice[i][j - 1].etat == 0)
+                                {
+                                    if (matrice[i][j - 1].degres != 0)
+                                    {
+                                        matrice[i][j - 1].etat = 1;
+                                        matrice[i][j - 1].degres--;
+                                        if (matrice[i][j - 1].degres == 1)
+                                        {
+                                            matrice[i][j - 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i + 1][j - 1].etat == 0)
+                                {
+                                    if (matrice[i + 1][j - 1].degres != 0)
+                                    {
+                                        matrice[i + 1][j - 1].etat = 1;
+                                        matrice[i + 1][j - 1].degres--;
+                                        if (matrice[i + 1][j - 1].degres == 1)
+                                        {
+                                            matrice[i + 1][j - 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i + 1][j].etat == 0)
+                                {
+                                    if (matrice[i + 1][j].degres != 0)
+                                    {
+                                        matrice[i + 1][j].etat = 1;
+                                        matrice[i + 1][j].degres--;
+                                        if (matrice[i + 1][j].degres == 1)
+                                        {
+                                            matrice[i + 1][j].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i + 1][j + 1].etat == 0)
+                                {
+                                    if (matrice[i + 1][j + 1].degres != 0)
+                                    {
+                                        matrice[i + 1][j + 1].etat = 1;
+                                        matrice[i + 1][j + 1].degres--;
+                                        if (matrice[i + 1][j + 1].degres == 1)
+                                        {
+                                            matrice[i + 1][j + 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i][j + 1].etat == 0)
+                                {
+                                    if (matrice[i][j + 1].degres != 0)
+                                    {
+                                        matrice[i][j + 1].etat = 1;
+                                        matrice[i][j + 1].degres--;
+                                        if (matrice[i][j + 1].degres == 1)
+                                        {
+                                            matrice[i][j + 1].symbole = '-';
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (i == length - 1)
+                            {
+                                if (matrice[i][j - 1].etat == 0)
+                                {
+                                    if (matrice[i][j - 1].degres != 0)
+                                    {
+                                        matrice[i][j - 1].etat = 1;
+                                        matrice[i][j - 1].degres--;
+                                        if (matrice[i][j - 1].degres == 1)
+                                        {
+                                            matrice[i][j - 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i - 1][j - 1].etat == 0)
+                                {
+                                    if (matrice[i - 1][j - 1].degres != 0)
+                                    {
+                                        matrice[i - 1][j - 1].etat = 1;
+                                        matrice[i - 1][j - 1].degres--;
+                                        if (matrice[i - 1][j - 1].degres == 1)
+                                        {
+                                            matrice[i - 1][j - 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i - 1][j].etat == 0)
+                                {
+                                    if (matrice[i - 1][j].degres != 0)
+                                    {
+                                        matrice[i - 1][j].etat = 1;
+                                        matrice[i - 1][j].degres--;
+                                        if (matrice[i - 1][j].degres == 1)
+                                        {
+                                            matrice[i - 1][j].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i - 1][j + 1].etat == 0)
+                                {
+                                    if (matrice[i - 1][j + 1].degres != 0)
+                                    {
+                                        matrice[i - 1][j + 1].etat = 1;
+                                        matrice[i - 1][j + 1].degres--;
+                                        if (matrice[i - 1][j + 1].degres == 1)
+                                        {
+                                            matrice[i - 1][j + 1].symbole = '-';
+                                        }
+                                    }
+                                }
+
+                                if (matrice[i][j + 1].etat == 0)
+                                {
+                                    if (matrice[i][j + 1].degres != 0)
+                                    {
+                                        matrice[i][j + 1].etat = 1;
+                                        matrice[i][j + 1].degres--;
+                                        if (matrice[i][j + 1].degres == 1)
+                                        {
+                                            matrice[i][j + 1].symbole = '-';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Nous faisons enfin le traitement pour les angles pour changer les 3 cases aux alentours
+                    //  de cette derniere
+                    if (i == 0 && j == 0)
+                    {
+                        if (matrice[i][j + 1].etat == 0)
+                        {
+                            if (matrice[i][j + 1].degres != 0)
+                            {
+                                matrice[i][j + 1].etat = 1;
+                                matrice[i][j + 1].degres--;
+                                if (matrice[i][j + 1].degres == 1)
+                                {
+                                    matrice[i][j + 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i + 1][j + 1].etat == 0)
+                        {
+                            if (matrice[i + 1][j + 1].degres != 0)
+                            {
+                                matrice[i + 1][j + 1].etat = 1;
+                                matrice[i + 1][j + 1].degres--;
+                                if (matrice[i + 1][j + 1].degres == 1)
+                                {
+                                    matrice[i + 1][j + 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i + 1][j].etat == 0)
+                        {
+                            if (matrice[i + 1][j].degres != 0)
+                            {
+                                matrice[i + 1][j].etat = 1;
+                                matrice[i + 1][j].degres--;
+                                if (matrice[i + 1][j].degres == 1)
+                                {
+                                    matrice[i + 1][j].symbole = '-';
+                                }
+                            }
+                        }
+                    }
+
+                    if (i == 0 && j == width - 1)
+                    {
+                        if (matrice[i][j - 1].etat == 0)
+                        {
+                            if (matrice[i][j - 1].degres != 0)
+                            {
+                                matrice[i][j - 1].etat = 1;
+                                matrice[i][j - 1].degres--;
+                                if (matrice[i][j - 1].degres == 1)
+                                {
+                                    matrice[i][j - 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i + 1][j - 1].etat == 0)
+                        {
+                            if (matrice[i + 1][j - 1].degres != 0)
+                            {
+                                matrice[i + 1][j - 1].etat = 1;
+                                matrice[i + 1][j - 1].degres--;
+                                if (matrice[i + 1][j - 1].degres == 1)
+                                {
+                                    matrice[i + 1][j - 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i + 1][j].etat == 0)
+                        {
+                            if (matrice[i + 1][j].degres != 0)
+                            {
+                                matrice[i + 1][j].etat = 1;
+                                matrice[i + 1][j].degres--;
+                                if (matrice[i + 1][j].degres == 1)
+                                {
+                                    matrice[i + 1][j].symbole = '-';
+                                }
+                            }
+                        }
+                    }
+
+                    if (i == length - 1 && j == width - 1)
+                    {
+                        if (matrice[i][j - 1].etat == 0)
+                        {
+                            if (matrice[i][j - 1].degres != 0)
+                            {
+                                matrice[i][j - 1].etat = 1;
+                                matrice[i][j - 1].degres--;
+                                if (matrice[i][j - 1].degres == 1)
+                                {
+                                    matrice[i][j - 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i - 1][j - 1].etat == 0)
+                        {
+                            if (matrice[i - 1][j - 1].degres != 0)
+                            {
+                                matrice[i - 1][j - 1].etat = 1;
+                                matrice[i - 1][j - 1].degres--;
+                                if (matrice[i - 1][j - 1].degres == 1)
+                                {
+                                    matrice[i - 1][j - 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i - 1][j].etat == 0)
+                        {
+                            if (matrice[i - 1][j].degres != 0)
+                            {
+                                matrice[i - 1][j].etat = 1;
+                                matrice[i - 1][j].degres--;
+                                if (matrice[i - 1][j].degres == 1)
+                                {
+                                    matrice[i - 1][j].symbole = '-';
+                                }
+                            }
+                        }
+                    }
+
+                    if (i == length - 1 && j == 0)
+                    {
+                        if (matrice[i][j + 1].etat == 0)
+                        {
+                            if (matrice[i][j + 1].degres != 0)
+                            {
+                                matrice[i][j + 1].etat = 1;
+                                matrice[i][j + 1].degres--;
+                                if (matrice[i][j + 1].degres == 1)
+                                {
+                                    matrice[i][j + 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i - 1][j + 1].etat == 0)
+                        {
+                            if (matrice[i - 1][j + 1].degres != 0)
+                            {
+                                matrice[i - 1][j + 1].etat = 1;
+                                matrice[i - 1][j + 1].degres--;
+                                if (matrice[i - 1][j + 1].degres == 1)
+                                {
+                                    matrice[i - 1][j + 1].symbole = '-';
+                                }
+                            }
+                        }
+
+                        if (matrice[i - 1][j].etat == 0)
+                        {
+                            if (matrice[i - 1][j].degres != 0)
+                            {
+                                matrice[i - 1][j].etat = 1;
+                                matrice[i - 1][j].degres--;
+                                if (matrice[i - 1][j].degres == 1)
+                                {
+                                    matrice[i - 1][j].symbole = '-';
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (matrice[i][j].degres == 1)
+                {
+                    matrice[i][j].symbole = '-';
+                    matrice[i][j].etat = 0;
+                    matrice[i][j].degres = 0;
+                }
             }
         }
     }
+
+    // A partir de là on presente un menu à l'utilisateur et on lui demande quelle action il veut faire par la
+    // suite à travers le menu4.
 }

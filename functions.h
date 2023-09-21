@@ -75,4 +75,4 @@ void push(struct Node** top, Element data);
 void pop(struct Node** top, Element* popped);
 
 
-void game(Element **matrice, int length, int width);
+void game(Element **matrice, int length, int width, int *x_firstcase, int *y_firstcase);
