@@ -222,7 +222,6 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
     printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
-
 int isEmpty(struct Node *top)
 {
     if (top == NULL)

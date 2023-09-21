@@ -9,8 +9,6 @@ int main(int argc, char *argv[])
 {
     MLV_Image *background;
 
-
-
     // affichage de selection de case pour le mode manuel
     Element select = {
         's',
@@ -56,28 +54,22 @@ int main(int argc, char *argv[])
     Element inactive_ash = {
         '@',
         0,
-        0
-    };
+        0};
 
-
-    MLV_create_window (
+    MLV_create_window(
         "Incendie - Le Jeu",
-		"Incendie",
-		WIDTH_WINDOW,
-		HEIGHT_WINDOW 
-	);
+        "Incendie",
+        WIDTH_WINDOW,
+        HEIGHT_WINDOW);
 
     background = MLV_load_image("images/Background.png");
 
     MLV_draw_image(
         background,
-		0,
-        0 
-	);
+        0,
+        0);
 
     MLV_actualise_window();
-
-
 
     // Selection dimentions de la matrice
     int length, width;
