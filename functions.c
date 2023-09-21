@@ -222,36 +222,14 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
     printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
-// void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase)
-// {
-//     int choix;
-//     printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
-//     printf("\t\t1 - Pour continuer la simulation.\n");
-//     printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
-//     printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
-//     printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
-//     scanf("%d", &choix);
-
-//     switch (choix)
-//     {
-//     case 1:
-//         break;
-//     case 2:
-//         break;
-//     case 3:
-//         break;
-//     default:
-//         break;
-//     }
-// }
 
 int isEmpty(struct Node *top)
 {
     if (top == NULL)
     {
-        return 0;
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 void push(struct Node **top, Element data)
@@ -281,6 +259,29 @@ void pop(struct Node **top, Element *popped)
         free(temp);
     }
 }
+
+// void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase)
+// {
+//     int choix;
+//     printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
+//     printf("\t\t1 - Pour continuer la simulation.\n");
+//     printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
+//     printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
+//     printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
+//     scanf("%d", &choix);
+
+//     switch (choix)
+//     {
+//     case 1:
+//         break;
+//     case 2:
+//         break;
+//     case 3:
+//         break;
+//     default:
+//         break;
+//     }
+// }
 
 void game(Element **matrice, int length, int width)
 {

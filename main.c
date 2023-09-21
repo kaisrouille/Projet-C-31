@@ -2,10 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <MLV/MLV_all.h>
 #include "functions.h"
 
 int main(int argc, char *argv[])
 {
+    MLV_Image *background;
+
+
+
     // affichage de selection de case pour le mode manuel
     Element select = {
         's',
@@ -51,7 +56,28 @@ int main(int argc, char *argv[])
     Element inactive_ash = {
         '@',
         0,
-        0};
+        0
+    };
+
+
+    MLV_create_window (
+        "Incendie - Le Jeu",
+		"Incendie",
+		WIDTH_WINDOW,
+		HEIGHT_WINDOW 
+	);
+
+    background = MLV_load_image("images/Background.png");
+
+    MLV_draw_image(
+        background,
+		0,
+        0 
+	);
+
+    MLV_actualise_window();
+
+
 
     // Selection dimentions de la matrice
     int length, width;

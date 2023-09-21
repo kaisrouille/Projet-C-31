@@ -1,3 +1,6 @@
+#define WIDTH_WINDOW 1600
+#define HEIGHT_WINDOW 950
+
 #define SIZEMIN 1
 #define SIZEMAX 20
 
