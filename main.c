@@ -109,7 +109,10 @@ int main(int argc, char *argv[])
     int p;
     for (p = 0; p < nb_tour; p++)
     {
-        game(matrice, length, width, &x_firstcase, &y_firstcase);
+        // On met d'abord le feu à la case selectionnée par l'utilisateur
+        matrice[x_firstcase][y_firstcase].etat = 1;
+        display_matrice(matrice, length, width);
+        game(matrice, length, width);
         display_matrice(matrice, length, width);
         printf("\n\n\n\n\n");
     }
