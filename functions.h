@@ -1,3 +1,6 @@
+#define WIDTH_WINDOW 1600
+#define HEIGHT_WINDOW 950
+
 #define SIZEMIN 1
 #define SIZEMAX 20
 
@@ -73,6 +76,9 @@ int isEmpty(struct Node* top);
 void push(struct Node** top, Element data);
 
 void pop(struct Node** top, Element* popped);
+
+
+//void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase);
 
 
 void game(Element **matrice, int length, int width, int *x_firstcase, int *y_firstcase);
