@@ -297,499 +297,89 @@ void game(Element **matrice, int length, int width)
                 {
                     // On diminue le degres de la case
                     matrice[i][j].degres--;
-                    // Le traitement à effectuer maintenant est de faire en sorte de mettre en feu les 8 cases
-                    // entourant la case actuelle (si c'est possible)
-                    // Premierement les cases qui sont bien entourées de 8 autres cases
-                    if (i != 0 && i != length - 1)
+
+                    // Condition pour le traitement des cases du haut
+                    if (i != 0)
                     {
-                        if (j != 0 && j != width - 1)
-                        {
-                            // Verification si l'état de la case n'est pas déjà en feu et que le degre n'est pas de 0
-                            // Traitement de la case à en haut à gauche
-                            if (matrice[i - 1][j - 1].etat == 0 && matrice[i - 1][j - 1].degres != 0)
-                            {
-                                matrice[i - 1][j - 1].etat = 1;
-                                matrice[i - 1][j - 1].degres--;
-                                if (matrice[i - 1][j - 1].degres == 1)
-                                {
-                                    matrice[i - 1][j - 1].symbole = '-';
-                                }
-                            }
-
-                            // Traitement de la case du dessus
-                            if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
-                            {
-                                matrice[i - 1][j].etat = 1;
-                                matrice[i - 1][j].degres--;
-                                if (matrice[i - 1][j].degres == 1)
-                                {
-                                    matrice[i - 1][j].symbole = '-';
-                                }
-                            }
-
-                            // Traitement de la case à en haut à droite
-                            if (matrice[i - 1][j + 1].etat == 0 && matrice[i - 1][j + 1].degres != 0)
-                            {
-                                matrice[i - 1][j + 1].etat = 1;
-                                matrice[i - 1][j + 1].degres--;
-                                if (matrice[i - 1][j + 1].degres == 1)
-                                {
-                                    matrice[i - 1][j + 1].symbole = '-';
-                                }
-                            }
-
-                            // Traitement de la case à droite
-                            if (matrice[i][j + 1].etat == 0 && matrice[i][j + 1].degres != 0)
-                            {
-                                matrice[i][j + 1].etat = 1;
-                                matrice[i][j + 1].degres--;
-                                if (matrice[i][j + 1].degres == 1)
-                                {
-                                    matrice[i][j + 1].symbole = '-';
-                                }
-                            }
-
-                            // Traitement de la case en bqs à droite
-                            if (matrice[i + 1][j + 1].etat == 0 && matrice[i + 1][j + 1].degres != 0)
-                            {
-                                matrice[i + 1][j + 1].etat = 1;
-                                matrice[i + 1][j + 1].degres--;
-                                if (matrice[i + 1][j + 1].degres == 1)
-                                {
-                                    matrice[i + 1][j + 1].symbole = '-';
-                                }
-                            }
-
-                            // Traitement de la case d'en bas
-                            if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
-                            {
-                                matrice[i + 1][j].etat = 1;
-                                matrice[i + 1][j].degres--;
-                                if (matrice[i + 1][j].degres == 1)
-                                {
-                                    matrice[i + 1][j].symbole = '-';
-                                }
-                            }
-
-                            // Traitement de la case à en bas à gauche
-                            if (matrice[i + 1][j - 1].etat == 0 && matrice[i + 1][j - 1].degres != 0)
-                            {
-                                matrice[i + 1][j - 1].etat = 1;
-                                matrice[i + 1][j - 1].degres--;
-                                if (matrice[i + 1][j - 1].degres == 1)
-                                {
-                                    matrice[i + 1][j - 1].symbole = '-';
-                                }
-                            }
-
-                            // Traitement de la case à gauche
-                            if (matrice[i][j - 1].etat == 0 && matrice[i][j - 1].degres != 0)
-                            {
-                                matrice[i][j - 1].etat = 1;
-                                matrice[i][j - 1].degres--;
-                                if (matrice[i][j - 1].degres == 1)
-                                {
-                                    matrice[i][j - 1].symbole = '-';
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // Mise en feu des 5 cases (si possible) entourant la case actuelle, car elle se
-                            // trouve du coté gauche ou du coté droit (les côtés latéraux)
-                            // Si la case actuelle se trouve à) gauche de la matrice (hormi les angles)
-                            if (j == 0)
-                            {
-                                // Traitement de la case du haut
-                                if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
-                                {
-                                    matrice[i - 1][j].etat = 1;
-                                    matrice[i - 1][j].degres--;
-                                    if (matrice[i - 1][j].degres == 1)
-                                    {
-                                        matrice[i - 1][j].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en haut à droite
-                                if (matrice[i - 1][j + 1].etat == 0 && matrice[i - 1][j + 1].degres != 0)
-                                {
-                                    matrice[i - 1][j + 1].etat = 1;
-                                    matrice[i - 1][j + 1].degres--;
-                                    if (matrice[i - 1][j + 1].degres == 1)
-                                    {
-                                        matrice[i - 1][j + 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case à droite
-                                if (matrice[i][j + 1].etat == 0 && matrice[i][j + 1].degres != 0)
-                                {
-                                    matrice[i][j + 1].etat = 1;
-                                    matrice[i][j + 1].degres--;
-                                    if (matrice[i][j + 1].degres == 1)
-                                    {
-                                        matrice[i][j + 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en bas à droite
-                                if (matrice[i + 1][j + 1].etat == 0 && matrice[i + 1][j + 1].degres != 0)
-                                {
-                                    matrice[i + 1][j + 1].etat = 1;
-                                    matrice[i + 1][j + 1].degres--;
-                                    if (matrice[i + 1][j + 1].degres == 1)
-                                    {
-                                        matrice[i + 1][j + 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case du bas
-                                if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
-                                {
-                                    matrice[i + 1][j].etat = 1;
-                                    matrice[i + 1][j].degres--;
-                                    if (matrice[i + 1][j].degres == 1)
-                                    {
-                                        matrice[i + 1][j].symbole = '-';
-                                    }
-                                }
-                            }
-
-                            // Si la case actuelle se trouve à droite de la matrice (hormi les angles)
-                            if (j == width - 1)
-                            {
-                                // Traitement de la case du haut
-                                if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
-                                {
-                                    matrice[i - 1][j].etat = 1;
-                                    matrice[i - 1][j].degres--;
-                                    if (matrice[i - 1][j].degres == 1)
-                                    {
-                                        matrice[i - 1][j].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en haut à gauche
-                                if (matrice[i - 1][j - 1].etat == 0 && matrice[i - 1][j - 1].degres != 0)
-                                {
-                                    matrice[i - 1][j - 1].etat = 1;
-                                    matrice[i - 1][j - 1].degres--;
-                                    if (matrice[i - 1][j - 1].degres == 1)
-                                    {
-                                        matrice[i - 1][j - 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case à gauche
-                                if (matrice[i][j - 1].etat == 0 && matrice[i][j - 1].degres != 0)
-                                {
-                                    matrice[i][j - 1].etat = 1;
-                                    matrice[i][j - 1].degres--;
-                                    if (matrice[i][j - 1].degres == 1)
-                                    {
-                                        matrice[i][j - 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en bas à gauche
-                                if (matrice[i + 1][j - 1].etat == 0 && matrice[i + 1][j - 1].degres != 0)
-                                {
-                                    matrice[i + 1][j - 1].etat = 1;
-                                    matrice[i + 1][j - 1].degres--;
-                                    if (matrice[i + 1][j - 1].degres == 1)
-                                    {
-                                        matrice[i + 1][j - 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case du bas
-                                if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
-                                {
-                                    matrice[i + 1][j].etat = 1;
-                                    matrice[i + 1][j].degres--;
-                                    if (matrice[i + 1][j].degres == 1)
-                                    {
-                                        matrice[i + 1][j].symbole = '-';
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Mise en feu des 5 cases (si possible) entourant la case actuelle, car elle se
-                        // trouve en haut ou en bas (les côtés latéraux)
-                        if (j != 0 && j != width - 1)
-                        {
-                            // Si la case actuelle se trouve en haut de la matrice (hormi les angles)
-                            if (i == 0)
-                            {
-                                // Traitement de la case de gauche
-                                if (matrice[i][j - 1].etat == 0 && matrice[i][j - 1].degres != 0)
-                                {
-                                    matrice[i][j - 1].etat = 1;
-                                    matrice[i][j - 1].degres--;
-                                    if (matrice[i][j - 1].degres == 1)
-                                    {
-                                        matrice[i][j - 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en bas à gauche
-                                if (matrice[i + 1][j - 1].etat == 0 && matrice[i + 1][j - 1].degres != 0)
-                                {
-                                    matrice[i + 1][j - 1].etat = 1;
-                                    matrice[i + 1][j - 1].degres--;
-                                    if (matrice[i + 1][j - 1].degres == 1)
-                                    {
-                                        matrice[i + 1][j - 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case d'en bas
-                                if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
-                                {
-                                    matrice[i + 1][j].etat = 1;
-                                    matrice[i + 1][j].degres--;
-                                    if (matrice[i + 1][j].degres == 1)
-                                    {
-                                        matrice[i + 1][j].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en bas à droite
-                                if (matrice[i + 1][j + 1].etat == 0 && matrice[i + 1][j + 1].degres != 0)
-                                {
-                                    matrice[i + 1][j + 1].etat = 1;
-                                    matrice[i + 1][j + 1].degres--;
-                                    if (matrice[i + 1][j + 1].degres == 1)
-                                    {
-                                        matrice[i + 1][j + 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case à droite
-                                if (matrice[i][j + 1].etat == 0 && matrice[i][j + 1].degres != 0)
-                                {
-                                    matrice[i][j + 1].etat = 1;
-                                    matrice[i][j + 1].degres--;
-                                    if (matrice[i][j + 1].degres == 1)
-                                    {
-                                        matrice[i][j + 1].symbole = '-';
-                                    }
-                                }
-                            }
-
-                            // Si la case actuelle se trouve en bas de la matrice (hormi les angles)
-                            if (i == length - 1)
-                            {
-                                // Traitement de la case à gauche
-                                if (matrice[i][j - 1].etat == 0 && matrice[i][j - 1].degres != 0)
-                                {
-                                    matrice[i][j - 1].etat = 1;
-                                    matrice[i][j - 1].degres--;
-                                    if (matrice[i][j - 1].degres == 1)
-                                    {
-                                        matrice[i][j - 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en haut à droite
-                                if (matrice[i - 1][j - 1].etat == 0 && matrice[i - 1][j - 1].degres != 0)
-                                {
-                                    matrice[i - 1][j - 1].etat = 1;
-                                    matrice[i - 1][j - 1].degres--;
-                                    if (matrice[i - 1][j - 1].degres == 1)
-                                    {
-                                        matrice[i - 1][j - 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case du haut
-                                if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
-                                {
-                                    matrice[i - 1][j].etat = 1;
-                                    matrice[i - 1][j].degres--;
-                                    if (matrice[i - 1][j].degres == 1)
-                                    {
-                                        matrice[i - 1][j].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case en haut à droite
-                                if (matrice[i - 1][j + 1].etat == 0 && matrice[i - 1][j + 1].degres != 0)
-                                {
-                                    matrice[i - 1][j + 1].etat = 1;
-                                    matrice[i - 1][j + 1].degres--;
-                                    if (matrice[i - 1][j + 1].degres == 1)
-                                    {
-                                        matrice[i - 1][j + 1].symbole = '-';
-                                    }
-                                }
-
-                                // Traitement de la case à droite
-                                if (matrice[i][j + 1].etat == 0 && matrice[i][j + 1].degres != 0)
-                                {
-                                    matrice[i][j + 1].etat = 1;
-                                    matrice[i][j + 1].degres--;
-                                    if (matrice[i][j + 1].degres == 1)
-                                    {
-                                        matrice[i][j + 1].symbole = '-';
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    // Nous faisons enfin le traitement pour les angles pour changer les 3 cases aux alentours
-                    //  de cette derniere
-                    // Si la case actuelle se trouve à l'angle en haut à gauche
-                    if (i == 0 && j == 0)
-                    {
-                        // Traitement de la case à droite
-                        if (matrice[i][j + 1].etat == 0 && matrice[i][j + 1].degres != 0)
-                        {
-                            matrice[i][j + 1].etat = 1;
-                            matrice[i][j + 1].degres--;
-                            if (matrice[i][j + 1].degres == 1)
-                            {
-                                matrice[i][j + 1].symbole = '-';
-                            }
-                        }
-
-                        // Traitement de la case en bas à droite
-                        if (matrice[i + 1][j + 1].etat == 0 && matrice[i + 1][j + 1].degres != 0)
-                        {
-                            matrice[i + 1][j + 1].etat = 1;
-                            matrice[i + 1][j + 1].degres--;
-                            if (matrice[i + 1][j + 1].degres == 1)
-                            {
-                                matrice[i + 1][j + 1].symbole = '-';
-                            }
-                        }
-
-                        // Traitement de la case d'en bas
-                        if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
-                        {
-                            matrice[i + 1][j].etat = 1;
-                            matrice[i + 1][j].degres--;
-                            if (matrice[i + 1][j].degres == 1)
-                            {
-                                matrice[i + 1][j].symbole = '-';
-                            }
-                        }
-                    }
-
-                    // Si la case actuelle se trouve à l'angle en haut à droite
-                    if (i == 0 && j == width - 1)
-                    {
-                        // Traitement de la case à gauche
-                        if (matrice[i][j - 1].etat == 0 && matrice[i][j - 1].degres != 0)
-                        {
-                            matrice[i][j - 1].etat = 1;
-                            matrice[i][j - 1].degres--;
-                            if (matrice[i][j - 1].degres == 1)
-                            {
-                                matrice[i][j - 1].symbole = '-';
-                            }
-                        }
-
-                        // Traitement de la case en bas à gauche
-                        if (matrice[i + 1][j - 1].etat == 0 && matrice[i + 1][j - 1].degres != 0)
-                        {
-                            matrice[i + 1][j - 1].etat = 1;
-                            matrice[i + 1][j - 1].degres--;
-                            if (matrice[i + 1][j - 1].degres == 1)
-                            {
-                                matrice[i + 1][j - 1].symbole = '-';
-                            }
-                        }
-
-                        // Traitement de la case d'en bas
-                        if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
-                        {
-                            matrice[i + 1][j].etat = 1;
-                            matrice[i + 1][j].degres--;
-                            if (matrice[i + 1][j].degres == 1)
-                            {
-                                matrice[i + 1][j].symbole = '-';
-                            }
-                        }
-                    }
-
-                    // Si la case actuelle se trouve à l'angle en bas à droite
-                    if (i == length - 1 && j == width - 1)
-                    {
-                        // Traitement de la case à gauche
-                        if (matrice[i][j - 1].etat == 0 && matrice[i][j - 1].degres != 0)
-                        {
-                            matrice[i][j - 1].etat = 1;
-                            matrice[i][j - 1].degres--;
-                            if (matrice[i][j - 1].degres == 1)
-                            {
-                                matrice[i][j - 1].symbole = '-';
-                            }
-                        }
-
-                        // Traitement de la case en haut à gauche
-                        if (matrice[i - 1][j - 1].etat == 0 && matrice[i - 1][j - 1].degres != 0)
+                        // Traitement de la case en haut en gauche
+                        if (
+                            j != 0 &&
+                            matrice[i - 1][j - 1].etat == 0 &&
+                            matrice[i - 1][j - 1].degres != 0)
                         {
                             matrice[i - 1][j - 1].etat = 1;
                             matrice[i - 1][j - 1].degres--;
-                            if (matrice[i - 1][j - 1].degres == 1)
-                            {
-                                matrice[i - 1][j - 1].symbole = '-';
-                            }
                         }
 
-                        // Traitement de la case d'en haut
+                        // Traitement de la case du dessus
                         if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
                         {
                             matrice[i - 1][j].etat = 1;
                             matrice[i - 1][j].degres--;
-                            if (matrice[i - 1][j].degres == 1)
-                            {
-                                matrice[i - 1][j].symbole = '-';
-                            }
-                        }
-                    }
-
-                    // Si la case actuelle se trouve à l'angle en bas à gauche
-                    if (i == length - 1 && j == 0)
-                    {
-                        // Traitement de la case à droite
-                        if (matrice[i][j + 1].etat == 0 && matrice[i][j + 1].degres != 0)
-                        {
-                            matrice[i][j + 1].etat = 1;
-                            matrice[i][j + 1].degres--;
-                            if (matrice[i][j + 1].degres == 1)
-                            {
-                                matrice[i][j + 1].symbole = '-';
-                            }
                         }
 
                         // Traitement de la case en haut à droite
-                        if (matrice[i - 1][j + 1].etat == 0 && matrice[i - 1][j + 1].degres != 0)
+                        if (
+                            j != width - 1 &&
+                            matrice[i - 1][j + 1].etat == 0 &&
+                            matrice[i - 1][j + 1].degres != 0)
                         {
                             matrice[i - 1][j + 1].etat = 1;
                             matrice[i - 1][j + 1].degres--;
-                            if (matrice[i - 1][j + 1].degres == 1)
-                            {
-                                matrice[i - 1][j + 1].symbole = '-';
-                            }
+                        }
+                    }
+
+                    // Condition pour le traitement des cases du bas
+                    if (i != length - 1)
+                    {
+                        // Traitement de la case en bas à droite
+                        if (
+                            j != width - 1 &&
+                            matrice[i + 1][j + 1].etat == 0 &&
+                            matrice[i + 1][j + 1].degres != 0)
+                        {
+                            matrice[i + 1][j + 1].etat = 1;
+                            matrice[i + 1][j + 1].degres--;
                         }
 
-                        // Traitement de la case d'en haut
-                        if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
+                        // Traitement de la case d'en bas
+                        if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
                         {
-                            matrice[i - 1][j].etat = 1;
-                            matrice[i - 1][j].degres--;
-                            if (matrice[i - 1][j].degres == 1)
-                            {
-                                matrice[i - 1][j].symbole = '-';
-                            }
+                            matrice[i + 1][j].etat = 1;
+                            matrice[i + 1][j].degres--;
                         }
+
+                        // Traitement de la case en bas à gauche
+                        if (
+                            j != 0 &&
+                            matrice[i + 1][j - 1].etat == 0 &&
+                            matrice[i + 1][j - 1].degres != 0)
+                        {
+                            matrice[i + 1][j - 1].etat = 1;
+                            matrice[i + 1][j - 1].degres--;
+                        }
+                    }
+
+                    // Condition pour le traitement de la case à gauche
+                    if (
+                        j != 0 &&
+                        matrice[i][j + 1].etat == 0 &&
+                        matrice[i][j + 1].degres != 0)
+                    {
+                        // Traitement de la case à droite
+                        matrice[i][j + 1].etat = 1;
+                        matrice[i][j + 1].degres--;
+                    }
+
+                    // Condition pour le traitement de la case à droite
+                    if (
+                        j != width - 1 &&
+                        matrice[i][j - 1].etat == 0 &&
+                        matrice[i][j - 1].degres != 0)
+                    {
+                        // Traitement de la case à gauche
+                        matrice[i][j - 1].etat = 1;
+                        matrice[i][j - 1].degres--;
                     }
                 }
                 // Si case est en feu mais que c'est des cendres
