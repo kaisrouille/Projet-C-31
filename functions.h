@@ -31,7 +31,7 @@ void display_matrice(Element **matrice, int length, int width);
 
 
 //Menu de sélection des dimensions de la matrice
-void menu_1(int *length, int *width);
+void menu_1(int *length, int *width, char *background_path, char *text1_menu1_path, char *text2_menu1_path);
 
 
 //Menu de sélection du mode de jeu
@@ -71,6 +71,8 @@ void auto_mode(
 
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase);
 
+void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase);
+
 int isEmpty(struct Node* top);
 
 void push(struct Node** top, Element data);
@@ -79,3 +81,6 @@ void pop(struct Node** top, Element* popped);
 
 
 void game(Element **matrice, int length, int width);
+
+
+void display_init(char *background_path, char *title_path, char *button_LG_path);

@@ -7,73 +7,100 @@
 
 int main(int argc, char *argv[])
 {
-    MLV_Image *background;
+    //images affichage graphique
+    char background[] = "images/background.png";
+
+    char title[] = "images/title.png";
+
+    char text1_menu1[] = "images/text1_menu1.png";
+    char text2_menu1[] = "images/text2_menu1.png";
+
+    char button_LG[] = "images/button_LG.png";
+
 
     // affichage de selection de case pour le mode manuel
     Element select = {
         's',
         -9,
-        -9};
+        -9
+    };
 
     // déclaration des éléments
     Element ground = {
         '+',
         0,
-        0};
+        0
+    };
 
     Element tree = {
         '*',
         4,
-        0};
+        0
+    };
 
     Element leaf = {
         ' ',
         2,
-        0};
+        0
+    };
 
     Element rock = {
         '#',
         5,
-        0};
+        0
+    };
 
     Element grass = {
         'x',
         3,
-        0};
+        0
+    };
 
     Element water = {
         '/',
         0,
-        0};
+        0
+    };
 
     Element ash = {
         '-',
         1,
-        0};
+        0
+    };
 
     Element inactive_ash = {
         '@',
         0,
-        0};
+        0
+    };
 
-    MLV_create_window(
-        "Incendie - Le Jeu",
-        "Incendie",
-        WIDTH_WINDOW,
-        HEIGHT_WINDOW);
 
-    background = MLV_load_image("images/Background.png");
+    //Initialisation de l'affichage graphique
+    display_init(background, title, button_LG);
 
-    MLV_draw_image(
-        background,
-        0,
-        0);
-
-    MLV_actualise_window();
+    MLV_Keyboard_button sym;
+    MLV_Keyboard_modifier mod;
+    int unicode;
+    int mouse_x;
+    int mouse_y;
+    while(
+        !(
+            unicode == 32 ||
+            (
+                mouse_x >= 550 &&
+                mouse_x <= 1050 &&
+                mouse_y >= 550 &&
+                mouse_y <= 707
+            )
+        )
+    )
+    {
+        MLV_wait_keyboard_or_mouse(&sym, &mod, &unicode, &mouse_x, &mouse_y);
+    }
 
     // Selection dimentions de la matrice
     int length, width;
-    menu_1(&length, &width);
+    menu_1(&length, &width, background, text1_menu1, text2_menu1);
 
     // Déclaration et initialisation de la matrice
     Element **matrice = allocate_matrice(length, width);

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <MLV/MLV_all.h>
+
 Element **allocate_matrice(int length, int width)
 {
     Element **matrice;
@@ -86,21 +88,86 @@ void display_matrice(Element **matrice, int length, int width)
     }
 }
 
-void menu_1(int *length, int *width)
+
+void display_init(char *background_path, char *title_path, char *button_LG_path)
 {
     printf("\n=========================INCENDIE========================\n\n");
 
+    MLV_create_window(
+        "Incendie - Le Jeu",
+        "Incendie",
+        WIDTH_WINDOW,
+        HEIGHT_WINDOW
+    );
+
+    MLV_Image *background = MLV_load_image(background_path);
+    MLV_Image *title = MLV_load_image(title_path);
+    MLV_Image *button_LG = MLV_load_image(button_LG_path);
+
+    MLV_draw_image(
+        background,
+        0,0
+    );
+
+    MLV_draw_image(
+        title,
+        45,75
+    );
+
+    MLV_draw_image(
+        button_LG,
+        550,550
+    );
+
+    MLV_actualise_window();
+}
+
+
+void menu_1(int *length, int *width, char *background_path, char *text1_menu1_path, char *text2_menu1_path)
+{
     do
     {
         printf("\nEntrez le nombre de cellule en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+
+        MLV_Image *background = MLV_load_image(background_path);
+        MLV_Image *text1_menu1 = MLV_load_image(text1_menu1_path);
+
+        MLV_draw_image(
+            background,
+            0,0
+        );
+
+        MLV_draw_image(
+            text1_menu1,
+            20,20
+        );
+        
+        MLV_actualise_window();
+
         scanf("%d", length);
-    } while (*length < SIZEMIN || *length > SIZEMAX);
+    } while(*length < SIZEMIN || *length > SIZEMAX);
 
     do
     {
         printf("\n\nEntrez le nombre de cellule en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+
+        MLV_Image *background = MLV_load_image(background_path);
+        MLV_Image *text2_menu1 = MLV_load_image(text2_menu1_path);
+
+        MLV_draw_image(
+            background,
+            0,0
+        );
+
+        MLV_draw_image(
+            text2_menu1,
+            20,20
+        );
+
+        MLV_actualise_window();
+
         scanf("%d", width);
-    } while (*width < SIZEMIN || *width > SIZEMAX);
+    } while(*width < SIZEMIN || *width > SIZEMAX);
 }
 
 void menu_2(int *mode_game)
@@ -259,28 +326,28 @@ void pop(struct Node **top, Element *popped)
     }
 }
 
-// void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase)
-// {
-//     int choix;
-//     printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
-//     printf("\t\t1 - Pour continuer la simulation.\n");
-//     printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
-//     printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
-//     printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
-//     scanf("%d", &choix);
+void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase)
+{
+    // int choix;
+    // printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
+    // printf("\t\t1 - Pour continuer la simulation.\n");
+    // printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
+    // printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
+    // printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
+    // scanf("%d", &choix);
 
-//     switch (choix)
-//     {
-//     case 1:
-//         break;
-//     case 2:
-//         break;
-//     case 3:
-//         break;
-//     default:
-//         break;
-//     }
-// }
+    // switch (choix)
+    // {
+    // case 1:
+    //     break;
+    // case 2:
+    //     break;
+    // case 3:
+    //     break;
+    // default:
+    //     break;
+    // }
+}
 
 void game(Element **matrice, int length, int width)
 {
