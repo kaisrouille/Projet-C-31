@@ -126,7 +126,7 @@ void action_next_menu()
 {
     MLV_Keyboard_button sym;
     MLV_Keyboard_modifier mod;
-    int unicode;
+    int unicode = 0;
     int mouse_x;
     int mouse_y;
     while(
@@ -193,9 +193,25 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
     } while(*width < SIZEMIN || *width > SIZEMAX);
 }
 
-void menu_2(int *mode_game)
+void menu_2(int *mode_game, char *background_path, char *text1_menu2_path)
 {
     printf("\n\nVeuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
+
+        MLV_Image *background = MLV_load_image(background_path);
+        MLV_Image *text1_menu2 = MLV_load_image(text1_menu2_path);
+
+        MLV_draw_image(
+            background,
+            0,0
+        );
+
+        MLV_draw_image(
+            text1_menu2,
+            40,300
+        );
+        
+        MLV_actualise_window();
+
     do
     {
         scanf("%d", mode_game);
@@ -220,6 +236,17 @@ void manual_mode(
 
     // affichage matrice
     display_matrice(matrice, length, width);
+
+
+
+
+
+
+
+
+    //dessin de la grille a faire
+    //action_next_menu();
+
 
     // remplissage de la matrice par l'utilisateur
     int i, j;

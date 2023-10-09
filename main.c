@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
     char text1_menu1[] = "images/text1_menu1.png";
     char text2_menu1[] = "images/text2_menu1.png";
 
+    char text1_menu2[] = "images/text1_menu2.png";
+
 
 
 
@@ -79,6 +81,7 @@ int main(int argc, char *argv[])
     //Initialisation de l'affichage graphique
     display_init(background, title, button_LG);
 
+    //Detection action utilisateur (bouton ou barre espace clavier)
     action_next_menu();
 
     // Selection dimentions de la matrice
@@ -90,7 +93,7 @@ int main(int argc, char *argv[])
 
     // Selection du mode de jeu
     int mode_game;
-    menu_2(&mode_game);
+    menu_2(&mode_game, background, text1_menu2);
 
     // Initialisation de la matrice
     if (mode_game == 1)
