@@ -29,6 +29,8 @@ void free_matrice(Element **matrice, int length);
 //Affichage console de la matrice
 void display_matrice(Element **matrice, int length, int width);
 
+void action_next_menu();
+
 
 //Menu de sélection des dimensions de la matrice
 void menu_1(int *length, int *width, char *background_path, char *text1_menu1_path, char *text2_menu1_path);

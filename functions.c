@@ -122,6 +122,29 @@ void display_init(char *background_path, char *title_path, char *button_LG_path)
     MLV_actualise_window();
 }
 
+void action_next_menu()
+{
+    MLV_Keyboard_button sym;
+    MLV_Keyboard_modifier mod;
+    int unicode;
+    int mouse_x;
+    int mouse_y;
+    while(
+        !(
+            unicode == 32 ||
+            (
+                mouse_x >= 550 &&
+                mouse_x <= 1050 &&
+                mouse_y >= 550 &&
+                mouse_y <= 707
+            )
+        )
+    )
+    {
+        MLV_wait_keyboard_or_mouse(&sym, &mod, &unicode, &mouse_x, &mouse_y);
+    }
+}
+
 
 void menu_1(int *length, int *width, char *background_path, char *text1_menu1_path, char *text2_menu1_path)
 {
@@ -139,7 +162,7 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
 
         MLV_draw_image(
             text1_menu1,
-            20,20
+            120,400
         );
         
         MLV_actualise_window();
@@ -161,7 +184,7 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
 
         MLV_draw_image(
             text2_menu1,
-            20,20
+            120,400
         );
 
         MLV_actualise_window();

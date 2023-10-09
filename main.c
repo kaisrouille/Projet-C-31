@@ -12,10 +12,12 @@ int main(int argc, char *argv[])
 
     char title[] = "images/title.png";
 
+    char button_LG[] = "images/button_LG.png";
+
     char text1_menu1[] = "images/text1_menu1.png";
     char text2_menu1[] = "images/text2_menu1.png";
 
-    char button_LG[] = "images/button_LG.png";
+
 
 
     // affichage de selection de case pour le mode manuel
@@ -74,29 +76,10 @@ int main(int argc, char *argv[])
         0
     };
 
-
     //Initialisation de l'affichage graphique
     display_init(background, title, button_LG);
 
-    MLV_Keyboard_button sym;
-    MLV_Keyboard_modifier mod;
-    int unicode;
-    int mouse_x;
-    int mouse_y;
-    while(
-        !(
-            unicode == 32 ||
-            (
-                mouse_x >= 550 &&
-                mouse_x <= 1050 &&
-                mouse_y >= 550 &&
-                mouse_y <= 707
-            )
-        )
-    )
-    {
-        MLV_wait_keyboard_or_mouse(&sym, &mod, &unicode, &mouse_x, &mouse_y);
-    }
+    action_next_menu();
 
     // Selection dimentions de la matrice
     int length, width;
@@ -156,8 +139,11 @@ int main(int argc, char *argv[])
     {
         // On met d'abord le feu à la case selectionnée par l'utilisateur
         matrice[x_firstcase][y_firstcase].etat = 1;
+
         display_matrice(matrice, length, width);
+
         game(matrice, length, width);
+
         display_matrice(matrice, length, width);
         printf("\n\n\n\n\n");
     }
