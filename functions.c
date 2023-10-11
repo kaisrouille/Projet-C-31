@@ -16,7 +16,7 @@ Element **allocate_matrice(int length, int width)
         return NULL;
     }
 
-    // Allocation de mémoire pour chaque ligne (tableau de Elements)
+    // Allocation de mémoire pour chaque ligne (tableau de Element)
     int i;
     for (i = 0; i < length; i++)
     {
@@ -339,67 +339,50 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
     printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
-int isEmpty(struct Node *top)
+void menu_4(int *nb_tour)
 {
-    if (top == NULL)
-    {
-        return 1;
-    }
-    return 0;
+    int choix;
+    printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
+    printf("\t\t1 (ou ESPACE) - Pour continuer la simulation.\n");
+    printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
+    printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
+    printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
+    scanf("%d", &choix);
 }
 
-void push(struct Node **top, Element data)
+void push(Stack *stack, Element matrice)
 {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    if (newNode == NULL)
+    Node* new_node = (Node*) malloc(sizeof(Node));  // Allocation dynamique de mémoire
+    if(new_node == NULL)
     {
-        printf("Pile pleine. Allocation memoire echouee.\n");
-        return;
-    }
-    newNode->data = data;
-    newNode->next = *top;
-    *top = newNode;
-}
-
-void pop(struct Node **top, Element *popped)
-{
-    if (isEmpty(*top))
-    {
-        printf("Pile vide. Impossible de retirer un element.\n");
+        printf("erreur allocation memoire");
     }
     else
     {
-        struct Node *temp = *top;
-        *popped = temp->data;
-        *top = temp->next;
+        new_node->data = matrice;
+        new_node->next = stack->top;
+        stack->top = new_node;   
+    }
+
+}
+
+void pop(Stack *stack)
+{
+    if(stack->top == NULL)
+    {
+
+    }
+    else
+    {
+        Node* temp = stack->top;
+        stack->top = stack->top->next;
         free(temp);
     }
+
+    
 }
 
-void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase)
-{
-    // int choix;
-    // printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
-    // printf("\t\t1 - Pour continuer la simulation.\n");
-    // printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
-    // printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
-    // printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
-    // scanf("%d", &choix);
-
-    // switch (choix)
-    // {
-    // case 1:
-    //     break;
-    // case 2:
-    //     break;
-    // case 3:
-    //     break;
-    // default:
-    //     break;
-    // }
-}
-
-void game(Element **matrice, int length, int width)
+void propagation(Element **matrice, int length, int width, Stack *stack)
 {
     int i, j;
     for (i = 0; i < length; i++)
@@ -418,17 +401,18 @@ void game(Element **matrice, int length, int width)
                     // Condition pour le traitement des cases du haut
                     if (i != 0)
                     {
-                        // Traitement de la case en haut en gauche
+                        // Traitement de la case en haut à gauche
                         if (
                             j != 0 &&
                             matrice[i - 1][j - 1].etat == 0 &&
-                            matrice[i - 1][j - 1].degres != 0)
+                            matrice[i - 1][j - 1].degres != 0
+                        )
                         {
                             matrice[i - 1][j - 1].etat = 1;
                             matrice[i - 1][j - 1].degres--;
                         }
 
-                        // Traitement de la case du dessus
+                        // Traitement de la case en haut au milieu
                         if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
                         {
                             matrice[i - 1][j].etat = 1;
@@ -470,7 +454,8 @@ void game(Element **matrice, int length, int width)
                         if (
                             j != 0 &&
                             matrice[i + 1][j - 1].etat == 0 &&
-                            matrice[i + 1][j - 1].degres != 0)
+                            matrice[i + 1][j - 1].degres != 0
+                        )
                         {
                             matrice[i + 1][j - 1].etat = 1;
                             matrice[i + 1][j - 1].degres--;
@@ -509,7 +494,5 @@ void game(Element **matrice, int length, int width)
             }
         }
     }
-
-    // A partir de là on presente un menu à l'utilisateur et on lui demande quelle action il veut faire par la
-    // suite à travers le menu4.
+    push(stack, **matrice);
 }

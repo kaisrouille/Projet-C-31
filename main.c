@@ -9,17 +9,11 @@ int main(int argc, char *argv[])
 {
     //images affichage graphique
     char background[] = "images/background.png";
-
     char title[] = "images/title.png";
-
     char button_LG[] = "images/button_LG.png";
-
     char text1_menu1[] = "images/text1_menu1.png";
     char text2_menu1[] = "images/text2_menu1.png";
-
     char text1_menu2[] = "images/text1_menu2.png";
-
-
 
 
     // affichage de selection de case pour le mode manuel
@@ -35,50 +29,43 @@ int main(int argc, char *argv[])
         0,
         0
     };
-
     Element tree = {
         '*',
         4,
         0
     };
-
     Element leaf = {
         ' ',
         2,
         0
     };
-
     Element rock = {
         '#',
         5,
         0
     };
-
     Element grass = {
         'x',
         3,
         0
     };
-
     Element water = {
         '/',
         0,
         0
     };
-
     Element ash = {
         '-',
         1,
         0
     };
-
     Element inactive_ash = {
         '@',
         0,
         0
     };
 
-    //Initialisation de l'affichage graphique
+    //Initialisation du jeu
     display_init(background, title, button_LG);
 
     //Detection action utilisateur (bouton ou barre espace clavier)
@@ -136,19 +123,23 @@ int main(int argc, char *argv[])
     int x_firstcase, y_firstcase;
     menu_3(&nb_tour, &x_firstcase, &y_firstcase);
 
+    Stack stack;
+    stack.top = matrice;
+
+    // On met d'abord le feu à la case selectionnée par l'utilisateur
+    matrice[x_firstcase][y_firstcase].etat = 1;
+
+    display_matrice(matrice, length, width);
+
     // Déroulement du jeu
     int p;
     for (p = 0; p < nb_tour; p++)
     {
-        // On met d'abord le feu à la case selectionnée par l'utilisateur
-        matrice[x_firstcase][y_firstcase].etat = 1;
+        propagation(matrice, length, width, &stack);
 
         display_matrice(matrice, length, width);
 
-        game(matrice, length, width);
-
-        display_matrice(matrice, length, width);
-        printf("\n\n\n\n\n");
+        menu_4(&nb_tour);
     }
 
     // Libération de la mémoire de la matrice

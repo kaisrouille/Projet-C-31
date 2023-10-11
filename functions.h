@@ -11,12 +11,19 @@ typedef struct Element
     int etat;
 } Element;
 
-typedef struct Node Node;
-struct Node
+
+//Structure noeud pile
+typedef struct Node
 {
     Element data;
-    Node* next;
-};
+    struct Node* next;
+} Node;
+
+//Structure pile
+typedef struct Stack
+{
+    Node* top;
+} Stack;
 
 
 
@@ -73,16 +80,16 @@ void auto_mode(
 
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase);
 
-void menu_4(int *nb_tour, int *x_firstcase, int *y_firstcase);
-
-int isEmpty(struct Node* top);
-
-void push(struct Node** top, Element data);
-
-void pop(struct Node** top, Element* popped);
+void menu_4(int *nb_tour);
 
 
-void game(Element **matrice, int length, int width);
+
+void push(Stack *stack, Element matrice);
+
+void pop(Stack *stack);
+
+
+void propagation(Element **matrice, int length, int width, Stack *stack);
 
 
 void display_init(char *background_path, char *title_path, char *button_LG_path);
