@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
                 printf("Erreur de lecture du choix.\n");
             }
 
-            // int choice2;
+            int choice2;
 
             // revenir en arriere
             if (choice == 1)
@@ -164,38 +164,50 @@ int main(int argc, char *argv[])
                 {
                     pop(&stack, length, width);
 
-                    //             printf("revenir en arriere une fois encore ?\n\n1 - Oui\n2 - Non");
+                    printf("revenir en arriere une fois encore ?\n\n1 - Oui\n2 - Non");
 
-                    //             scanf("%d", &choice2);
-                    //         }
+                    if (scanf("%d", &choice2) == 1)
+                    {
+                        printf("Le choix renseignée est %d.\n\n", choice);
+                    }
+                    else
+                    {
+                        printf("Erreur de lecture du choix.\n");
+                    }
+                }
+            }
+
+            //changer le contenu d'une case
+            else if(choice == 2)
+            {
+                printf("entrez les coordonnees de la case a modifier (au format X,X):\n\n");
+
+                printf("choisissez le nouvel element a inserer dans cette case :\n\n");
+                printf("1 - Sol");
+                printf("2 - Arbre");
+                printf("3 - Feuille");
+                printf("4 - Rocher");
+                printf("5 - Herbe");
+                printf("6 - Eau");
+                printf("7 - Cendre");
+                printf("8 - Cendre eteinte\n\n");
+
+                if (scanf("%d", &choice2) == 1)
+                {
+                    printf("Le choix renseignée est %d.\n\n", choice);
+                }
+                else
+                {
+                    printf("Erreur de lecture du choix.\n");
                 }
 
-                //     //changer le contenu d'une case
-                //     else if(choice == 2)
-                //     {
-                //         printf("entrez les coordonnees de la case a modifier (au format X,X):\n\n");
+                //faire le switch
+            }
 
-                //         printf("choisissez le nouvel element a inserer dans cette case :\n\n");
-                //         printf("1 - Sol");
-                //         printf("2 - Arbre");
-                //         printf("3 - Feuille");
-                //         printf("4 - Rocher");
-                //         printf("5 - Herbe");
-                //         printf("6 - Eau");
-                //         printf("7 - Cendre");
-                //         printf("8 - Cendre eteinte\n\n");
-
-                //         scanf("%d", &choice2);
-
-                //         //faire le switch
-                //     }
-
-                //     //Quitter la partie/recommencer au début
-                //     else if(choice == 3)
-                //     {
-                //         break;
-                //     }
-                //
+            //Quitter la partie/recommencer au début
+            else if(choice == 3)
+            {
+                break;
             }
         }
     }
