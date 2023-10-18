@@ -268,7 +268,7 @@ void manual_mode(
             {
                 if (scanf("%d", &choice) == 1)
                 {
-                    printf("La choix renseignée est %d.\n\n", choice);
+                    printf("Le choix renseignée est %d.\n\n", choice);
                 }
                 else
                 {
@@ -421,7 +421,7 @@ void pop(Stack *stack, int length, int width)
 }
 
 
-void propagation(Element **matrice, int length, int width) // , Stack *stack
+void propagation(Element **matrice, int length, int width, Stack *stack)
 {
     int i, j;
     for (i = 0; i < length; i++)
