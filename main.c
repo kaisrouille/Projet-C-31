@@ -123,8 +123,8 @@ int main(int argc, char *argv[])
     int x_firstcase, y_firstcase;
     menu_3(&nb_tour, &x_firstcase, &y_firstcase);
 
-    // Stack stack;
-    // stack.top = matrice;
+    Stack stack;
+    push(&stack, matrice, length, width);
 
     // On met d'abord le feu à la case selectionnée par l'utilisateur
     matrice[x_firstcase][y_firstcase].etat = 1;
@@ -147,25 +147,25 @@ int main(int argc, char *argv[])
             MLV_wait_keyboard(NULL, NULL, &unicode);
         }
         
-        // //Appuie sur ESPACE
-        // if (unicode == 32)
-        // {
-        //     push(&stack, matrice);
-        // }
-        // //Appuie sur BACKSPACE
-        // else if (unicode == 8)
-        // {
-        //     int choice;
-        //     scanf("%d", &choice);
+        //Appuie sur ESPACE
+        if (unicode == 32)
+        {
+            push(&stack, matrice, length, width);
+        }
+        //Appuie sur BACKSPACE
+        else if (unicode == 8)
+        {
+            int choice;
+            scanf("%d", &choice);
 
         //     int choice2;
 
-        //     //revenir en arriere
-        //     if(choice == 1)
-        //     {
-        //         while(choice == 1)
-        //         {
-        //             pop(&stack);
+            //revenir en arriere
+            if(choice == 1)
+            {
+                while(choice == 1)
+                {
+                    pop(&stack, length, width);
 
         //             printf("revenir en arriere une fois encore ?\n\n1 - Oui\n2 - Non");
 

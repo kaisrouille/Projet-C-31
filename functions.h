@@ -14,8 +14,8 @@ typedef struct Element
 // Structure noeud pile
 typedef struct Node
 {
-    Element data;
-    struct Node *next;
+    Element **data;
+    struct Node* next;
 } Node;
 
 // Structure pile
@@ -75,10 +75,14 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase);
 
 void menu_4(int *nb_tour);
 
-void push(Stack *stack, Element **matrice);
 
-void pop(Stack *stack);
 
-void propagation(Element **matrice, int length, int width); // Stack *stack
+void push(Stack *stack, Element **matrice, int length, int width);
+
+void pop(Stack *stack, int length, int width);
+
+
+void propagation(Element **matrice, int length, int width, Stack *stack);
+
 
 void display_init(char *background_path, char *title_path, char *button_LG_path);
