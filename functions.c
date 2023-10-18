@@ -129,10 +129,10 @@ void action_next_menu()
     while (
         !(
             unicode == 32 ||
-            (mouse_x >= 550 &&
-             mouse_x <= 1050 &&
-             mouse_y >= 550 &&
-             mouse_y <= 707)))
+            (mouse_x >= 420 &&
+             mouse_x <= 780 &&
+             mouse_y >= 375 &&
+             mouse_y <= 600)))
     {
         MLV_wait_keyboard_or_mouse(NULL, NULL, &unicode, &mouse_x, &mouse_y);
     }
@@ -371,14 +371,14 @@ void menu_4(int *nb_tour)
 
 void push(Stack *stack, Element **matrice, int length, int width)
 {
-    Node* new_node = (Node*) malloc(sizeof(Node));  
-    if(new_node == NULL)
+    Node *new_node = (Node *)malloc(sizeof(Node));
+    if (new_node == NULL)
     {
         printf("erreur allocation memoire");
         return;
     }
-    
-    //Clonage de la matrice actuelle
+
+    // Clonage de la matrice actuelle
     Element **new_matrice = allocate_matrice(length, width);
     for (int i = 0; i < length; i++)
     {
@@ -387,23 +387,22 @@ void push(Stack *stack, Element **matrice, int length, int width)
             new_matrice[i][j] = matrice[i][j];
         }
     }
-    
+
     new_node->data = new_matrice;
     new_node->next = stack->top;
     stack->top = new_node;
 }
 
-
 void pop(Stack *stack, int length, int width)
 {
-    if(stack->top == NULL)
+    if (stack->top == NULL)
     {
         printf("La pile est vide.\n");
         return;
     }
     else
     {
-        Node* temp = stack->top;
+        Node *temp = stack->top;
 
         // Libérer la mémoire de la matrice
         for (int i = 0; i < length; i++)
@@ -419,7 +418,6 @@ void pop(Stack *stack, int length, int width)
         free(temp);
     }
 }
-
 
 void propagation(Element **matrice, int length, int width, Stack *stack)
 {
