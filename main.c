@@ -140,6 +140,65 @@ int main(int argc, char *argv[])
         display_matrice(matrice, length, width);
 
         menu_4(&nb_tour);
+
+        int unicode = 0;
+        while(!(unicode == 32 || unicode == 8))
+        {
+            MLV_wait_keyboard(NULL, NULL, &unicode);
+        }
+        
+        //Appuie sur ESPACE
+        if (unicode == 32)
+        {
+            push(&stack, matrice);
+        }
+        //Appuie sur BACKSPACE
+        else if (unicode == 8)
+        {
+            int choice;
+            scanf("%d", &choice);
+
+            int choice2;
+
+            //revenir en arriere
+            if(choice == 1)
+            {
+                while(choice == 1)
+                {
+                    pop(&stack);
+
+                    printf("revenir en arriere une fois encore ?\n\n1 - Oui\n2 - Non");
+
+                    scanf("%d", &choice2);
+                }
+            }
+            
+            //changer le contenu d'une case
+            else if(choice == 2)
+            {
+                printf("entrez les coordonnees de la case a modifier (au format X,X):\n\n");
+
+                printf("choisissez le nouvel element a inserer dans cette case :\n\n");
+                printf("1 - Sol");
+                printf("2 - Arbre");
+                printf("3 - Feuille");
+                printf("4 - Rocher");
+                printf("5 - Herbe");
+                printf("6 - Eau");
+                printf("7 - Cendre");
+                printf("8 - Cendre eteinte\n\n");
+
+                scanf("%d", &choice2);
+
+                //faire le switch
+            }
+
+            //Quitter la partie/recommencer au début
+            else if(choice == 3)
+            {
+                break;
+            }
+        }
     }
 
     // Libération de la mémoire de la matrice

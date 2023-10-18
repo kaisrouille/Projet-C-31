@@ -124,8 +124,6 @@ void display_init(char *background_path, char *title_path, char *button_LG_path)
 
 void action_next_menu()
 {
-    MLV_Keyboard_button sym;
-    MLV_Keyboard_modifier mod;
     int unicode = 0;
     int mouse_x;
     int mouse_y;
@@ -141,7 +139,7 @@ void action_next_menu()
         )
     )
     {
-        MLV_wait_keyboard_or_mouse(&sym, &mod, &unicode, &mouse_x, &mouse_y);
+        MLV_wait_keyboard_or_mouse(NULL, NULL, &unicode, &mouse_x, &mouse_y);
     }
 }
 
@@ -341,30 +339,26 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
 
 void menu_4(int *nb_tour)
 {
-    int choix;
     printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
     printf("\t\t1 (ou ESPACE) - Pour continuer la simulation.\n");
     printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
     printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
     printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
-    scanf("%d", &choix);
 }
 
-void push(Stack *stack, Element matrice)
+void push(Stack *stack, Element **matrice)
 {
-    Node* new_node = (Node*) malloc(sizeof(Node));  // Allocation dynamique de mémoire
+    Node* new_node = (Node*) malloc(sizeof(Node));  
     if(new_node == NULL)
     {
         printf("erreur allocation memoire");
+        return;
     }
-    else
-    {
-        new_node->data = matrice;
-        new_node->next = stack->top;
-        stack->top = new_node;   
-    }
-
+    new_node->data = matrice;
+    new_node->next = stack->top;
+    stack->top = new_node;
 }
+
 
 void pop(Stack *stack)
 {

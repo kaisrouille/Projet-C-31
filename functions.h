@@ -84,7 +84,7 @@ void menu_4(int *nb_tour);
 
 
 
-void push(Stack *stack, Element matrice);
+void push(Stack *stack, Element **matrice);
 
 void pop(Stack *stack);
 
