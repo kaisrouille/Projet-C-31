@@ -235,13 +235,6 @@ void manual_mode(
     // affichage matrice
     display_matrice(matrice, length, width);
 
-
-
-
-
-
-
-
     //dessin de la grille a faire
     //action_next_menu();
 
@@ -346,7 +339,7 @@ void menu_4(int *nb_tour)
     printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
 }
 
-void push(Stack *stack, Element **matrice)
+void push(Stack *stack, Element **matrice, int length, int width)
 {
     Node* new_node = (Node*) malloc(sizeof(Node));  
     if(new_node == NULL)
@@ -354,27 +347,49 @@ void push(Stack *stack, Element **matrice)
         printf("erreur allocation memoire");
         return;
     }
-    new_node->data = matrice;
+    
+    //Clonage de la matrice actuelle
+    Element **new_matrice = allocate_matrice(length, width);
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            new_matrice[i][j] = matrice[i][j];
+        }
+    }
+    
+    new_node->data = new_matrice;
     new_node->next = stack->top;
     stack->top = new_node;
 }
 
 
-void pop(Stack *stack)
+void pop(Stack *stack, int length, int width)
 {
     if(stack->top == NULL)
     {
-
+        printf("La pile est vide.\n");
+        return;
     }
     else
     {
         Node* temp = stack->top;
+
+        // Libérer la mémoire de la matrice
+        for (int i = 0; i < length; i++)
+        {
+            free(temp->data[i]);
+        }
+        free(temp->data);
+
+        // Retirer le nœud du sommet de la pile
         stack->top = stack->top->next;
+
+        // Libérer la mémoire du nœud
         free(temp);
     }
-
-    
 }
+
 
 void propagation(Element **matrice, int length, int width, Stack *stack)
 {
@@ -488,5 +503,5 @@ void propagation(Element **matrice, int length, int width, Stack *stack)
             }
         }
     }
-    push(stack, **matrice);
+    push(stack, matrice, length, width);
 }
