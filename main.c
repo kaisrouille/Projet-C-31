@@ -123,8 +123,8 @@ int main(int argc, char *argv[])
     int x_firstcase, y_firstcase;
     menu_3(&nb_tour, &x_firstcase, &y_firstcase);
 
-    Stack stack;
-    stack.top = matrice;
+    // Stack stack;
+    // stack.top = matrice;
 
     // On met d'abord le feu à la case selectionnée par l'utilisateur
     matrice[x_firstcase][y_firstcase].etat = 1;
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
     int p;
     for (p = 0; p < nb_tour; p++)
     {
-        propagation(matrice, length, width, &stack);
+        propagation(matrice, length, width);
 
         display_matrice(matrice, length, width);
 
@@ -147,58 +147,58 @@ int main(int argc, char *argv[])
             MLV_wait_keyboard(NULL, NULL, &unicode);
         }
         
-        //Appuie sur ESPACE
-        if (unicode == 32)
-        {
-            push(&stack, matrice);
-        }
-        //Appuie sur BACKSPACE
-        else if (unicode == 8)
-        {
-            int choice;
-            scanf("%d", &choice);
+        // //Appuie sur ESPACE
+        // if (unicode == 32)
+        // {
+        //     push(&stack, matrice);
+        // }
+        // //Appuie sur BACKSPACE
+        // else if (unicode == 8)
+        // {
+        //     int choice;
+        //     scanf("%d", &choice);
 
-            int choice2;
+        //     int choice2;
 
-            //revenir en arriere
-            if(choice == 1)
-            {
-                while(choice == 1)
-                {
-                    pop(&stack);
+        //     //revenir en arriere
+        //     if(choice == 1)
+        //     {
+        //         while(choice == 1)
+        //         {
+        //             pop(&stack);
 
-                    printf("revenir en arriere une fois encore ?\n\n1 - Oui\n2 - Non");
+        //             printf("revenir en arriere une fois encore ?\n\n1 - Oui\n2 - Non");
 
-                    scanf("%d", &choice2);
-                }
-            }
+        //             scanf("%d", &choice2);
+        //         }
+        //     }
             
-            //changer le contenu d'une case
-            else if(choice == 2)
-            {
-                printf("entrez les coordonnees de la case a modifier (au format X,X):\n\n");
+        //     //changer le contenu d'une case
+        //     else if(choice == 2)
+        //     {
+        //         printf("entrez les coordonnees de la case a modifier (au format X,X):\n\n");
 
-                printf("choisissez le nouvel element a inserer dans cette case :\n\n");
-                printf("1 - Sol");
-                printf("2 - Arbre");
-                printf("3 - Feuille");
-                printf("4 - Rocher");
-                printf("5 - Herbe");
-                printf("6 - Eau");
-                printf("7 - Cendre");
-                printf("8 - Cendre eteinte\n\n");
+        //         printf("choisissez le nouvel element a inserer dans cette case :\n\n");
+        //         printf("1 - Sol");
+        //         printf("2 - Arbre");
+        //         printf("3 - Feuille");
+        //         printf("4 - Rocher");
+        //         printf("5 - Herbe");
+        //         printf("6 - Eau");
+        //         printf("7 - Cendre");
+        //         printf("8 - Cendre eteinte\n\n");
 
-                scanf("%d", &choice2);
+        //         scanf("%d", &choice2);
 
-                //faire le switch
-            }
+        //         //faire le switch
+        //     }
 
-            //Quitter la partie/recommencer au début
-            else if(choice == 3)
-            {
-                break;
-            }
-        }
+        //     //Quitter la partie/recommencer au début
+        //     else if(choice == 3)
+        //     {
+        //         break;
+        //     }
+        // }
     }
 
     // Libération de la mémoire de la matrice

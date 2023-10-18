@@ -88,7 +88,6 @@ void display_matrice(Element **matrice, int length, int width)
     }
 }
 
-
 void display_init(char *background_path, char *title_path, char *button_LG_path)
 {
     printf("\n=========================INCENDIE========================\n\n");
@@ -97,27 +96,27 @@ void display_init(char *background_path, char *title_path, char *button_LG_path)
         "Incendie - Le Jeu",
         "Incendie",
         WIDTH_WINDOW,
-        HEIGHT_WINDOW
-    );
+        HEIGHT_WINDOW);
 
     MLV_Image *background = MLV_load_image(background_path);
     MLV_Image *title = MLV_load_image(title_path);
     MLV_Image *button_LG = MLV_load_image(button_LG_path);
 
+    MLV_resize_image_with_proportions(background, WIDTH_WINDOW, HEIGHT_WINDOW);
+    MLV_resize_image_with_proportions(title, WIDTH_WINDOW * 0.5, HEIGHT_WINDOW * 0.4);
+    MLV_resize_image_with_proportions(button_LG, WIDTH_WINDOW * 0.3, HEIGHT_WINDOW * 0.3);
+
     MLV_draw_image(
         background,
-        0,0
-    );
+        0, 0);
 
     MLV_draw_image(
         title,
-        45,75
-    );
+        300, 185);
 
     MLV_draw_image(
         button_LG,
-        550,550
-    );
+        420, 375);
 
     MLV_actualise_window();
 }
@@ -127,22 +126,17 @@ void action_next_menu()
     int unicode = 0;
     int mouse_x;
     int mouse_y;
-    while(
+    while (
         !(
             unicode == 32 ||
-            (
-                mouse_x >= 550 &&
-                mouse_x <= 1050 &&
-                mouse_y >= 550 &&
-                mouse_y <= 707
-            )
-        )
-    )
+            (mouse_x >= 550 &&
+             mouse_x <= 1050 &&
+             mouse_y >= 550 &&
+             mouse_y <= 707)))
     {
         MLV_wait_keyboard_or_mouse(NULL, NULL, &unicode, &mouse_x, &mouse_y);
     }
 }
-
 
 void menu_1(int *length, int *width, char *background_path, char *text1_menu1_path, char *text2_menu1_path)
 {
@@ -155,18 +149,24 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
 
         MLV_draw_image(
             background,
-            0,0
-        );
+            0, 0);
 
         MLV_draw_image(
             text1_menu1,
-            120,400
-        );
-        
+            120, 400);
+
         MLV_actualise_window();
 
-        scanf("%d", length);
-    } while(*length < SIZEMIN || *length > SIZEMAX);
+        if (scanf("%d", length) == 1)
+        {
+            printf("La longueur renseignée est %d.\n\n", *length);
+        }
+        else
+        {
+            printf("Erreur de lecture de la longueur.\n");
+        }
+
+    } while (*length < SIZEMIN || *length > SIZEMAX);
 
     do
     {
@@ -177,42 +177,52 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
 
         MLV_draw_image(
             background,
-            0,0
-        );
+            0, 0);
 
         MLV_draw_image(
             text2_menu1,
-            120,400
-        );
+            120, 400);
 
         MLV_actualise_window();
 
-        scanf("%d", width);
-    } while(*width < SIZEMIN || *width > SIZEMAX);
+        if (scanf("%d", width) == 1)
+        {
+            printf("La largeur renseignée est %d.\n\n", *width);
+        }
+        else
+        {
+            printf("Erreur de lecture de la largeur.\n");
+        }
+    } while (*width < SIZEMIN || *width > SIZEMAX);
 }
 
 void menu_2(int *mode_game, char *background_path, char *text1_menu2_path)
 {
     printf("\n\nVeuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
 
-        MLV_Image *background = MLV_load_image(background_path);
-        MLV_Image *text1_menu2 = MLV_load_image(text1_menu2_path);
+    MLV_Image *background = MLV_load_image(background_path);
+    MLV_Image *text1_menu2 = MLV_load_image(text1_menu2_path);
 
-        MLV_draw_image(
-            background,
-            0,0
-        );
+    MLV_draw_image(
+        background,
+        0, 0);
 
-        MLV_draw_image(
-            text1_menu2,
-            40,300
-        );
-        
-        MLV_actualise_window();
+    MLV_draw_image(
+        text1_menu2,
+        40, 300);
+
+    MLV_actualise_window();
 
     do
     {
-        scanf("%d", mode_game);
+        if (scanf("%d", mode_game) == 1)
+        {
+            printf("La mode choisi est %d.\n\n", *mode_game);
+        }
+        else
+        {
+            printf("Erreur de lecture du mode de jeu.\n");
+        }
     } while (*mode_game != 1 && *mode_game != 2);
 }
 
@@ -235,16 +245,8 @@ void manual_mode(
     // affichage matrice
     display_matrice(matrice, length, width);
 
-
-
-
-
-
-
-
-    //dessin de la grille a faire
-    //action_next_menu();
-
+    // dessin de la grille a faire
+    // action_next_menu();
 
     // remplissage de la matrice par l'utilisateur
     int i, j;
@@ -264,7 +266,14 @@ void manual_mode(
 
             do
             {
-                scanf("%d", &choice);
+                if (scanf("%d", &choice) == 1)
+                {
+                    printf("La choix renseignée est %d.\n\n", choice);
+                }
+                else
+                {
+                    printf("Erreur de lecture du choix.\n");
+                }
                 switch (choice)
                 {
                 case 1:
@@ -329,54 +338,64 @@ void auto_mode(
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
 {
     printf("\n\nEntrez le nombre de tour de la simulation \n\n");
-    scanf("%d", nb_tour);
+    if (scanf("%d", nb_tour) == 1)
+    {
+        printf("La nombre de tours renseignés est %d.\n\n", *nb_tour);
+    }
+    else
+    {
+        printf("Erreur de lecture du nombre de tours.\n");
+    }
 
     printf("\n\nEntrez les coordonnees de la case du depart de feu (au format X,X) :\n\n");
-    scanf("%d,%d", x_firstcase, y_firstcase);
+    if (scanf("%d,%d", x_firstcase, y_firstcase) == 1)
+    {
+        printf("Les coordonnées sont %d, %d.\n\n", *x_firstcase, *y_firstcase);
+    }
+    else
+    {
+        printf("Erreur de lecture des coordonnées.\n");
+    }
 
     printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
 void menu_4(int *nb_tour)
 {
-    printf("\nVous êtes à l'étape %d de la simulation.\n\n", nb_tour);
+    printf("\nVous êtes à l'étape %d de la simulation.\n\n", *nb_tour);
     printf("\t\t1 (ou ESPACE) - Pour continuer la simulation.\n");
     printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
     printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
     printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
 }
 
-void push(Stack *stack, Element **matrice)
-{
-    Node* new_node = (Node*) malloc(sizeof(Node));  
-    if(new_node == NULL)
-    {
-        printf("erreur allocation memoire");
-        return;
-    }
-    new_node->data = matrice;
-    new_node->next = stack->top;
-    stack->top = new_node;
-}
+// void push(Stack *stack, Element **matrice)
+// {
+//     Node *new_node = (Node *)malloc(sizeof(Node));
+//     if (new_node == NULL)
+//     {
+//         printf("erreur allocation memoire");
+//         return;
+//     }
+//     new_node->data = matrice;
+//     new_node->next = stack->top;
+//     stack->top = new_node;
+// }
 
+// void pop(Stack *stack)
+// {
+//     if (stack->top == NULL)
+//     {
+//     }
+//     else
+//     {
+//         Node *temp = stack->top;
+//         stack->top = stack->top->next;
+//         free(temp);
+//     }
+// }
 
-void pop(Stack *stack)
-{
-    if(stack->top == NULL)
-    {
-
-    }
-    else
-    {
-        Node* temp = stack->top;
-        stack->top = stack->top->next;
-        free(temp);
-    }
-
-    
-}
-
-void propagation(Element **matrice, int length, int width, Stack *stack)
+void propagation(Element **matrice, int length, int width) // , Stack *stack
 {
     int i, j;
     for (i = 0; i < length; i++)
@@ -399,8 +418,7 @@ void propagation(Element **matrice, int length, int width, Stack *stack)
                         if (
                             j != 0 &&
                             matrice[i - 1][j - 1].etat == 0 &&
-                            matrice[i - 1][j - 1].degres != 0
-                        )
+                            matrice[i - 1][j - 1].degres != 0)
                         {
                             matrice[i - 1][j - 1].etat = 1;
                             matrice[i - 1][j - 1].degres--;
@@ -448,8 +466,7 @@ void propagation(Element **matrice, int length, int width, Stack *stack)
                         if (
                             j != 0 &&
                             matrice[i + 1][j - 1].etat == 0 &&
-                            matrice[i + 1][j - 1].degres != 0
-                        )
+                            matrice[i + 1][j - 1].degres != 0)
                         {
                             matrice[i + 1][j - 1].etat = 1;
                             matrice[i + 1][j - 1].degres--;
@@ -488,5 +505,5 @@ void propagation(Element **matrice, int length, int width, Stack *stack)
             }
         }
     }
-    push(stack, **matrice);
+    // push(stack, **matrice);
 }
