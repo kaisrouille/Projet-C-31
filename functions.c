@@ -130,9 +130,9 @@ void action_next_menu()
         !(
             unicode == 32 ||
             (mouse_x >= 420 &&
-             mouse_x <= 780 &&
+             mouse_x <= 772 &&
              mouse_y >= 375 &&
-             mouse_y <= 600)))
+             mouse_y <= 585)))
     {
         MLV_wait_keyboard_or_mouse(NULL, NULL, &unicode, &mouse_x, &mouse_y);
     }
