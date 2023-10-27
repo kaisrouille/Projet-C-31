@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
     // images affichage graphique
-    char background[] = "images/background.png";
+    char background[] = "images/background_menu.png";
     char title[] = "images/title.png";
     char button_LG[] = "images/button_LG.png";
     char text1_menu1[] = "images/text1_menu1.png";
