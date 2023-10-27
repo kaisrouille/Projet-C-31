@@ -147,13 +147,15 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
         MLV_Image *background = MLV_load_image(background_path);
         MLV_Image *text1_menu1 = MLV_load_image(text1_menu1_path);
 
+        MLV_resize_image_with_proportions(text1_menu1, WIDTH_WINDOW * 0.5, HEIGHT_WINDOW * 0.4);
+
         MLV_draw_image(
             background,
             0, 0);
 
         MLV_draw_image(
             text1_menu1,
-            120, 400);
+            300, 185);
 
         MLV_actualise_window();
 
