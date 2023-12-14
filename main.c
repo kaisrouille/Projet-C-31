@@ -8,12 +8,12 @@
 int main(int argc, char *argv[])
 {
     // images affichage graphique
-    char background[] = "images/background_menu.png";
+    char background[] = "images/background.png";
     char title[] = "images/title.png";
     char button_LG[] = "images/button_LG.png";
-    char text1_menu1[] = "images/text1_menu1.png";
-    char text2_menu1[] = "images/text2_menu1.png";
-    char text1_menu2[] = "images/text1_menu2.png";
+    char menu1_text1[] = "images/menu1_text1.png";
+    char menu1_text2[] = "images/menu1_text2.png";
+    char menu2_text1[] = "images/menu2_text1.png";
 
     // affichage de selection de case pour le mode manuel
     Element select = {
@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
     Element inactive_ash = {
         '@',
         0,
-        0};
+        0
+    };
 
     // Initialisation du jeu
     display_init(background, title, button_LG);
@@ -63,14 +64,14 @@ int main(int argc, char *argv[])
 
     // Selection dimentions de la matrice
     int length, width;
-    menu_1(&length, &width, background, text1_menu1, text2_menu1);
+    menu_1(&length, &width, background, menu1_text1, menu1_text2);
 
     // Déclaration et initialisation de la matrice
     Element **matrice = allocate_matrice(length, width);
 
     // Selection du mode de jeu
     int mode_game;
-    menu_2(&mode_game, background, text1_menu2);
+    menu_2(&mode_game, background, menu2_text1);
 
     // Initialisation de la matrice
     if (mode_game == 1)
