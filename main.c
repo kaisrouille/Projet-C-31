@@ -53,8 +53,7 @@ int main(int argc, char *argv[])
     Element inactive_ash = {
         '@',
         0,
-        0
-    };
+        0};
 
     // Initialisation du jeu
     display_init(background, title, button_LG);
@@ -70,7 +69,7 @@ int main(int argc, char *argv[])
     Element **matrice = allocate_matrice(length, width);
 
     // Selection du mode de jeu
-    int mode_game;
+    long mode_game;
     menu_2(&mode_game, background, menu2_text1);
 
     // Initialisation de la matrice
@@ -178,8 +177,8 @@ int main(int argc, char *argv[])
                 }
             }
 
-            //changer le contenu d'une case
-            else if(choice == 2)
+            // changer le contenu d'une case
+            else if (choice == 2)
             {
                 printf("entrez les coordonnees de la case a modifier (au format X,X):\n\n");
 
@@ -202,11 +201,11 @@ int main(int argc, char *argv[])
                     printf("Erreur de lecture du choix.\n");
                 }
 
-                //faire le switch
+                // faire le switch
             }
 
-            //Quitter la partie/recommencer au début
-            else if(choice == 3)
+            // Quitter la partie/recommencer au début
+            else if (choice == 3)
             {
                 break;
             }

@@ -108,15 +108,13 @@ void display_init(char *background_path, char *title_path, char *button_LG_path)
 
     MLV_draw_image(
         title,
-        WIDTH_WINDOW/2 - MLV_get_image_width(title)/2, 
-        HEIGHT_WINDOW/6 - MLV_get_image_height(title)/2
-    );
+        WIDTH_WINDOW / 2 - MLV_get_image_width(title) / 2,
+        HEIGHT_WINDOW / 6 - MLV_get_image_height(title) / 2);
 
     MLV_draw_image(
         button_LG,
-        WIDTH_WINDOW/2 - MLV_get_image_width(button_LG)/2,
-        HEIGHT_WINDOW/1.5 - MLV_get_image_height(button_LG)/2
-    );
+        WIDTH_WINDOW / 2 - MLV_get_image_width(button_LG) / 2,
+        HEIGHT_WINDOW / 1.5 - MLV_get_image_height(button_LG) / 2);
 
     MLV_actualise_window();
 }
@@ -128,7 +126,7 @@ void action_next_menu()
     int mouse_y;
     while (
         !(
-            unicode == 32 ||    // touche ESPACE
+            unicode == 32 || // touche ESPACE
             (mouse_x >= 420 &&
              mouse_x <= 772 &&
              mouse_y >= 375 &&
@@ -143,39 +141,36 @@ void menu_1(
     int *width,
     char *background_path,
     char *menu1_text1_path,
-    char *menu1_text2_path
-)
+    char *menu1_text2_path)
 {
     MLV_Image *background = MLV_load_image(background_path);
     MLV_Image *menu1_text1 = MLV_load_image(menu1_text1_path);
     MLV_Image *menu1_text2 = MLV_load_image(menu1_text2_path);
 
-    //Longueur
+    // Longueur
 
     printf("\nEntrez le nombre de cellule en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
 
     // Affichage des images
     MLV_draw_image(
         background,
-        0,0);
+        0, 0);
 
     MLV_draw_image(
         menu1_text1,
-        0,0
-    );
+        0, 0);
 
     // Affichage de la boite de dialogue
-    char* text_response_length;
+    char *text_response_length;
 
     MLV_wait_input_box(
-        WIDTH_WINDOW/2 - 100, HEIGHT_WINDOW/2,
+        WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
         200, 50,
         MLV_COLOR_BLACK,
         MLV_COLOR_BLACK,
         MLV_COLOR_WHITE,
         "Longueur : ",
-        &text_response_length
-    );
+        &text_response_length);
 
     // Convertion de l'entrée utilisateur (char) en int
     long tmp_length = strtol(text_response_length, NULL, 10);
@@ -189,10 +184,10 @@ void menu_1(
         printf("Longueur incorrecte");
     }
     free(text_response_length);
-   
+
     MLV_actualise_window();
 
-    //Largeur
+    // Largeur
 
     printf("\n\nEntrez le nombre de cellule en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
 
@@ -202,21 +197,19 @@ void menu_1(
 
     MLV_draw_image(
         menu1_text2,
-        0,0
-    );
+        0, 0);
 
     // Affichage de la boite de dialogue
-    char* text_response_width;
+    char *text_response_width;
 
     MLV_wait_input_box(
-        WIDTH_WINDOW/2 - 100, HEIGHT_WINDOW/2,
+        WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
         200, 50,
         MLV_COLOR_BLACK,
         MLV_COLOR_BLACK,
         MLV_COLOR_WHITE,
         "Largeur : ",
-        &text_response_width
-    );
+        &text_response_width);
 
     // Convertion de l'entrée utilisateur (char) en int
     long tmp_width = strtol(text_response_width, NULL, 10);
@@ -230,11 +223,11 @@ void menu_1(
         printf("Largeur incorrecte");
     }
     free(text_response_width);
-   
+
     MLV_actualise_window();
 }
 
-void menu_2(int *mode_game, char *background_path, char *text1_menu2_path)
+void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 {
     printf("\n\nVeuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
 
@@ -247,34 +240,33 @@ void menu_2(int *mode_game, char *background_path, char *text1_menu2_path)
 
     MLV_draw_image(
         text1_menu2,
-        0,0
-    );
+        0, 0);
 
     // Affichage de la boite de dialogue
-    char* text_response_mode;
+    char *text_response_mode;
 
     MLV_wait_input_box(
-        WIDTH_WINDOW/2 - 100, HEIGHT_WINDOW/2,
+        WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
         200, 50,
         MLV_COLOR_BLACK,
         MLV_COLOR_BLACK,
         MLV_COLOR_WHITE,
         "Mode de jeu : ",
-        &text_response_mode
-    );
+        &text_response_mode);
 
     // Convertion de l'entrée utilisateur (char) en int
     long temp_mode = strtol(text_response_mode, NULL, 10);
     if (temp_mode == 1 || temp_mode == 2)
     {
-        printf("%d", *mode_game);
+        printf("%ld", temp_mode);
+        *mode_game = temp_mode;
     }
     else
     {
         printf("Selection incorrecte");
     }
     free(text_response_mode);
-   
+
     MLV_actualise_window();
 }
 

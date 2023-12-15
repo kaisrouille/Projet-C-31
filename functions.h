@@ -40,7 +40,7 @@ void action_next_menu();
 void menu_1(int *length, int *width, char *background_path, char *text1_menu1_path, char *text2_menu1_path);
 
 // Menu de sélection du mode de jeu
-void menu_2(int *mode_game, char *background_path, char *text1_menu2_path);
+void menu_2(long *mode_game, char *background_path, char *text1_menu2_path);
 
 // Remplissage manuel de la matrice
 void manual_mode(
