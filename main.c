@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
         display_matrice(matrice, length, width);
 
-        menu_4(&nb_tour);
+        menu_4(&nb_tour - p);
 
         int unicode = 0;
         while (!(unicode == 32 || unicode == 8))
@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
             MLV_wait_keyboard(NULL, NULL, &unicode);
         }
 
-        // Appuie sur ESPACE
+        // Appuie sur ESPACE : continuer la simulation
         if (unicode == 32)
         {
             push(&stack, matrice, length, width);

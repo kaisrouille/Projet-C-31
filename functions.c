@@ -148,7 +148,6 @@ void menu_1(
     MLV_Image *menu1_text2 = MLV_load_image(menu1_text2_path);
 
     // Longueur
-
     printf("\nEntrez le nombre de cellule en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
 
     // Affichage des images
@@ -162,30 +161,40 @@ void menu_1(
 
     // Affichage de la boite de dialogue
     char *text_response_length;
+    long tmp_length;
 
-    MLV_wait_input_box(
-        WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
-        200, 50,
-        MLV_COLOR_BLACK,
-        MLV_COLOR_BLACK,
-        MLV_COLOR_WHITE,
-        "Longueur : ",
-        &text_response_length);
+    do
+    {
+        MLV_wait_input_box(
+            WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
+            200, 50,
+            MLV_COLOR_BLACK,
+            MLV_COLOR_BLACK,
+            MLV_COLOR_WHITE,
+            "Longueur : ",
+            &text_response_length);
 
-    // Convertion de l'entrée utilisateur (char) en int
-    long tmp_length = strtol(text_response_length, NULL, 10);
-    if (tmp_length >= SIZEMIN && tmp_length <= SIZEMAX)
-    {
-        *length = (int)tmp_length;
-        printf("%d", *length);
-    }
-    else
-    {
-        printf("Longueur incorrecte");
-    }
+        // Convertir l'entrée utilisateur (char) en long
+        tmp_length = strtol(text_response_length, NULL, 10);
+
+        // Vérifier si la valeur convertie est dans la plage valide
+        if (tmp_length < SIZEMIN || tmp_length > SIZEMAX)
+        {
+            printf("Longueur incorrecte. Veuillez entrer une valeur entre %d et %d.\n", SIZEMIN, SIZEMAX);
+            free(text_response_length); // Libérer la mémoire avant de demander à nouveau
+            MLV_actualise_window();
+            continue; // Continuer la boucle si la valeur n'est pas valide
+        }
+
+        break; // Sortir de la boucle si la valeur est valide
+
+    } while (1); // Boucle infinie qui se termine uniquement avec un 'break'
+
+    *length = (int)tmp_length;
+    printf("Longueur choisie : %d\n", *length);
+
+    // Libération de la mémoire si la valeur est valide et sortie de la boucle
     free(text_response_length);
-
-    MLV_actualise_window();
 
     // Largeur
 
@@ -201,30 +210,40 @@ void menu_1(
 
     // Affichage de la boite de dialogue
     char *text_response_width;
+    long tmp_width;
 
-    MLV_wait_input_box(
-        WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
-        200, 50,
-        MLV_COLOR_BLACK,
-        MLV_COLOR_BLACK,
-        MLV_COLOR_WHITE,
-        "Largeur : ",
-        &text_response_width);
+    do
+    {
+        MLV_wait_input_box(
+            WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
+            200, 50,
+            MLV_COLOR_BLACK,
+            MLV_COLOR_BLACK,
+            MLV_COLOR_WHITE,
+            "Largeur : ",
+            &text_response_width);
 
-    // Convertion de l'entrée utilisateur (char) en int
-    long tmp_width = strtol(text_response_width, NULL, 10);
-    if (tmp_width >= SIZEMIN && tmp_width <= SIZEMAX)
-    {
-        *width = (int)tmp_width;
-        printf("%d", *width);
-    }
-    else
-    {
-        printf("Largeur incorrecte");
-    }
+        // Convertir l'entrée utilisateur (char) en long
+        tmp_width = strtol(text_response_width, NULL, 10);
+
+        // Vérifier si la valeur convertie est dans la plage valide
+        if (tmp_width < SIZEMIN || tmp_width > SIZEMAX)
+        {
+            printf("Largeur incorrecte. Veuillez entrer une valeur entre %d et %d.\n", SIZEMIN, SIZEMAX);
+            free(text_response_width); // Libérer la mémoire avant de demander à nouveau
+            MLV_actualise_window();
+            continue; // Continuer la boucle si la valeur n'est pas valide
+        }
+
+        break; // Sortir de la boucle si la valeur est valide
+
+    } while (1); // Boucle infinie qui se termine uniquement avec un 'break'
+
+    *width = (int)tmp_width;
+    printf("Largeur choisie : %d\n", *width);
+
+    // Libération de la mémoire si la valeur est valide et sortie de la boucle
     free(text_response_width);
-
-    MLV_actualise_window();
 }
 
 void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
@@ -313,12 +332,13 @@ void manual_mode(
             {
                 status = scanf("%d", &choice);
 
-                //Securisation entrée user
+                // Securisation entrée user
                 if (status != 1)
                 {
                     printf("Entrée invalide. Veuillez entrer un nombre entre 1 et 8.\n");
 
-                    while (getchar() != '\n');
+                    while (getchar() != '\n')
+                        ;
                     continue;
                 }
 
