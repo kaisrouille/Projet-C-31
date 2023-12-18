@@ -308,16 +308,22 @@ void manual_mode(
 
             printf("\n");
 
+            int status;
             do
             {
-                if (scanf("%d", &choice) == 1)
+                status = scanf("%d", &choice);
+
+                //Securisation entrée user
+                if (status != 1)
                 {
-                    printf("Le choix renseignée est %d.\n\n", choice);
+                    printf("Entrée invalide. Veuillez entrer un nombre entre 1 et 8.\n");
+
+                    while (getchar() != '\n');
+                    continue;
                 }
-                else
-                {
-                    printf("Erreur de lecture du choix.\n");
-                }
+
+                printf("Le choix renseignée est %d.\n\n", choice);
+
                 switch (choice)
                 {
                 case 1:
@@ -348,7 +354,8 @@ void manual_mode(
                     printf("Veuillez entrer une option valide :\n");
                     break;
                 }
-            } while (choice < 0 || choice > 8);
+
+            } while (choice < 0 || choice > 8 || status != 1);
         }
     }
 }
