@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
     int x_firstcase, y_firstcase;
     menu_3(&nb_tour, &x_firstcase, &y_firstcase);
 
+    //Mise en pile de la matrice initialisée
     Stack stack;
     push(&stack, matrice, length, width);
 

@@ -391,7 +391,7 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
     printf("\n\nEntrez le nombre de tour de la simulation \n\n");
     if (scanf("%d", nb_tour) == 1)
     {
-        printf("La nombre de tours renseignés est %d.\n\n", *nb_tour);
+        printf("Le nombre de tours renseignés est %d.\n\n", *nb_tour);
     }
     else
     {
@@ -399,9 +399,9 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
     }
 
     printf("\n\nEntrez les coordonnees de la case du depart de feu (au format X,X) :\n\n");
-    if (scanf("%d,%d", x_firstcase, y_firstcase) == 1)
+    if (scanf("%d,%d", x_firstcase, y_firstcase) == 2)
     {
-        printf("Les coordonnées sont %d, %d.\n\n", *x_firstcase, *y_firstcase);
+        printf("Les coordonnées sont %d,%d.\n", *x_firstcase, *y_firstcase);
     }
     else
     {
@@ -413,7 +413,7 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
 
 void menu_4(int *nb_tour)
 {
-    printf("\nVous êtes à l'étape %d de la simulation.\n\n", *nb_tour);
+    printf("\nIl reste actuellement %d stades de la simulation avant la fin de l'incendie.\n\n", *nb_tour);
     printf("\t\t1 (ou ESPACE) - Pour continuer la simulation.\n");
     printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
     printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
