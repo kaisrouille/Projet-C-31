@@ -292,7 +292,7 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
         long temp_mode = strtol(text_response_mode, NULL, 10);
 
         if (temp_mode != 1 && temp_mode != 2) {
-            printf("Sélection du mode de jeu incorrecte, entrez 1 ou 2 :\n");
+            printf("Selection du mode de jeu incorrecte, entrez 1 ou 2 :\n");
 
             free(text_response_mode);
 
@@ -310,13 +310,88 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 
     if(*mode_game == 1)
     {
-        printf("Mode de remplissage manuel");
+        printf("Mode de remplissage manuel selectionne");
     }
     else if(*mode_game == 2)
     {
-        printf("Mode de remplissage aleatoire");
+        printf("Mode de remplissage aleatoire selectionne");
     }
+}
 
+void modify_case(
+    Element **matrice,
+    int length,
+    int width,
+    int x,
+    int y,
+    Element ground,
+    Element tree,
+    Element leaf,
+    Element rock,
+    Element grass,
+    Element water,
+    Element ash,
+    Element inactive_ash
+)
+{
+    printf("\n\nCellule %d %d\n", x, y);
+    printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
+
+    display_matrice(matrice, length, width);
+
+    printf("\n");
+
+    int choice;
+
+    // Securisation entrée user
+    int status;
+    do
+    {
+        status = scanf("%d", &choice);
+
+        if (status != 1)
+        {
+            printf("Entree invalide. Veuillez entrer un nombre entre 1 et 8.\n");
+
+            while (getchar() != '\n')
+                ;
+            continue;
+        }
+
+        printf("Le choix renseigne est %d.\n\n", choice);
+
+        switch (choice)
+        {
+        case 1:
+            matrice[x][y] = ground;
+            break;
+        case 2:
+            matrice[x][y] = tree;
+            break;
+        case 3:
+            matrice[x][y] = leaf;
+            break;
+        case 4:
+            matrice[x][y] = rock;
+            break;
+        case 5:
+            matrice[x][y] = grass;
+            break;
+        case 6:
+            matrice[x][y] = water;
+            break;
+        case 7:
+            matrice[x][y] = ash;
+            break;
+        case 8:
+            matrice[x][y] = inactive_ash;
+            break;
+        default:
+            printf("Veuillez entrer une option valide :\n");
+            break;
+        }
+
+    } while (choice < 0 || choice > 8 || status != 1);
 }
 
 void manual_mode(
@@ -339,73 +414,30 @@ void manual_mode(
     display_matrice(matrice, length, width);
 
     // dessin de la grille a faire
-    // action_next_menu();
 
     // remplissage de la matrice par l'utilisateur
     int i, j;
-    int choice;
     for (i = 0; i < length; i++)
     {
         for (j = 0; j < width; j++)
         {
-            printf("\n\nCellule %d %d\n", i, j);
-            printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
-
             matrice[i][j] = select;
 
-            display_matrice(matrice, length, width);
-
-            printf("\n");
-
-            // Securisation entrée user
-            int status;
-            do
-            {
-                status = scanf("%d", &choice);
-
-                if (status != 1)
-                {
-                    printf("Entrée invalide. Veuillez entrer un nombre entre 1 et 8.\n");
-
-                    while (getchar() != '\n')
-                        ;
-                    continue;
-                }
-
-                printf("Le choix renseignée est %d.\n\n", choice);
-
-                switch (choice)
-                {
-                case 1:
-                    matrice[i][j] = ground;
-                    break;
-                case 2:
-                    matrice[i][j] = tree;
-                    break;
-                case 3:
-                    matrice[i][j] = leaf;
-                    break;
-                case 4:
-                    matrice[i][j] = rock;
-                    break;
-                case 5:
-                    matrice[i][j] = grass;
-                    break;
-                case 6:
-                    matrice[i][j] = water;
-                    break;
-                case 7:
-                    matrice[i][j] = ash;
-                    break;
-                case 8:
-                    matrice[i][j] = inactive_ash;
-                    break;
-                default:
-                    printf("Veuillez entrer une option valide :\n");
-                    break;
-                }
-
-            } while (choice < 0 || choice > 8 || status != 1);
+            modify_case(
+                matrice,
+                length,
+                width,
+                i,
+                j,
+                ground,
+                tree,
+                leaf,
+                rock,
+                grass,
+                water,
+                ash,
+                inactive_ash
+            );           
         }
     }
 }
@@ -461,13 +493,13 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
     printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
-void menu_4(int *nb_tour)
+void menu_4(int nb_tour)
 {
-    printf("\nIl reste actuellement %d stades de la simulation avant la fin de l'incendie.\n\n", *nb_tour);
-    printf("\t\t1 (ou ESPACE) - Pour continuer la simulation.\n");
-    printf("\t\t2 - Pour revenir en arrière dans la simulation.\n");
-    printf("\t\t3 - Pour interrompre et choisir une case à modifier dans la simulation.\n");
-    printf("\t\t4 - Pour arrêter la simulation et revenir au debut du jeu.\n");
+    printf("\nIl reste actuellement %d stades de la simulation avant la fin de l'incendie.\n\n", nb_tour);
+    printf("\t\tESPACE - Pour continuer la simulation.\n");
+    printf("\t\tBACKSPACE - Pour revenir en arrière dans la simulation.\n");
+    printf("\t\tC - Pour interrompre et modifier une case dans la simulation.\n");
+    printf("\t\tQ - Pour arrêter la simulation et revenir au debut du jeu.\n");
 }
 
 void push(Stack *stack, Element **matrice, int length, int width)

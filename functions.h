@@ -42,6 +42,23 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
 // Menu de sélection du mode de jeu
 void menu_2(long *mode_game, char *background_path, char *text1_menu2_path);
 
+//Modifier une case
+void modify_case(
+    Element **matrice,
+    int length,
+    int width,
+    int x,
+    int y,
+    Element ground,
+    Element tree,
+    Element leaf,
+    Element rock,
+    Element grass,
+    Element water,
+    Element ash,
+    Element inactive_ash
+)
+
 // Remplissage manuel de la matrice
 void manual_mode(
     Element **matrice,
@@ -73,7 +90,7 @@ void auto_mode(
 
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase);
 
-void menu_4(int *nb_tour);
+void menu_4(int nb_tour);
 
 void push(Stack *stack, Element **matrice, int length, int width);
 

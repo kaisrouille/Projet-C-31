@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 
         display_matrice(matrice, length, width);
 
-        menu_4(&nb_tour - p);
+        menu_4(nb_tour - p);
 
         int unicode = 0;
         while (!(unicode == 32 || unicode == 8))
@@ -143,73 +143,45 @@ int main(int argc, char *argv[])
         {
             push(&stack, matrice, length, width);
         }
-        // Appuie sur BACKSPACE
+        // Appuie sur BACKSPACE : retourner en arrière
         else if (unicode == 8)
         {
-            int choice;
-            if (scanf("%d", &choice) == 1)
+            pop(&stack, length, width);
+        }
+        // Appuie sur C :changer le contenu d'une case
+        else if (unicode == 67)
+        {
+            printf("Entrez les coordonnees de la case a modifier (au format X,X):\n\n");
+
+            int x_modify;
+            int y_modify;
+            if (scanf("%d,%d", &x_modify, &y_modify) == 2)
             {
-                printf("Le choix renseignée est %d.\n\n", choice);
+                printf("Le choix renseigne est %d,%d.\n\n", x_modify,y_modify);
             }
             else
             {
                 printf("Erreur de lecture du choix.\n");
             }
 
-            int choice2;
-
-            // revenir en arriere
-            if (choice == 1)
-            {
-                while (choice == 1)
-                {
-                    pop(&stack, length, width);
-
-                    printf("revenir en arriere une fois encore ?\n\n1 - Oui\n2 - Non");
-
-                    if (scanf("%d", &choice2) == 1)
-                    {
-                        printf("Le choix renseignée est %d.\n\n", choice);
-                    }
-                    else
-                    {
-                        printf("Erreur de lecture du choix.\n");
-                    }
-                }
-            }
-
-            // changer le contenu d'une case
-            else if (choice == 2)
-            {
-                printf("entrez les coordonnees de la case a modifier (au format X,X):\n\n");
-
-                printf("choisissez le nouvel element a inserer dans cette case :\n\n");
-                printf("1 - Sol");
-                printf("2 - Arbre");
-                printf("3 - Feuille");
-                printf("4 - Rocher");
-                printf("5 - Herbe");
-                printf("6 - Eau");
-                printf("7 - Cendre");
-                printf("8 - Cendre eteinte\n\n");
-
-                if (scanf("%d", &choice2) == 1)
-                {
-                    printf("Le choix renseignée est %d.\n\n", choice);
-                }
-                else
-                {
-                    printf("Erreur de lecture du choix.\n");
-                }
-
-                // faire le switch
-            }
-
-            // Quitter la partie/recommencer au début
-            else if (choice == 3)
-            {
-                break;
-            }
+            modify_case(
+                matrice,
+                x_modify, 
+                y_modify,
+                ground,
+                tree,
+                leaf,
+                rock,
+                grass,
+                water,
+                ash,
+                inactive_ash
+            );
+        }
+        // Appuie sur Q : quitter la partie/recommencer au début
+        else if (unicode == 81)
+        {
+            break;
         }
     }
 
