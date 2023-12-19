@@ -57,7 +57,7 @@ void modify_case(
     Element water,
     Element ash,
     Element inactive_ash
-)
+);
 
 // Remplissage manuel de la matrice
 void manual_mode(

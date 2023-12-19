@@ -166,6 +166,8 @@ int main(int argc, char *argv[])
 
             modify_case(
                 matrice,
+                length,
+                width,
                 x_modify, 
                 y_modify,
                 ground,

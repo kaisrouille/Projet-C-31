@@ -454,16 +454,16 @@ void auto_mode(
     Element water,
     Element ash,
     Element inactive_ash)
-{
-    // int i,j;
-    // for (i = 0; i < length; i++)
-    // {
-    //     for (j = 0; j < width; j++)
-    //     {
-    //         srand(time(NULL));
-    //         int random_number = (rand() % 6) + 1;
-    //     }
-    // }
+{   srand(time(NULL));
+     int i,j;
+     for (i = 0; i < length; i++)
+     {
+         for (j = 0; j < width; j++)
+         {
+             
+             int random_number = (rand() % 8) + 1;
+         }
+         }
 
     // //A finir
 }
