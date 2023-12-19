@@ -6,22 +6,22 @@
 
 typedef struct Element
 {
-    char symbole;
-    int degres;
-    int etat;
+	char symbole;
+	int degres;
+	int etat;
 } Element;
 
 // Structure noeud pile
 typedef struct Node
 {
-    Element **data;
-    struct Node *next;
+	Element **data;
+	struct Node *next;
 } Node;
 
 // Structure pile
 typedef struct Stack
 {
-    Node *top;
+	Node *top;
 } Stack;
 
 // Allocation de mémoire de la matrice
@@ -44,49 +44,50 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path);
 
 //Modifier une case
 void modify_case(
-    Element **matrice,
-    int length,
-    int width,
-    int x,
-    int y,
-    Element ground,
-    Element tree,
-    Element leaf,
-    Element rock,
-    Element grass,
-    Element water,
-    Element ash,
-    Element inactive_ash
+	Element **matrice,
+	int length,
+	int width,
+	int x,
+	int y,
+	int choice,
+	Element ground,
+	Element tree,
+	Element leaf,
+	Element rock,
+	Element grass,
+	Element water,
+	Element ash,
+	Element inactive_ash
 );
 
 // Remplissage manuel de la matrice
 void manual_mode(
-    Element **matrice,
-    int length,
-    int width,
-    Element select,
-    Element ground,
-    Element tree,
-    Element leaf,
-    Element rock,
-    Element grass,
-    Element water,
-    Element ash,
-    Element inactive_ash);
+	Element **matrice,
+	int length,
+	int width,
+	Element select,
+	Element ground,
+	Element tree,
+	Element leaf,
+	Element rock,
+	Element grass,
+	Element water,
+	Element ash,
+	Element inactive_ash);
 
 // Remplissage auto de la matrice
 void auto_mode(
-    Element **matrice,
-    int length,
-    int width,
-    Element ground,
-    Element tree,
-    Element leaf,
-    Element rock,
-    Element grass,
-    Element water,
-    Element ash,
-    Element inactive_ash);
+	Element **matrice,
+	int length,
+	int width,
+	Element ground,
+	Element tree,
+	Element leaf,
+	Element rock,
+	Element grass,
+	Element water,
+	Element ash,
+	Element inactive_ash);
 
 void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase);
 
