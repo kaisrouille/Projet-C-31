@@ -187,7 +187,7 @@ void menu_1(
 			MLV_actualise_window();
 
 			// Continuer la boucle si la valeur n'est pas valide
-			continue; 
+			continue;
 		}
 
 		*length = (int)tmp_length;
@@ -201,26 +201,23 @@ void menu_1(
 
 	printf("Longueur choisie : %d\n", *length);
 
-
 	// Largeur
 
 	printf("\n\nEntrez le nombre de cellule en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
 
 	MLV_draw_image(
 		background,
-		0, 0
-	);
+		0, 0);
 
 	MLV_draw_image(
 		menu1_text2,
-		0, 0
-	);
+		0, 0);
 
 	// Securisation entrée user
 	char *text_response_width;
 	do
 	{
-		//Affichage de la boite de dialogue
+		// Affichage de la boite de dialogue
 		MLV_wait_input_box(
 			WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
 			200, 50,
@@ -228,8 +225,7 @@ void menu_1(
 			MLV_COLOR_BLACK,
 			MLV_COLOR_WHITE,
 			"Largeur : ",
-			&text_response_width
-		);
+			&text_response_width);
 
 		// Convertir l'entrée utilisateur (char) en long
 		long tmp_width = strtol(text_response_width, NULL, 10);
@@ -245,18 +241,18 @@ void menu_1(
 			MLV_actualise_window();
 
 			// Continuer la boucle si la valeur n'est pas valide
-			continue; 
+			continue;
 		}
 
 		*width = (int)tmp_width;
-		
+
 		// Libération de la mémoire si la valeur est valide et sortie de la boucle
 		free(text_response_width);
 
 		break;
 
 	} while (1);
-	
+
 	printf("Largeur choisie : %d\n", *width);
 }
 
@@ -273,11 +269,11 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 
 	MLV_draw_image(
 		text1_menu2,
-		0, 0
-	);
-	
+		0, 0);
+
 	char *text_response_mode;
-	do {
+	do
+	{
 		// Affichage de la boite de dialogue
 		MLV_wait_input_box(
 			WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
@@ -286,13 +282,13 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 			MLV_COLOR_BLACK,
 			MLV_COLOR_WHITE,
 			"Mode de jeu : ",
-			&text_response_mode
-		);
+			&text_response_mode);
 
 		// Conversion de l'entrée utilisateur (char) en long
 		long temp_mode = strtol(text_response_mode, NULL, 10);
 
-		if (temp_mode != 1 && temp_mode != 2) {
+		if (temp_mode != 1 && temp_mode != 2)
+		{
 			printf("Selection du mode de jeu incorrecte, entrez 1 ou 2 :\n");
 
 			free(text_response_mode);
@@ -309,11 +305,11 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 
 	} while (1); // Boucle infinie qui se termine uniquement avec un 'break'
 
-	if(*mode_game == 1)
+	if (*mode_game == 1)
 	{
 		printf("Mode de remplissage manuel selectionne");
 	}
-	else if(*mode_game == 2)
+	else if (*mode_game == 2)
 	{
 		printf("Mode de remplissage aleatoire selectionne");
 	}
@@ -333,53 +329,44 @@ void modify_case(
 	Element grass,
 	Element water,
 	Element ash,
-	Element inactive_ash
-)
+	Element inactive_ash)
 {
 	printf("\n\nCellule %d %d\n", x, y);
-	printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
-
-	display_matrice(matrice, length, width);
-
 	printf("\n");
 
 	// Securisation entrée user
-	do
+	printf("Le choix renseigne est %d.\n", choice);
+
+	switch (choice)
 	{
-		printf("Le choix renseigne est %d.\n\n", choice);
-
-		switch (choice)
-		{
-		case 1:
-			matrice[x][y] = ground;
-			break;
-		case 2:
-			matrice[x][y] = tree;
-			break;
-		case 3:
-			matrice[x][y] = leaf;
-			break;
-		case 4:
-			matrice[x][y] = rock;
-			break;
-		case 5:
-			matrice[x][y] = grass;
-			break;
-		case 6:
-			matrice[x][y] = water;
-			break;
-		case 7:
-			matrice[x][y] = ash;
-			break;
-		case 8:
-			matrice[x][y] = inactive_ash;
-			break;
-		default:
-			printf("Veuillez entrer une option valide :\n");
-			break;
-		}
-
-	} while (choice < 0 || choice > 8);
+	case 1:
+		matrice[x][y] = ground;
+		break;
+	case 2:
+		matrice[x][y] = tree;
+		break;
+	case 3:
+		matrice[x][y] = leaf;
+		break;
+	case 4:
+		matrice[x][y] = rock;
+		break;
+	case 5:
+		matrice[x][y] = grass;
+		break;
+	case 6:
+		matrice[x][y] = water;
+		break;
+	case 7:
+		matrice[x][y] = ash;
+		break;
+	case 8:
+		matrice[x][y] = inactive_ash;
+		break;
+	default:
+		printf("Veuillez entrer une option valide :\n");
+		break;
+	}
 }
 
 void manual_mode(
@@ -396,14 +383,8 @@ void manual_mode(
 	Element ash,
 	Element inactive_ash)
 {
-	printf("\n\nVoici la surface de votre foret :\n\n");
-
-	// affichage matrice
-	display_matrice(matrice, length, width);
-
-	// dessin de la grille a faire
-
 	// remplissage de la matrice par l'utilisateur
+	printf("\n\nVoici la surface de votre foret :\n\n");
 	int i, j;
 	for (i = 0; i < length; i++)
 	{
@@ -411,15 +392,26 @@ void manual_mode(
 		{
 			matrice[i][j] = select;
 
-			int choice;
-			int status = scanf("%d", &choice);
-			if (status != 1)
-			{
-				printf("Entree invalide. Veuillez entrer un nombre entre 1 et 8.\n");
+			// affichage matrice
+			display_matrice(matrice, length, width);
 
-				while (getchar() != '\n');
-				continue;
-			}
+			// dessin de la grille a faire
+
+			// Choix de l'utilisateur
+			printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
+
+			int choice, status;
+			do
+			{
+				printf("Entrer votre choix :");
+				status = scanf("%d", &choice);
+				if (status != 1)
+				{
+					printf("Entrée invalide. Veuillez entrer un nombre entre 1 et 8.\n");
+					// while (getchar() != '\n')
+					// 	;
+				}
+			} while (status != 1);
 
 			modify_case(
 				matrice,
@@ -435,8 +427,7 @@ void manual_mode(
 				grass,
 				water,
 				ash,
-				inactive_ash
-			);
+				inactive_ash);
 		}
 	}
 }
@@ -453,9 +444,9 @@ void auto_mode(
 	Element water,
 	Element ash,
 	Element inactive_ash)
-{   
+{
 	srand(time(NULL));
-	int i,j;
+	int i, j;
 	for (i = 0; i < length; i++)
 	{
 		for (j = 0; j < width; j++)
@@ -476,8 +467,7 @@ void auto_mode(
 				grass,
 				water,
 				ash,
-				inactive_ash
-			);
+				inactive_ash);
 		}
 	}
 }
