@@ -133,7 +133,14 @@ int main(int argc, char *argv[])
 		menu_4(nb_tour - p);
 
 		int unicode = 0;
-		while (!(unicode == 32 || unicode == 8))
+		while (
+			!(
+				unicode == 32 ||
+				unicode == 8 ||
+				unicode == 99 ||
+				unicode == 113
+			)
+		)
 		{
 			MLV_wait_keyboard(NULL, NULL, &unicode);
 		}
@@ -149,7 +156,7 @@ int main(int argc, char *argv[])
 			pop(&stack, length, width);
 		}
 		// Appuie sur C :changer le contenu d'une case
-		else if (unicode == 67)
+		else if (unicode == 99)
 		{
 			printf("Entrez les coordonnees de la case a modifier (au format X,X):\n\n");
 
@@ -158,6 +165,9 @@ int main(int argc, char *argv[])
 			if (scanf("%d,%d", &x_modify, &y_modify) == 2)
 			{
 				printf("Le choix renseigne est %d,%d.\n\n", x_modify, y_modify);
+
+				//scanf + modify_case à implenter ici
+
 			}
 			else
 			{
@@ -192,7 +202,7 @@ int main(int argc, char *argv[])
 				inactive_ash);
 		}
 		// Appuie sur Q : quitter la partie/recommencer au début
-		else if (unicode == 81)
+		else if (unicode == 113)
 		{
 			break;
 		}
