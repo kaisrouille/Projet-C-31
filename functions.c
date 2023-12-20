@@ -668,3 +668,10 @@ void propagation(Element **matrice, int length, int width, Stack *stack)
 	}
 	push(stack, matrice, length, width);
 }
+
+void liberer_matrice(Element **matrice, int length) {
+    for (int i = 0; i < length; i++) {
+        free(matrice[i]);
+    }
+    free(matrice);
+}

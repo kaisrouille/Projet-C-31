@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 	int x_firstcase, y_firstcase;
 	menu_3(&nb_tour, &x_firstcase, &y_firstcase);
 
-	//Mise en pile de la matrice initialisée
+	// Mise en pile de la matrice initialisée
 	Stack stack;
 	push(&stack, matrice, length, width);
 
@@ -157,20 +157,21 @@ int main(int argc, char *argv[])
 			int y_modify;
 			if (scanf("%d,%d", &x_modify, &y_modify) == 2)
 			{
-				printf("Le choix renseigne est %d,%d.\n\n", x_modify,y_modify);
+				printf("Le choix renseigne est %d,%d.\n\n", x_modify, y_modify);
 			}
 			else
 			{
 				printf("Erreur de lecture du choix.\n");
 			}
- 
+
 			int choice;
 			int status = scanf("%d", &choice);
 			if (status != 1)
 			{
 				printf("Entree invalide. Veuillez entrer un nombre entre 1 et 8.\n");
 
-				while (getchar() != '\n');
+				while (getchar() != '\n')
+					;
 				continue;
 			}
 
@@ -178,7 +179,7 @@ int main(int argc, char *argv[])
 				matrice,
 				length,
 				width,
-				x_modify, 
+				x_modify,
 				y_modify,
 				choice,
 				ground,
@@ -188,8 +189,7 @@ int main(int argc, char *argv[])
 				grass,
 				water,
 				ash,
-				inactive_ash
-			);
+				inactive_ash);
 		}
 		// Appuie sur Q : quitter la partie/recommencer au début
 		else if (unicode == 81)
@@ -199,7 +199,7 @@ int main(int argc, char *argv[])
 	}
 
 	// Libération de la mémoire de la matrice
-	free_matrice(matrice, length);
+	liberer_matrice(matrice, length);
 
 	return 0;
 }
