@@ -284,26 +284,27 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 			"Mode de jeu : ",
 			&text_response_mode);
 
-		// Conversion de l'entrée utilisateur (char) en long
+		// Conversion de l'entrée user (qui est en char dans la textbox) en long
 		long temp_mode = strtol(text_response_mode, NULL, 10);
 
+		//Sécurisation de l'entrée user
 		if (temp_mode != 1 && temp_mode != 2)
 		{
 			printf("Selection du mode de jeu incorrecte, entrez 1 ou 2 :\n");
 
 			free(text_response_mode);
 
-			MLV_actualise_window(); // Actualiser la fenêtre ici pour afficher le message d'erreur
+			MLV_actualise_window();
 
 			continue; // Continuer la boucle si la valeur n'est pas valide
 		}
 
 		*mode_game = temp_mode;
-		free(text_response_mode); // Ne pas oublier de libérer la mémoire même pour une entrée valide
+		free(text_response_mode);
 
 		break;
 
-	} while (1); // Boucle infinie qui se termine uniquement avec un 'break'
+	} while (1);
 
 	if (*mode_game == 1)
 	{
@@ -331,12 +332,6 @@ void modify_case(
 	Element ash,
 	Element inactive_ash)
 {
-	printf("\n\nCellule %d %d\n", x, y);
-	printf("\n");
-
-	// Securisation entrée user
-	printf("Le choix renseigne est %d.\n", choice);
-
 	switch (choice)
 	{
 	case 1:
@@ -556,7 +551,7 @@ void pop(Stack *stack, int length, int width)
 	}
 }
 
-void propagation(Element **matrice, int length, int width, Stack *stack)
+void propagation(Element **matrice, int length, int width)
 {
 	int i, j;
 	for (i = 0; i < length; i++)
@@ -679,14 +674,9 @@ void propagation(Element **matrice, int length, int width, Stack *stack)
 					matrice[i][j].degres = 0;
 					matrice[i][j].case_modifiee = true;
 				}
-				// else if (matrice[i][j].degres == 2 && !matrice[i][j].case_modifiee)
-				// {
-				// 	matrice[i][j].symbole = '-';
-				// 	matrice[i][j].degres = 1;
-				// 	matrice[i][j].case_modifiee = true;
-				// }
 			}
 		}
 	}
-	push(stack, matrice, length, width);
 }
+
+// void propagation_a_b(Element **matrice, int length, int width, int xa, int xb) {}

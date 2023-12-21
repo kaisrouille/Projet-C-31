@@ -98,6 +98,6 @@ void push(Stack *stack, Element **matrice, int length, int width);
 
 void pop(Stack *stack, int length, int width);
 
-void propagation(Element **matrice, int length, int width, Stack *stack);
+void propagation(Element **matrice, int length, int width);
 
 void display_init(char *background_path, char *title_path, char *button_LG_path);

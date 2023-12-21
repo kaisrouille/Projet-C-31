@@ -123,6 +123,7 @@ int main(int argc, char *argv[])
 
 	// Mise en pile de la matrice initialisée
 	Stack stack;
+	stack.top = NULL;
 	push(&stack, matrice, length, width);
 
 	// On met d'abord le feu à la case selectionnée par l'utilisateur
@@ -131,14 +132,13 @@ int main(int argc, char *argv[])
 
 	display_matrice(matrice, length, width);
 
+	// Mise en pile de la 1ere etape
+	push(&stack, matrice, length, width);
+
 	// Déroulement du jeu
 	int p;
 	for (p = 0; p < nb_tour; p++)
 	{
-		propagation(matrice, length, width, &stack);
-
-		display_matrice(matrice, length, width);
-
 		menu_4(nb_tour - (p + 1));
 
 		int unicode = 0;
@@ -155,20 +155,22 @@ int main(int argc, char *argv[])
 		// Appuie sur ESPACE : continuer la simulation
 		if (unicode == 32)
 		{
+
+			propagation(matrice, length, width);
+
+			display_matrice(matrice, length, width);
+
 			push(&stack, matrice, length, width);
-			// On remet à false pour passer à l'autre etape de la simulation
-			for (int i = 0; i < length; i++)
-			{
-				for (int j = 0; j < width; j++)
-				{
-					matrice[i][j].case_modifiee = false;
-				}
-			}
 		}
 		// Appuie sur BACKSPACE : retourner en arrière
 		else if (unicode == 8)
 		{
 			pop(&stack, length, width);
+
+			// on attribue celle d'avant à la matrice
+			matrice = stack.top->data;
+
+			display_matrice(matrice, length, width);
 		}
 		// Appuie sur C :changer le contenu d'une case
 		else if (unicode == 99)
@@ -180,13 +182,13 @@ int main(int argc, char *argv[])
 			if (scanf("%d,%d", &x_modify, &y_modify) == 2)
 			{
 				printf("Le choix renseigne est %d,%d.\n\n", x_modify, y_modify);
-
-				// scanf + modify_case à implenter ici
 			}
 			else
 			{
 				printf("Erreur de lecture du choix.\n");
 			}
+
+			printf("Veuillez choisir un nouvel element a inserer dans cette case :\n");
 
 			int choice;
 			int status = scanf("%d", &choice);
@@ -214,6 +216,10 @@ int main(int argc, char *argv[])
 				water,
 				ash,
 				inactive_ash);
+
+			printf("Le changement a ete effectue");
+
+			display_matrice(matrice, length, width);
 		}
 		// Appuie sur Q : quitter la partie/recommencer au début
 		else if (unicode == 113)
@@ -224,7 +230,6 @@ int main(int argc, char *argv[])
 
 	// Libération de la mémoire de la matrice
 	free_matrice(matrice, length);
-	printf("Au revoir !");
 
 	return 0;
 }
