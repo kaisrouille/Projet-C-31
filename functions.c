@@ -499,7 +499,7 @@ void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
 
 void menu_4(int nb_tour)
 {
-	printf("\nIl reste actuellement %d stades de la simulation avant la fin de l'incendie.\n\n", nb_tour);
+	printf("\nIl reste actuellement %d stade(s) de la simulation avant la fin de l'incendie.\n\n", nb_tour);
 	printf("\t\tESPACE - Pour continuer la simulation.\n");
 	printf("\t\tBACKSPACE - Pour revenir en arrière dans la simulation.\n");
 	printf("\t\tC - Pour interrompre et modifier une case dans la simulation.\n");
@@ -569,109 +569,124 @@ void propagation(Element **matrice, int length, int width, Stack *stack)
 				// Puis on verifie si le degres est superieur à 1
 				if (matrice[i][j].degres > 1)
 				{
-					// On diminue le degres de la case
-					matrice[i][j].degres--;
-
-					// Condition pour le traitement des cases du haut
-					if (i != 0)
+					// Si la case n'avait pas déjà été modifié pendant cette propagation
+					if (!matrice[i][j].case_modifiee)
 					{
-						// Traitement de la case en haut à gauche
+						if (matrice[i][j].degres == 2)
+							matrice[i][j].symbole = '-';
+						// On diminue le degres de la case
+						matrice[i][j].degres--;
+						matrice[i][j].case_modifiee = true;
+
+						// Condition pour le traitement des cases du haut
+						if (i != 0)
+						{
+							// Traitement de la case en haut à gauche
+							if (
+								j != 0 &&
+								matrice[i - 1][j - 1].etat == 0 &&
+								matrice[i - 1][j - 1].degres != 0)
+							{
+								matrice[i - 1][j - 1].etat = 1;
+								matrice[i - 1][j - 1].degres--;
+								matrice[i - 1][j - 1].case_modifiee = true;
+							}
+
+							// Traitement de la case en haut au milieu
+							if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
+							{
+								matrice[i - 1][j].etat = 1;
+								matrice[i - 1][j].degres--;
+								matrice[i - 1][j].case_modifiee = true;
+							}
+
+							// Traitement de la case en haut à droite
+							if (
+								j != width - 1 &&
+								matrice[i - 1][j + 1].etat == 0 &&
+								matrice[i - 1][j + 1].degres != 0)
+							{
+								matrice[i - 1][j + 1].etat = 1;
+								matrice[i - 1][j + 1].degres--;
+								matrice[i - 1][j + 1].case_modifiee = true;
+							}
+						}
+
+						// Condition pour le traitement des cases du bas
+						if (i != length - 1)
+						{
+							// Traitement de la case en bas à droite
+							if (
+								j != width - 1 &&
+								matrice[i + 1][j + 1].etat == 0 &&
+								matrice[i + 1][j + 1].degres != 0)
+							{
+								matrice[i + 1][j + 1].etat = 1;
+								matrice[i + 1][j + 1].degres--;
+								matrice[i + 1][j + 1].case_modifiee = true;
+							}
+
+							// Traitement de la case d'en bas
+							if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
+							{
+								matrice[i + 1][j].etat = 1;
+								matrice[i + 1][j].degres--;
+								matrice[i + 1][j].case_modifiee = true;
+							}
+
+							// Traitement de la case en bas à gauche
+							if (
+								j != 0 &&
+								matrice[i + 1][j - 1].etat == 0 &&
+								matrice[i + 1][j - 1].degres != 0)
+							{
+								matrice[i + 1][j - 1].etat = 1;
+								matrice[i + 1][j - 1].degres--;
+								matrice[i + 1][j - 1].case_modifiee = true;
+							}
+						}
+
+						// Condition pour le traitement de la case à gauche
 						if (
 							j != 0 &&
-							matrice[i - 1][j - 1].etat == 0 &&
-							matrice[i - 1][j - 1].degres != 0)
+							matrice[i][j - 1].etat == 0 &&
+							matrice[i][j - 1].degres != 0)
 						{
-							matrice[i - 1][j - 1].etat = 1;
-							matrice[i - 1][j - 1].degres--;
+							// Traitement de la case à gauche
+							matrice[i][j - 1].etat = 1;
+							matrice[i][j - 1].degres--;
+							matrice[i][j - 1].case_modifiee = true;
 						}
 
-						// Traitement de la case en haut au milieu
-						if (matrice[i - 1][j].etat == 0 && matrice[i - 1][j].degres != 0)
-						{
-							matrice[i - 1][j].etat = 1;
-							matrice[i - 1][j].degres--;
-						}
-
-						// Traitement de la case en haut à droite
+						// Condition pour le traitement de la case à droite
 						if (
 							j != width - 1 &&
-							matrice[i - 1][j + 1].etat == 0 &&
-							matrice[i - 1][j + 1].degres != 0)
+							matrice[i][j + 1].etat == 0 &&
+							matrice[i][j + 1].degres != 0)
 						{
-							matrice[i - 1][j + 1].etat = 1;
-							matrice[i - 1][j + 1].degres--;
+							// Traitement de la case à droite
+							matrice[i][j + 1].etat = 1;
+							matrice[i][j + 1].degres--;
+							matrice[i][j + 1].case_modifiee = true;
 						}
-					}
-
-					// Condition pour le traitement des cases du bas
-					if (i != length - 1)
-					{
-						// Traitement de la case en bas à droite
-						if (
-							j != width - 1 &&
-							matrice[i + 1][j + 1].etat == 0 &&
-							matrice[i + 1][j + 1].degres != 0)
-						{
-							matrice[i + 1][j + 1].etat = 1;
-							matrice[i + 1][j + 1].degres--;
-						}
-
-						// Traitement de la case d'en bas
-						if (matrice[i + 1][j].etat == 0 && matrice[i + 1][j].degres != 0)
-						{
-							matrice[i + 1][j].etat = 1;
-							matrice[i + 1][j].degres--;
-						}
-
-						// Traitement de la case en bas à gauche
-						if (
-							j != 0 &&
-							matrice[i + 1][j - 1].etat == 0 &&
-							matrice[i + 1][j - 1].degres != 0)
-						{
-							matrice[i + 1][j - 1].etat = 1;
-							matrice[i + 1][j - 1].degres--;
-						}
-					}
-
-					// Condition pour le traitement de la case à gauche
-					if (
-						j != 0 &&
-						matrice[i][j + 1].etat == 0 &&
-						matrice[i][j + 1].degres != 0)
-					{
-						// Traitement de la case à droite
-						matrice[i][j + 1].etat = 1;
-						matrice[i][j + 1].degres--;
-					}
-
-					// Condition pour le traitement de la case à droite
-					if (
-						j != width - 1 &&
-						matrice[i][j - 1].etat == 0 &&
-						matrice[i][j - 1].degres != 0)
-					{
-						// Traitement de la case à gauche
-						matrice[i][j - 1].etat = 1;
-						matrice[i][j - 1].degres--;
 					}
 				}
 				// Si case est en feu mais que c'est des cendres
-				else if (matrice[i][j].degres == 1)
+				else if (matrice[i][j].degres == 1 && !matrice[i][j].case_modifiee)
 				{
 					matrice[i][j].symbole = '@';
 					matrice[i][j].etat = 0;
 					matrice[i][j].degres = 0;
+					matrice[i][j].case_modifiee = true;
 				}
+				// else if (matrice[i][j].degres == 2 && !matrice[i][j].case_modifiee)
+				// {
+				// 	matrice[i][j].symbole = '-';
+				// 	matrice[i][j].degres = 1;
+				// 	matrice[i][j].case_modifiee = true;
+				// }
 			}
 		}
 	}
 	push(stack, matrice, length, width);
-}
-
-void liberer_matrice(Element **matrice, int length) {
-    for (int i = 0; i < length; i++) {
-        free(matrice[i]);
-    }
-    free(matrice);
 }

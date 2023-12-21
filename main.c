@@ -19,33 +19,40 @@ int main(int argc, char *argv[])
 	Element select = {
 		's',
 		-9,
-		-9};
+		-9,
+		false};
 
 	// déclaration des éléments
 	Element ground = {
 		'+',
 		0,
-		0};
+		0,
+		false};
 	Element tree = {
 		'*',
 		4,
-		0};
+		0,
+		false};
 	Element leaf = {
 		' ',
 		2,
-		0};
+		0,
+		false};
 	Element rock = {
 		'#',
 		5,
-		0};
+		0,
+		false};
 	Element grass = {
 		'x',
 		3,
-		0};
+		0,
+		false};
 	Element water = {
 		'/',
 		0,
-		0};
+		0,
+		false};
 	Element ash = {
 		'-',
 		1,
@@ -53,7 +60,8 @@ int main(int argc, char *argv[])
 	Element inactive_ash = {
 		'@',
 		0,
-		0};
+		0,
+		false};
 
 	// Initialisation du jeu
 	display_init(background, title, button_LG);
@@ -130,7 +138,7 @@ int main(int argc, char *argv[])
 
 		display_matrice(matrice, length, width);
 
-		menu_4(nb_tour - p);
+		menu_4(nb_tour - (p + 1));
 
 		int unicode = 0;
 		while (
@@ -138,9 +146,7 @@ int main(int argc, char *argv[])
 				unicode == 32 ||
 				unicode == 8 ||
 				unicode == 99 ||
-				unicode == 113
-			)
-		)
+				unicode == 113))
 		{
 			MLV_wait_keyboard(NULL, NULL, &unicode);
 		}
@@ -149,6 +155,14 @@ int main(int argc, char *argv[])
 		if (unicode == 32)
 		{
 			push(&stack, matrice, length, width);
+			// On remet à false pour passer à l'autre etape de la simulation
+			for (int i = 0; i < length; i++)
+			{
+				for (int j = 0; j < width; j++)
+				{
+					matrice[i][j].case_modifiee = false;
+				}
+			}
 		}
 		// Appuie sur BACKSPACE : retourner en arrière
 		else if (unicode == 8)
@@ -166,8 +180,7 @@ int main(int argc, char *argv[])
 			{
 				printf("Le choix renseigne est %d,%d.\n\n", x_modify, y_modify);
 
-				//scanf + modify_case à implenter ici
-
+				// scanf + modify_case à implenter ici
 			}
 			else
 			{
@@ -209,7 +222,8 @@ int main(int argc, char *argv[])
 	}
 
 	// Libération de la mémoire de la matrice
-	liberer_matrice(matrice, length);
+	free_matrice(matrice, length);
+	printf("Au revoir !");
 
 	return 0;
 }

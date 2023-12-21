@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #define WIDTH_WINDOW 1175
 #define HEIGHT_WINDOW 700
 
@@ -9,6 +10,7 @@ typedef struct Element
 	char symbole;
 	int degres;
 	int etat;
+	bool case_modifiee;
 } Element;
 
 // Structure noeud pile
@@ -42,7 +44,7 @@ void menu_1(int *length, int *width, char *background_path, char *text1_menu1_pa
 // Menu de sélection du mode de jeu
 void menu_2(long *mode_game, char *background_path, char *text1_menu2_path);
 
-//Modifier une case
+// Modifier une case
 void modify_case(
 	Element **matrice,
 	int length,
@@ -57,8 +59,7 @@ void modify_case(
 	Element grass,
 	Element water,
 	Element ash,
-	Element inactive_ash
-);
+	Element inactive_ash);
 
 // Remplissage manuel de la matrice
 void manual_mode(
@@ -100,5 +101,3 @@ void pop(Stack *stack, int length, int width);
 void propagation(Element **matrice, int length, int width, Stack *stack);
 
 void display_init(char *background_path, char *title_path, char *button_LG_path);
-
-void liberer_matrice(Element **matrice, int length);
