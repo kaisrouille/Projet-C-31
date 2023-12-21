@@ -127,6 +127,7 @@ int main(int argc, char *argv[])
 
 	// On met d'abord le feu à la case selectionnée par l'utilisateur
 	matrice[x_firstcase][y_firstcase].etat = 1;
+	matrice[x_firstcase][y_firstcase].degres--;
 
 	display_matrice(matrice, length, width);
 
