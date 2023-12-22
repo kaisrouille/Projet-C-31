@@ -135,8 +135,8 @@ int main(int argc, char *argv[])
 	push(&stack, matrice, length, width);
 
 	// On met d'abord le feu à la case selectionnée par l'utilisateur
-	matrice[y_firstcase][x_firstcase].etat = 1;
-	matrice[y_firstcase][x_firstcase].degres--;
+	matrice[x_firstcase][y_firstcase].etat = 1;
+	matrice[x_firstcase][y_firstcase].degres--;
 
 	display_matrice(matrice, length, width);
 
@@ -165,12 +165,19 @@ int main(int argc, char *argv[])
 		// Appuie sur ESPACE : continuer la simulation
 		if (unicode == 32)
 		{
-
 			propagation(matrice, length, width);
 
 			display_matrice(matrice, length, width);
 
 			push(&stack, matrice, length, width);
+
+			for (int i = 0; i < length; i++)
+			{
+				for (int j = 0; j < width; j++) {
+					matrice[i][j].case_modifiee = false;
+				}
+			}
+			
 		}
 		// Appuie sur BACKSPACE : retourner en arrière
 		else if (unicode == 8)
