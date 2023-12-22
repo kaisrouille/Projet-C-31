@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
 	char menu1_text1[] = "images/menu1_text1.png";
 	char menu1_text2[] = "images/menu1_text2.png";
 	char menu2_text1[] = "images/menu2_text1.png";
+	char menu3_text1[] = "images/menu3_text1.png";
+	char menu3_text2[] = "images/menu3_text2.png";
+	char game_text1[] = "images/game_text1.png";
 
 	// affichage de selection de case pour le mode manuel
 	Element select = {
@@ -113,13 +116,18 @@ int main(int argc, char *argv[])
 			inactive_ash);
 	}
 
-	printf("\n\nVoici votre foret !\n\n");
+	printf("Voici votre foret !\n\n");
 	display_matrice(matrice, length, width);
+	printf("\n\n");
 
 	// Selection du nombre de tour et de la case de départ
 	int nb_tour;
 	int x_firstcase, y_firstcase;
-	menu_3(&nb_tour, &x_firstcase, &y_firstcase);
+	menu_3(&nb_tour, &x_firstcase, &y_firstcase, background, menu3_text1, menu3_text2);
+
+	MLV_draw_image(MLV_load_image(background),0,0);
+	MLV_draw_image(MLV_load_image(game_text1), 0,0);
+	MLV_actualise_window();
 
 	// Mise en pile de la matrice initialisée
 	Stack stack;
@@ -127,8 +135,8 @@ int main(int argc, char *argv[])
 	push(&stack, matrice, length, width);
 
 	// On met d'abord le feu à la case selectionnée par l'utilisateur
-	matrice[x_firstcase][y_firstcase].etat = 1;
-	matrice[x_firstcase][y_firstcase].degres--;
+	matrice[y_firstcase][x_firstcase].etat = 1;
+	matrice[y_firstcase][x_firstcase].degres--;
 
 	display_matrice(matrice, length, width);
 
@@ -144,10 +152,12 @@ int main(int argc, char *argv[])
 		int unicode = 0;
 		while (
 			!(
-				unicode == 32 ||
-				unicode == 8 ||
-				unicode == 99 ||
-				unicode == 113))
+				unicode == 32 ||	//ESPACE
+				unicode == 8 ||		//BACKSPACE
+				unicode == 99 ||	//C
+				unicode == 113		//Q
+			)
+		)
 		{
 			MLV_wait_keyboard(NULL, NULL, &unicode);
 		}

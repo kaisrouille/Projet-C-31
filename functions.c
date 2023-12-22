@@ -91,7 +91,7 @@ void display_matrice(Element **matrice, int length, int width)
 
 void display_init(char *background_path, char *title_path, char *button_LG_path)
 {
-	printf("\n=========================INCENDIE========================\n\n");
+	printf("\n=========================L'INCENDIE========================\n\n\n");
 
 	MLV_create_window(
 		"Incendie - Le Jeu",
@@ -128,10 +128,14 @@ void action_next_menu()
 	while (
 		!(
 			unicode == 32 || // touche ESPACE
-			(mouse_x >= 420 &&
-			 mouse_x <= 772 &&
-			 mouse_y >= 375 &&
-			 mouse_y <= 585)))
+			(
+				mouse_x >= 420 &&
+			 	mouse_x <= 772 &&
+				mouse_y >= 375 &&
+			 	mouse_y <= 585
+			)
+		)
+	)
 	{
 		MLV_wait_keyboard_or_mouse(NULL, NULL, &unicode, &mouse_x, &mouse_y);
 	}
@@ -149,7 +153,7 @@ void menu_1(
 	MLV_Image *menu1_text2 = MLV_load_image(menu1_text2_path);
 
 	// Longueur
-	printf("\nEntrez le nombre de cellule en longueur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+	printf("Entrez le nombre de cellule en longueur de la foret, compris entre %d et %d : \n\n", SIZEMIN, SIZEMAX);
 
 	// Affichage des images
 	MLV_draw_image(
@@ -160,10 +164,11 @@ void menu_1(
 		menu1_text1,
 		0, 0);
 
-	// Affichage de la boite de dialogue
+	//Securisation entrée user
 	char *text_response_length;
 	do
 	{
+		// Affichage de la boite de dialogue
 		MLV_wait_input_box(
 			WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
 			200, 50,
@@ -179,7 +184,7 @@ void menu_1(
 		// Vérifier si la valeur convertie est dans la plage valide
 		if (tmp_length < SIZEMIN || tmp_length > SIZEMAX)
 		{
-			printf("Longueur incorrecte. Veuillez entrer une valeur entre %d et %d.\n", SIZEMIN, SIZEMAX);
+			printf("Longueur invalide. Veuillez entrer une valeur entre %d et %d.\n", SIZEMIN, SIZEMAX);
 
 			// Libérer la mémoire avant de demander à nouveau
 			free(text_response_length);
@@ -199,11 +204,11 @@ void menu_1(
 
 	} while (1);
 
-	printf("Longueur choisie : %d\n", *length);
+	printf("Longueur choisie : %d\n\n\n", *length);
 
 	// Largeur
 
-	printf("\n\nEntrez le nombre de cellule en largeur de la foret, compris entre %d et %d: \n\n", SIZEMIN, SIZEMAX);
+	printf("Entrez le nombre de cellule en largeur de la foret, compris entre %d et %d : \n\n", SIZEMIN, SIZEMAX);
 
 	MLV_draw_image(
 		background,
@@ -233,7 +238,7 @@ void menu_1(
 		// Vérifier si la valeur convertie est dans la plage valide
 		if (tmp_width < SIZEMIN || tmp_width > SIZEMAX)
 		{
-			printf("Largeur incorrecte. Veuillez entrer une valeur entre %d et %d.\n", SIZEMIN, SIZEMAX);
+			printf("Largeur invalide. Veuillez entrer une valeur entre %d et %d.\n", SIZEMIN, SIZEMAX);
 
 			// Libérer la mémoire avant de demander à nouveau
 			free(text_response_width);
@@ -253,12 +258,12 @@ void menu_1(
 
 	} while (1);
 
-	printf("Largeur choisie : %d\n", *width);
+	printf("Largeur choisie : %d\n\n\n", *width);
 }
 
 void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 {
-	printf("\n\nVeuillez choisir le mode de jeu de la simulation :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
+	printf("Veuillez choisir le mode de remplissage de la foret :\n\n\t 1 - Manuel\n\t 2- Automatique\n\n");
 
 	MLV_Image *background = MLV_load_image(background_path);
 	MLV_Image *text1_menu2 = MLV_load_image(text1_menu2_path);
@@ -290,7 +295,7 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 		//Sécurisation de l'entrée user
 		if (temp_mode != 1 && temp_mode != 2)
 		{
-			printf("Selection du mode de jeu incorrecte, entrez 1 ou 2 :\n");
+			printf("Selection du mode de jeu invalide, entrez 1(Manuel) ou 2(Automatique) :\n");
 
 			free(text_response_mode);
 
@@ -308,11 +313,11 @@ void menu_2(long *mode_game, char *background_path, char *text1_menu2_path)
 
 	if (*mode_game == 1)
 	{
-		printf("Mode de remplissage manuel selectionne");
+		printf("Mode de remplissage choisi : Manuel\n\n\n");
 	}
 	else if (*mode_game == 2)
 	{
-		printf("Mode de remplissage aleatoire selectionne");
+		printf("Mode de remplissage choisi : Aleatoire\n\n\n");
 	}
 }
 
@@ -359,7 +364,6 @@ void modify_case(
 		matrice[x][y] = inactive_ash;
 		break;
 	default:
-		printf("Veuillez entrer une option valide :\n");
 		break;
 	}
 }
@@ -379,7 +383,7 @@ void manual_mode(
 	Element inactive_ash)
 {
 	// remplissage de la matrice par l'utilisateur
-	printf("\n\nVoici la surface de votre foret :\n\n");
+	printf("Veuillez remplir la surface de votre foret :\n\n");
 	int i, j;
 	for (i = 0; i < length; i++)
 	{
@@ -390,22 +394,27 @@ void manual_mode(
 			// affichage matrice
 			display_matrice(matrice, length, width);
 
-			// dessin de la grille a faire
-
 			// Choix de l'utilisateur
-			printf("Choisissez :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
+			printf("Choisissez un element parmis :\n\n1 - Sol(+)\n2 - Arbre(*)\n3 - Feuille( )\n4 - Roche(#)\n5 - Herbe(x)\n6 - Eau(/)\n7 - Cendres(-)\n8 - Cendres eteintes(@)\n\n");
 
 			int choice, status;
 			do
 			{
-				printf("Entrer votre choix :");
+				printf("Element choisi : ");
 				status = scanf("%d", &choice);
+
+				// Vide le buffer d'entrée si la lecture échoue
 				if (status != 1)
 				{
 					printf("Entrée invalide. Veuillez entrer un nombre entre 1 et 8.\n");
-					// while (getchar() != '\n')
-					// 	;
+					while (getchar() != '\n'); // Vide le buffer d'entrée
 				}
+				else if (choice < 1 || choice > 8)
+				{
+					printf("Entrée invalide. Veuillez entrer un nombre entre 1 et 8.\n");
+					status = 0; // Force la continuation de la boucle
+				}
+
 			} while (status != 1);
 
 			modify_case(
@@ -422,7 +431,10 @@ void manual_mode(
 				grass,
 				water,
 				ash,
-				inactive_ash);
+				inactive_ash
+			);
+
+			printf("\n");
 		}
 	}
 }
@@ -467,38 +479,172 @@ void auto_mode(
 	}
 }
 
-void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase)
+void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase, char *background_path, char *menu3_text1_path, char *menu3_text2_path)
 {
-	printf("\n\nEntrez le nombre de tour de la simulation \n\n");
-	if (scanf("%d", nb_tour) == 1)
-	{
-		printf("Le nombre de tours renseignés est %d.\n\n", *nb_tour);
-	}
-	else
-	{
-		printf("Erreur de lecture du nombre de tours.\n");
-	}
+	printf("Entrez le nombre d'etape de la simulation : \n\n");
 
-	printf("\n\nEntrez les coordonnees de la case du depart de feu (au format X,X) :\n\n");
-	if (scanf("%d,%d", x_firstcase, y_firstcase) == 2)
-	{
-		printf("Les coordonnées sont %d,%d.\n", *x_firstcase, *y_firstcase);
-	}
-	else
-	{
-		printf("Erreur de lecture des coordonnées.\n");
-	}
+	MLV_Image *background = MLV_load_image(background_path);
+	MLV_Image *menu3_text1 = MLV_load_image(menu3_text1_path);
 
-	printf("\n\n Ok, c'est parti pour l'incendie !!!\n\n");
+	MLV_draw_image(
+		background,
+		0, 0);
+
+	MLV_draw_image(
+		menu3_text1,
+		0, 0
+	);
+
+	//Securisation entrée user
+	char *text_response_nb_tour;
+	do
+	{
+		// Affichage de la boite de dialogue
+		MLV_wait_input_box(
+			WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
+			200, 50,
+			MLV_COLOR_BLACK,
+			MLV_COLOR_BLACK,
+			MLV_COLOR_WHITE,
+			"Nombre d'etape : ",
+			&text_response_nb_tour);
+
+		// Convertir l'entrée utilisateur (char) en long
+		long tmp_nb_tour = strtol(text_response_nb_tour, NULL, 10);
+
+		// Vérifier si la valeur convertie est dans la plage valide
+		if (tmp_nb_tour < 0)
+		{
+			printf("Nombre d'etape invalide. Veuillez entrer une valeur superieure a 0.\n");
+
+			// Libérer la mémoire avant de demander à nouveau
+			free(text_response_nb_tour);
+
+			MLV_actualise_window();
+
+			// Continuer la boucle si la valeur n'est pas valide
+			continue;
+		}
+
+		*nb_tour = (int)tmp_nb_tour;
+
+		// Libération de la mémoire si la valeur est valide et sortie de la boucle
+		free(text_response_nb_tour);
+
+		break;
+
+	} while (1);
+
+	printf("Nombre d'etape choisi : %d\n\n\n", *nb_tour);
+
+
+	printf("Entrez les coordonnees de la case du depart de feu : \n\n");
+
+	MLV_Image *menu3_text2 = MLV_load_image(menu3_text2_path);
+
+	MLV_draw_image(
+		background,
+		0, 0);
+
+	MLV_draw_image(
+		menu3_text2,
+		0, 0
+	);
+
+	//Securisation entrée user
+	char *text_response_x_firstcase;
+	do
+	{
+		// Affichage de la boite de dialogue
+		MLV_wait_input_box(
+			WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
+			200, 50,
+			MLV_COLOR_BLACK,
+			MLV_COLOR_BLACK,
+			MLV_COLOR_WHITE,
+			"x : ",
+			&text_response_x_firstcase
+		);
+
+		// Convertir l'entrée utilisateur (char) en long
+		long tmp_x_firstcase = strtol(text_response_x_firstcase, NULL, 10);
+
+		// Vérifier si la valeur convertie est dans la plage valide
+		if (tmp_x_firstcase < 0 )
+		{
+			printf("Coordonnee X invalide. Veuillez entrer une valeur superieure a 0 pour chaque parametre.\n");
+
+			// Libérer la mémoire avant de demander à nouveau
+			free(x_firstcase);
+
+			MLV_actualise_window();
+
+			// Continuer la boucle si la valeur n'est pas valide
+			continue;
+		}
+
+		*x_firstcase = (int)tmp_x_firstcase;
+
+		// Libération de la mémoire si la valeur est valide et sortie de la boucle
+		free(text_response_x_firstcase);
+
+		break;
+
+	} while (1);
+
+	printf("Coordonnee X de la premiere case en feu : %d\n", *x_firstcase);
+
+	char *text_response_y_firstcase;
+	do
+	{
+		// Affichage de la boite de dialogue
+		MLV_wait_input_box(
+			WIDTH_WINDOW / 2 - 100, HEIGHT_WINDOW / 2,
+			200, 50,
+			MLV_COLOR_BLACK,
+			MLV_COLOR_BLACK,
+			MLV_COLOR_WHITE,
+			"y : ",
+			&text_response_y_firstcase
+		);
+
+		// Convertir l'entrée utilisateur (char) en long
+		long tmp_y_firstcase = strtol(text_response_y_firstcase, NULL, 10);
+
+		// Vérifier si la valeur convertie est dans la plage valide
+		if (tmp_y_firstcase < 0)
+		{
+			printf("Coordonnees invalides. Veuillez entrer une valeur superieure a 0 pour chaque parametre.\n");
+
+			// Libérer la mémoire avant de demander à nouveau
+			free(y_firstcase);
+
+			MLV_actualise_window();
+
+			// Continuer la boucle si la valeur n'est pas valide
+			continue;
+		}
+		*y_firstcase = (int)tmp_y_firstcase;
+
+		// Libération de la mémoire si la valeur est valide et sortie de la boucle
+		free(text_response_y_firstcase);
+
+		break;
+
+	} while (1);
+
+	printf("Coordonnee Y de la premiere case en feu : %d\n\n\n", *y_firstcase);
+
+	printf("Ok, c'est parti pour l'incendie !!!\n\n");
 }
 
 void menu_4(int nb_tour)
 {
-	printf("\nIl reste actuellement %d stade(s) de la simulation avant la fin de l'incendie.\n\n", nb_tour);
+	printf("\nIl reste actuellement %d etape(s) de la simulation avant la fin de l'incendie.\n\n", nb_tour);
 	printf("\t\tESPACE - Pour continuer la simulation.\n");
 	printf("\t\tBACKSPACE - Pour revenir en arrière dans la simulation.\n");
 	printf("\t\tC - Pour interrompre et modifier une case dans la simulation.\n");
-	printf("\t\tQ - Pour arrêter la simulation et revenir au debut du jeu.\n");
+	printf("\t\tQ - Pour arrêter la simulation et revenir au debut du jeu.\n\n");
 }
 
 void push(Stack *stack, Element **matrice, int length, int width)
@@ -506,7 +652,7 @@ void push(Stack *stack, Element **matrice, int length, int width)
 	Node *new_node = (Node *)malloc(sizeof(Node));
 	if (new_node == NULL)
 	{
-		printf("erreur allocation memoire");
+		printf("Erreur d'allocation memoire\n");
 		return;
 	}
 

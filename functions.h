@@ -90,7 +90,7 @@ void auto_mode(
 	Element ash,
 	Element inactive_ash);
 
-void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase);
+void menu_3(int *nb_tour, int *x_firstcase, int *y_firstcase, char *background_path, char *menu3_text1_path, char *menu3_text2_path);
 
 void menu_4(int nb_tour);
 
